@@ -11,6 +11,8 @@ Description: It allows the user to retrieve the data from the systems of
     systems, that is, the Estatísticas Vitais.
 License: GPL-3
 Encoding: UTF-8
+URL: http://github.com/rpradosiqueira/datasus
+BugReports: http://github.com/rpradosiqueira/datasus/issues
 Imports:
     dplyr,
     httr,
