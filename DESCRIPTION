@@ -1,0 +1,28 @@
+Package: datasus
+Type: Package
+Title: An Interface to DATASUS system
+Version: 0.1.0
+Authors@R: person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"))
+Description: It allows the user to retrieve the data from the systems of 
+    DATASUS (SUS IT department related to the Ministry of Health, see 
+    <http://datasus.saude.gov.br/informacoes-de-saude/tabnet/> for more
+    information) much in the same way that is done in the online portal.
+    For now the package allows access to the SINASC and SIM's (ICD-10) 
+    systems, that is, the Estatísticas Vitais.
+License: GPL-3
+Encoding: UTF-8
+Imports:
+    dplyr,
+    httr,
+    magrittr,
+    RCurl,
+    readr,
+    rvest,
+    stringi,
+    stringr,
+    xml2
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
