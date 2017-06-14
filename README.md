@@ -10,7 +10,13 @@ The "datasus" R package seeks to provide direct access to the data of TABNET/DAT
 Installation
 ------------
 
-To install the development version hosted on Github:
+Install the release version from CRAN:
+
+``` r
+install.packages("datasus")
+```
+
+or the development version from github
 
 ``` r
 # install.packages("devtools")

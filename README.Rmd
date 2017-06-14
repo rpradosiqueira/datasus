@@ -15,12 +15,18 @@ the package allows access to the systematic record of mortality and survival dat
 
 ## Installation
 
-To install the development version hosted on Github:
+Install the release version from CRAN:
 
-```{r, eval=FALSE}
+```{r , eval = FALSE}
+install.packages("datasus")
+```
+
+or the development version from github
+
+```{r , eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("rpradosiqueira/datasus")
-```
+````
 
 ## Example
 
