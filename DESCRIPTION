@@ -1,7 +1,7 @@
 Package: datasus
 Type: Package
 Title: An Interface to DATASUS System
-Version: 0.1.0
+Version: 0.4.0
 Authors@R: person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"))
 Description: It allows the user to retrieve the data from the systems of 
     DATASUS (SUS IT department related to the Brazilian Ministry of Health, 
