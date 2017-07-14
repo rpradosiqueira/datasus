@@ -265,7 +265,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (municipio != "all") {
+  if (any(municipio != "all")) {
 
     municipio <- as.character(municipio)
 
@@ -273,7 +273,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (capital != "all") {
+  if (any(capital != "all")) {
 
     capital <- as.character(capital)
 
@@ -281,7 +281,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (cir != "all") {
+  if (any(cir != "all")) {
 
     cir <- as.character(cir)
 
@@ -289,7 +289,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (macrorregiao_de_saude != "all") {
+  if (any(macrorregiao_de_saude != "all")) {
 
     macrorregiao_de_saude <- as.character(macrorregiao_de_saude)
 
@@ -297,7 +297,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (microrregiao_ibge != "all") {
+  if (any(microrregiao_ibge != "all")) {
 
     microrregiao_ibge <- as.character(microrregiao_ibge)
 
@@ -305,7 +305,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (ride != "all") {
+  if (any(ride != "all")) {
 
     ride <- as.character(ride)
 
@@ -313,7 +313,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (territorio_da_cidadania != "all") {
+  if (any(territorio_da_cidadania != "all")) {
 
     territorio_da_cidadania <- as.character(as.numeric(territorio_da_cidadania))
 
@@ -321,7 +321,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (mesorregiao_pndr != "all") {
+  if (any(mesorregiao_pndr != "all")) {
 
     mesorregiao_pndr <- as.character(as.numeric(mesorregiao_pndr))
 
@@ -329,7 +329,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (amazonia_legal != "all") {
+  if (any(amazonia_legal != "all")) {
 
     amazonia_legal <- as.character(amazonia_legal)
 
@@ -337,7 +337,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (semiarido != "all") {
+  if (any(semiarido != "all")) {
 
     semiarido <- as.character(semiarido)
 
@@ -345,7 +345,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (faixa_de_fronteira != "all") {
+  if (any(faixa_de_fronteira != "all")) {
 
     faixa_de_fronteira <- as.character(faixa_de_fronteira)
 
@@ -353,7 +353,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (zona_de_fronteira != "all") {
+  if (any(zona_de_fronteira != "all")) {
 
     zona_de_fronteira <- as.character(zona_de_fronteira)
 
@@ -361,7 +361,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (municipio_de_extrema_pobreza != "all") {
+  if (any(municipio_de_extrema_pobreza != "all")) {
 
     municipio_de_extrema_pobreza <- as.character(municipio_de_extrema_pobreza)
 
@@ -369,7 +369,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (capitulo_cid10 != "all") {
+  if (any(capitulo_cid10 != "all")) {
 
     capitulo_cid10 <- as.character(capitulo_cid10)
 
@@ -377,7 +377,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (grupo_cid10 != "all") {
+  if (any(grupo_cid10 != "all")) {
 
     if (!(all(grupo_cid10 %in% grupo_cid10.df$id))) {
 
@@ -393,7 +393,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (categoria_cid10 != "all") {
+  if (any(categoria_cid10 != "all")) {
 
     categoria_cid10 <- as.character(categoria_cid10)
 
@@ -401,7 +401,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (causa_br_cid10 != "all") {
+  if (any(causa_br_cid10 != "all")) {
 
     causa_br_cid10 <- as.character(causa_br_cid10)
 
@@ -409,7 +409,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (causa_mal_definida != "all") {
+  if (any(causa_mal_definida != "all")) {
 
     if (!(all(causa_mal_definida %in% causa_mal_definida.df$id))) {
 
@@ -425,7 +425,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (faixa_etaria != "all") {
+  if (any(faixa_etaria != "all")) {
 
     if (!(all(faixa_etaria %in% faixa_etaria.df$id))) {
 
@@ -441,7 +441,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (faixa_etaria_ops != "all") {
+  if (any(faixa_etaria_ops != "all")) {
 
     if (!(all(faixa_etaria_ops %in% faixa_etaria_ops.df$id))) {
 
@@ -457,7 +457,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (faixa_etaria_det != "all") {
+  if (any(faixa_etaria_det != "all")) {
 
     if (!(all(faixa_etaria_det %in% faixa_etaria_det.df$id))) {
 
@@ -473,7 +473,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (faixa_etaria_menor1a != "all") {
+  if (any(faixa_etaria_menor1a != "all")) {
 
     if (!(all(faixa_etaria_menor1a %in% faixa_etaria_menor1a.df$id))) {
 
@@ -489,7 +489,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (sexo != "all") {
+  if (any(sexo != "all")) {
 
     if (!(all(sexo %in% sexo.df$id))) {
 
@@ -505,7 +505,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (cor_raca != "all") {
+  if (any(cor_raca != "all")) {
 
     if (!(all(cor_raca %in% cor_raca.df$id))) {
 
@@ -521,7 +521,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (escolaridade != "all") {
+  if (any(escolaridade != "all")) {
 
     if (!(all(escolaridade %in% escolaridade.df$id))) {
 
@@ -537,7 +537,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (estado_civil != "all") {
+  if (any(estado_civil != "all")) {
 
     if (!(all(estado_civil %in% estado_civil.df$id))) {
 
@@ -553,7 +553,7 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (local_ocorrencia != "all") {
+  if (any(local_ocorrencia != "all")) {
 
     if (!(all(local_ocorrencia %in% local_ocorrencia.df$id))) {
 
@@ -785,4 +785,3 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   tabela_final
 
 }
-

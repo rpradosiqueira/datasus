@@ -209,7 +209,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (regiao != "all") {
+  if (any(regiao != "all")) {
 
     regiao <- as.character(regiao)
 
@@ -217,7 +217,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (unidade_da_federacao != "all") {
+  if (any(unidade_da_federacao != "all")) {
 
     unidade_da_federacao <- as.character(unidade_da_federacao)
 
@@ -225,7 +225,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (local_ocorrencia != "all") {
+  if (any(local_ocorrencia != "all")) {
 
     if (!(all(local_ocorrencia %in% local_ocorrencia.df$id))) {
 
@@ -241,7 +241,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (idade_da_mae != "all") {
+  if (any(idade_da_mae != "all")) {
 
     if (!(all(idade_da_mae %in% idade_da_mae.df$id))) {
 
@@ -257,7 +257,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (instrucao_da_mae != "all") {
+  if (any(instrucao_da_mae != "all")) {
 
     if (!(all(instrucao_da_mae %in% instrucao_da_mae.df$id))) {
 
@@ -273,7 +273,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (estado_civil_mae != "all") {
+  if (any(estado_civil_mae != "all")) {
 
     if (!(all(estado_civil_mae %in% estado_civil_mae.df$id))) {
 
@@ -289,7 +289,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (duracao_gestacao != "all") {
+  if (any(duracao_gestacao != "all")) {
 
     if (!(all(duracao_gestacao %in% duracao_gestacao.df$id))) {
 
@@ -305,7 +305,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (tipo_de_gravidez != "all") {
+  if (any(tipo_de_gravidez != "all")) {
 
     if (!(all(tipo_de_gravidez %in% tipo_de_gravidez.df$id))) {
 
@@ -321,7 +321,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (tipo_de_parto != "all") {
+  if (any(tipo_de_parto != "all")) {
 
     if (!(all(tipo_de_parto %in% tipo_de_parto.df$id))) {
 
@@ -337,7 +337,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (consult_pre_natal != "all") {
+  if (any(consult_pre_natal != "all")) {
 
     if (!(all(consult_pre_natal %in% consult_pre_natal.df$id))) {
 
@@ -353,7 +353,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (sexo != "all") {
+  if (any(sexo != "all")) {
 
     if (!(all(sexo %in% sexo.df$id))) {
 
@@ -369,7 +369,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (cor_raca != "all") {
+  if (any(cor_raca != "all")) {
 
     if (!(all(cor_raca %in% cor_raca.df$id))) {
 
@@ -385,7 +385,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (apgar_1_minuto != "all") {
+  if (any(apgar_1_minuto != "all")) {
 
     if (!(all(apgar_1_minuto %in% apgar_1_minuto.df$id))) {
 
@@ -401,7 +401,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (apgar_5_minuto != "all") {
+  if (any(apgar_5_minuto != "all")) {
 
     if (!(all(apgar_5_minuto %in% apgar_5_minuto.df$id))) {
 
@@ -417,7 +417,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (peso_ao_nascer != "all") {
+  if (any(peso_ao_nascer != "all")) {
 
     if (!(all(peso_ao_nascer %in% peso_ao_nascer.df$id))) {
 
@@ -433,7 +433,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (anomalia_congenita != "all") {
+  if (any(anomalia_congenita != "all")) {
 
     if (!(all(anomalia_congenita %in% anomalia_congenita.df$id))) {
 
@@ -449,7 +449,7 @@ sinasc_nv_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (tipo_anomal_congen != "all") {
+  if (any(tipo_anomal_congen != "all")) {
 
     if (!(all(tipo_anomal_congen %in% tipo_anomal_congen.df$id))) {
 

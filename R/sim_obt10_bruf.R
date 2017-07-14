@@ -207,7 +207,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (regiao != "all") {
+  if (any(regiao != "all")) {
 
     regiao <- as.character(regiao)
 
@@ -215,7 +215,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (unidade_da_federacao != "all") {
+  if (any(unidade_da_federacao != "all")) {
 
     unidade_da_federacao <- as.character(unidade_da_federacao)
 
@@ -223,7 +223,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (capitulo_cid10 != "all") {
+  if (any(capitulo_cid10 != "all")) {
 
     capitulo_cid10 <- as.character(capitulo_cid10)
 
@@ -231,7 +231,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (grupo_cid10 != "all") {
+  if (any(grupo_cid10 != "all")) {
 
     if (!(all(grupo_cid10 %in% grupo_cid10.df$id))) {
 
@@ -247,7 +247,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (categoria_cid10 != "all") {
+  if (any(categoria_cid10 != "all")) {
 
     categoria_cid10 <- as.character(categoria_cid10)
 
@@ -255,7 +255,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (causa_br_cid10 != "all") {
+  if (any(causa_br_cid10 != "all")) {
 
     causa_br_cid10 <- as.character(causa_br_cid10)
 
@@ -263,7 +263,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (causa_mal_definida != "all") {
+  if (any(causa_mal_definida != "all")) {
 
     if (!(all(causa_mal_definida %in% causa_mal_definida.df$id))) {
 
@@ -279,7 +279,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (faixa_etaria != "all") {
+  if (any(faixa_etaria != "all")) {
 
     if (!(all(faixa_etaria %in% faixa_etaria.df$id))) {
 
@@ -295,7 +295,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (faixa_etaria_ops != "all") {
+  if (any(faixa_etaria_ops != "all")) {
 
     if (!(all(faixa_etaria_ops %in% faixa_etaria_ops.df$id))) {
 
@@ -311,7 +311,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (faixa_etaria_det != "all") {
+  if (any(faixa_etaria_det != "all")) {
 
     if (!(all(faixa_etaria_det %in% faixa_etaria_det.df$id))) {
 
@@ -327,7 +327,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (faixa_etaria_menor1a != "all") {
+  if (any(faixa_etaria_menor1a != "all")) {
 
     if (!(all(faixa_etaria_menor1a %in% faixa_etaria_menor1a.df$id))) {
 
@@ -343,7 +343,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (sexo != "all") {
+  if (any(sexo != "all")) {
 
     if (!(all(sexo %in% sexo.df$id))) {
 
@@ -359,7 +359,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (cor_raca != "all") {
+  if (any(cor_raca != "all")) {
 
     if (!(all(cor_raca %in% cor_raca.df$id))) {
 
@@ -375,7 +375,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (escolaridade != "all") {
+  if (any(escolaridade != "all")) {
 
     if (!(all(escolaridade %in% escolaridade.df$id))) {
 
@@ -391,7 +391,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (estado_civil != "all") {
+  if (any(estado_civil != "all")) {
 
     if (!(all(estado_civil %in% estado_civil.df$id))) {
 
@@ -407,7 +407,7 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (local_ocorrencia != "all") {
+  if (any(local_ocorrencia != "all")) {
 
     if (!(all(local_ocorrencia %in% local_ocorrencia.df$id))) {
 
@@ -578,4 +578,3 @@ sim_obt10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
   tabela_final
 
 }
-

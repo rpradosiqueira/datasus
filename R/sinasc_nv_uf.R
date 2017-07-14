@@ -229,7 +229,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (municipio != "all") {
+  if (any(municipio != "all")) {
 
     municipio <- as.character(municipio)
 
@@ -237,7 +237,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (cir != "all") {
+  if (any(cir != "all")) {
 
     cir <- as.character(cir)
 
@@ -245,7 +245,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (macrorregiao_de_saude != "all") {
+  if (any(macrorregiao_de_saude != "all")) {
 
     macrorregiao_de_saude <- as.character(macrorregiao_de_saude)
 
@@ -253,7 +253,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (divisao_admnist_estadual != "all") {
+  if (any(divisao_admnist_estadual != "all")) {
 
     divisao_admnist_estadual <- as.character(divisao_admnist_estadual)
 
@@ -261,7 +261,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (microrregiao_ibge != "all") {
+  if (any(microrregiao_ibge != "all")) {
 
     microrregiao_ibge <- as.character(microrregiao_ibge)
 
@@ -269,7 +269,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (ride != "all") {
+  if (any(ride != "all")) {
 
     ride <- as.character(ride)
 
@@ -277,7 +277,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (local_ocorrencia != "all") {
+  if (any(local_ocorrencia != "all")) {
 
     if (!(all(local_ocorrencia %in% local_ocorrencia.df$id))) {
 
@@ -293,7 +293,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (idade_da_mae != "all") {
+  if (any(idade_da_mae != "all")) {
 
     if (!(all(idade_da_mae %in% idade_da_mae.df$id))) {
 
@@ -309,7 +309,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (instrucao_da_mae != "all") {
+  if (any(instrucao_da_mae != "all")) {
 
     if (!(all(instrucao_da_mae %in% instrucao_da_mae.df$id))) {
 
@@ -325,7 +325,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (estado_civil_mae != "all") {
+  if (any(estado_civil_mae != "all")) {
 
     if (!(all(estado_civil_mae %in% estado_civil_mae.df$id))) {
 
@@ -341,7 +341,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (duracao_gestacao != "all") {
+  if (any(duracao_gestacao != "all")) {
 
     if (!(all(duracao_gestacao %in% duracao_gestacao.df$id))) {
 
@@ -357,7 +357,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (tipo_de_gravidez != "all") {
+  if (any(tipo_de_gravidez != "all")) {
 
     if (!(all(tipo_de_gravidez %in% tipo_de_gravidez.df$id))) {
 
@@ -373,7 +373,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (tipo_de_parto != "all") {
+  if (any(tipo_de_parto != "all")) {
 
     if (!(all(tipo_de_parto %in% tipo_de_parto.df$id))) {
 
@@ -389,7 +389,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (consult_pre_natal != "all") {
+  if (any(consult_pre_natal != "all")) {
 
     if (!(all(consult_pre_natal %in% consult_pre_natal.df$id))) {
 
@@ -405,7 +405,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (sexo != "all") {
+  if (any(sexo != "all")) {
 
     if (!(all(sexo %in% sexo.df$id))) {
 
@@ -421,7 +421,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (cor_raca != "all") {
+  if (any(cor_raca != "all")) {
 
     if (!(all(cor_raca %in% cor_raca.df$id))) {
 
@@ -437,7 +437,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (apgar_1_minuto != "all") {
+  if (any(apgar_1_minuto != "all")) {
 
     if (!(all(apgar_1_minuto %in% apgar_1_minuto.df$id))) {
 
@@ -453,7 +453,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (apgar_5_minuto != "all") {
+  if (any(apgar_5_minuto != "all")) {
 
     if (!(all(apgar_5_minuto %in% apgar_5_minuto.df$id))) {
 
@@ -469,7 +469,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (peso_ao_nascer != "all") {
+  if (any(peso_ao_nascer != "all")) {
 
     if (!(all(peso_ao_nascer %in% peso_ao_nascer.df$id))) {
 
@@ -485,7 +485,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (anomalia_congenita != "all") {
+  if (any(anomalia_congenita != "all")) {
 
     if (!(all(anomalia_congenita %in% anomalia_congenita.df$id))) {
 
@@ -501,7 +501,7 @@ sinasc_nv_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (tipo_anomal_congen != "all") {
+  if (any(tipo_anomal_congen != "all")) {
 
     if (!(all(tipo_anomal_congen %in% tipo_anomal_congen.df$id))) {
 

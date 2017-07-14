@@ -1,4 +1,4 @@
-#' Scrapes SIM's ICD-10 data from ufs
+#' Scrapes SIM's ICD-10 data from UF's
 #'
 #' This function allows the user to retrive data from
 #' SIM's ICD-10 database much in the same way that is done
@@ -227,7 +227,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (municipio != "all") {
+  if (any(municipio != "all")) {
 
     municipio <- as.character(municipio)
 
@@ -235,7 +235,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (cir != "all") {
+  if (any(cir != "all")) {
 
     cir <- as.character(cir)
 
@@ -243,7 +243,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (macrorregiao_de_saude != "all") {
+  if (any(macrorregiao_de_saude != "all")) {
 
     macrorregiao_de_saude <- as.character(macrorregiao_de_saude)
 
@@ -251,7 +251,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (divisao_admnist_estadual != "all") {
+  if (any(divisao_admnist_estadual != "all")) {
 
     divisao_admnist_estadual <- as.character(divisao_admnist_estadual)
 
@@ -259,7 +259,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (microrregiao_ibge != "all") {
+  if (any(microrregiao_ibge != "all")) {
 
     microrregiao_ibge <- as.character(microrregiao_ibge)
 
@@ -267,7 +267,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (ride != "all") {
+  if (any(ride != "all")) {
 
     ride <- as.character(ride)
 
@@ -275,7 +275,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (capitulo_cid10 != "all") {
+  if (any(capitulo_cid10 != "all")) {
 
     capitulo_cid10 <- as.character(capitulo_cid10)
 
@@ -283,7 +283,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (grupo_cid10 != "all") {
+  if (any(grupo_cid10 != "all")) {
 
     if (!(all(grupo_cid10 %in% grupo_cid10.df$id))) {
 
@@ -299,7 +299,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (categoria_cid10 != "all") {
+  if (any(categoria_cid10 != "all")) {
 
     categoria_cid10 <- as.character(categoria_cid10)
 
@@ -307,7 +307,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (causa_br_cid10 != "all") {
+  if (any(causa_br_cid10 != "all")) {
 
     causa_br_cid10 <- as.character(causa_br_cid10)
 
@@ -315,7 +315,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (causa_mal_definida != "all") {
+  if (any(causa_mal_definida != "all")) {
 
     if (!(all(causa_mal_definida %in% causa_mal_definida.df$id))) {
 
@@ -331,7 +331,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (faixa_etaria != "all") {
+  if (any(faixa_etaria != "all")) {
 
     if (!(all(faixa_etaria %in% faixa_etaria.df$id))) {
 
@@ -347,7 +347,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (faixa_etaria_ops != "all") {
+  if (any(faixa_etaria_ops != "all")) {
 
     if (!(all(faixa_etaria_ops %in% faixa_etaria_ops.df$id))) {
 
@@ -363,7 +363,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (faixa_etaria_det != "all") {
+  if (any(faixa_etaria_det != "all")) {
 
     if (!(all(faixa_etaria_det %in% faixa_etaria_det.df$id))) {
 
@@ -379,7 +379,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (faixa_etaria_menor1a != "all") {
+  if (any(faixa_etaria_menor1a != "all")) {
 
     if (!(all(faixa_etaria_menor1a %in% faixa_etaria_menor1a.df$id))) {
 
@@ -395,7 +395,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (sexo != "all") {
+  if (any(sexo != "all")) {
 
     if (!(all(sexo %in% sexo.df$id))) {
 
@@ -411,7 +411,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (cor_raca != "all") {
+  if (any(cor_raca != "all")) {
 
     if (!(all(cor_raca %in% cor_raca.df$id))) {
 
@@ -427,7 +427,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (escolaridade != "all") {
+  if (any(escolaridade != "all")) {
 
     if (!(all(escolaridade %in% escolaridade.df$id))) {
 
@@ -443,7 +443,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (estado_civil != "all") {
+  if (any(estado_civil != "all")) {
 
     if (!(all(estado_civil %in% estado_civil.df$id))) {
 
@@ -459,7 +459,7 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
 
   }
 
-  if (local_ocorrencia != "all") {
+  if (any(local_ocorrencia != "all")) {
 
     if (!(all(local_ocorrencia %in% local_ocorrencia.df$id))) {
 
@@ -650,4 +650,3 @@ sim_obt10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
   tabela_final
 
 }
-
