@@ -8,7 +8,7 @@ sim_inf10_bruf(linha = "Região", coluna = "Não ativa",
   conteudo = 1, periodo = "last", regiao = "all",
   unidade_da_federacao = "all", capitulo_cid10 = "all",
   categoria_cid10 = "all", lista_mort_cid10 = "all",
-  causa_mal_definidas = "all", causas_evitaveis_0a4anos = "all"
+  causa_mal_definidas = "all", causas_evitaveis_0a4anos = "all",
   faixa_etaria_1 = "all", faixa_etaria_2 = "all", faixa_etaria_3 = "all",
   faixa_etaria_4 = "all", faixa_etaria_5 = "all",
   faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all",

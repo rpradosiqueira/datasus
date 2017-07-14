@@ -12,7 +12,7 @@
 #'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
 #'   capitulo_cid10 = "all", categoria_cid10 = "all", lista_mort_cid10 = "all",
-#'   causa_mal_definidas = "all", causas_evitaveis_0a4anos = "all"
+#'   causa_mal_definidas = "all", causas_evitaveis_0a4anos = "all",
 #'   faixa_etaria_1 = "all", faixa_etaria_2 = "all", faixa_etaria_3 = "all",
 #'   faixa_etaria_4 = "all", faixa_etaria_5 = "all", faixa_etaria_detalhada = "all",
 #'   sexo = "all", cor_raca = "all", local_ocorrencia = "all", idade_mae = "all",
