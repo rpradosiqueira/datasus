@@ -37,12 +37,18 @@ install_github("rpradosiqueira/datasus")
 
 ## Functions
 
-For the time being, the "datasus" package contains six functions:
+The functions are named by parts:
+
++ The 1st part is the data system (SIM or SINASC) where the data will be retrieved.
++ The 2nd is the type of the data, i.e., the inferior level of the data system; when they are accompained by a number, it concerns with the ICD version.
++ The 3rd is the geographic level of the data.
+
+Then, for example we have:
 
 ```{r, eval=FALSE}
 sinasc_nv_uf       Scrapes SINASC data from the states unities
 
-sinasc_nv_mun      Scrapes SINASC data from cities
+sinasc_nv_mun      Scrapes SINASC data from municipalities
                    
 sinasc_nv_bruf     Scrapes SINASC data from regions
                    

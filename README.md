@@ -3,7 +3,7 @@
 datasus
 =======
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/datasus)](http://cran.r-project.org/package=datasus) [![CRAC\_Downloads](http://cranlogs.r-pkg.org/badges/grand-total/datasus)](http://cran.rstudio.com/web/packages/datasus/index.html)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/datasus)](https://CRAN.R-project.org/package=datasus) [![CRAC\_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/datasus)](https://CRAN.R-project.org/package=datasus)
 
 The "datasus" R package seeks to provide direct access to the data of TABNET/DATASUS within the R environment much in the same way that is done in the online portal. For now the package allows access to the systematic record of mortality and survival data (Vital Statistics - Mortality and Live Births) through SIM and SINASC's systems
 
@@ -32,3 +32,5 @@ In this example we will download the last mortality data for the IBGE's micro-re
 sim_obt10_mun(linha = "Microrregião IBGE",
               coluna = "Capítulo CID-10")
 ```
+
+To more examples, see the vignette ["Introduction to datasus"](https://CRAN.R-project.org/package=datasus/vignettes/Introduction_to_datasus.html).
