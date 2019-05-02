@@ -57,13 +57,14 @@ sim_evita10_bruf(regiao = 5)
 }
 
 }
-\seealso{
-\code{\link{sinasc_nv_uf}}
-}
 \author{
 Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+}
+\seealso{
+\code{\link{sinasc_nv_uf}}
 }
 \keyword{SIM}
 \keyword{causas}
 \keyword{datasus}
 \keyword{evitáveis}
+

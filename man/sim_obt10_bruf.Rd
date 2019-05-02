@@ -69,11 +69,12 @@ sim_obt10_bruf(region = 5)
 }
 
 }
-\seealso{
-\code{\link{sinasc_nv_uf}}
-}
 \author{
 Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
 }
+\seealso{
+\code{\link{sinasc_nv_uf}}
+}
 \keyword{SIM}
 \keyword{datasus}
+

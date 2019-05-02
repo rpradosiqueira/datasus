@@ -95,11 +95,12 @@ sim_obt10_mun(municipio = 500270)
 }
 
 }
-\seealso{
-\code{\link{sinasc_nv_uf}}
-}
 \author{
 Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
 }
+\seealso{
+\code{\link{sinasc_nv_uf}}
+}
 \keyword{SIM}
 \keyword{datasus}
+

@@ -70,13 +70,14 @@ sim_evita10_uf(uf = "ms")
 }
 
 }
-\seealso{
-\code{\link{sim_obt10_mun}}
-}
 \author{
 Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+}
+\seealso{
+\code{\link{sim_obt10_mun}}
 }
 \keyword{SIM}
 \keyword{causas}
 \keyword{datasus}
 \keyword{evitáveis}
+
