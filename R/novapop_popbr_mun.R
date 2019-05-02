@@ -6,14 +6,13 @@
 #' regions and population tipes
 #'
 #' @usage novapop_popbr_mun(linha = "Município", coluna = "Não ativa",
-#'   conteudo = 1, periodo = "last", municipio = "all", capital = "all",
+#'   conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all,
+#'   municipio = "all", capital = "all",
 #'   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
 #'   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
 #'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-#'   causas_evitaveis = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
-#'   faixa_etaria = "all", sexo = "all", cor_raca = "all", escolaridade = "all",
-#'   estado_civil = "all", local_ocorrencia = "all")
+#'   sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all")
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo A character of length = 1 with the state's acronym of interest.
@@ -33,15 +32,11 @@
 #' @param faixa_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border area must be included. Defaults to "all".
 #' @param zona_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border strip must be included. Defaults to "all".
 #' @param municipio_de_extrema_pobreza "all" or a character ("Sim" or "Não") indicating if only the municipalities of extreme poverty must be included. Defaults to "all".
+#' @param sexo "all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param faixa_etaria_1 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param faixa_etaria_2 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param sexo "all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param cor_raca "all" or a character vector with the color/race (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param escolaridade "all" or a character vector with the instruction (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param estado_civil "all" or a character vector with the marital status (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param local_ocorrencia "all" or a character vector with the place of ocurrence to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Rodrigo Borges  \email{<rodrigo@@borges.net.br>}
+#' @author Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{<rodrigo@@borges.net.br>}
 #' @seealso \code{\link{sim_evita10_mun}}
 #' @examples
 #' \dontrun{
@@ -143,19 +138,18 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
 
   faixa_etaria_1.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
                                 value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
-  faixa_etaria_1.df[] <- lapply(faixa_etaria.df, as.character)
+  faixa_etaria_1.df[] <- lapply(faixa_etaria_1.df, as.character)
 
   faixa_etaria_2.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
                                 value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
-  faixa_etaria_2.df[] <- lapply(faixa_etaria.df, as.character)
+  faixa_etaria_2.df[] <- lapply(faixa_etaria_2.df, as.character)
 
 
-  municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
+  municipios.df$id[1] <- regiao.df$id[1] <- unidade_da_federacao.df$id[1] <- capital.df$id[1] <- "all"
+  cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
-  ride.df$id[1] <- local_ocorrencia.df$id[1]<- capitulo_cid10.df$id[1] <- categoria_cid10.df$id[1] <- "all"
-  faixa_etaria.df$id[1] <- sexo.df$id[1] <- cor_raca.df$id[1] <- escolaridade.df$id[1] <- "all"
-  estado_civil.df$id[1] <- causas_evitaveis.df$id[1] <- "all"
+  ride.df$id[1] <- sexo.df$id[1] <- faixa_etaria_1.df$id[1]  <- faixa_etaria_2.df$id[1] <- "all"
 
   #### ERROR HANDLING ####
   if (linha != "Munic\u00edpio") {
@@ -449,43 +443,43 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
   form_municipio <- dplyr::filter(municipios.df, municipios.df$id %in% municipio)
   form_municipio <- paste0("SMunic%EDpio=", form_municipio$value, collapse = "&")
 
-  form_pesqmes2 <- "pesqmes2=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes4 <- "pesqmes4=Digite+o+texto+e+ache+f%E1cil"
 
   #capital
   form_capital <- dplyr::filter(capital.df, capital.df$id %in% capital)
   form_capital <- paste0("SCapital=", form_capital$value, collapse = "&")
 
-  form_pesqmes3 <- "pesqmes3=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes5 <- "pesqmes5=Digite+o+texto+e+ache+f%E1cil"
 
   #cir
   form_cir <- dplyr::filter(cir.df, cir.df$id %in% cir)
   form_cir <- paste0("SRegi%E3o_de_Sa%FAde_%28CIR%29=", form_cir$value, collapse = "&")
 
-  form_pesqmes4 <- "pesqmes4=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes6 <- "pesqmes6=Digite+o+texto+e+ache+f%E1cil"
 
   #macrorregiao_de_saude
   form_macrorregiao_de_saude <- dplyr::filter(macrorregiao_de_saude.df, macrorregiao_de_saude.df$id %in% macrorregiao_de_saude)
   form_macrorregiao_de_saude <- paste0("SMacrorregi%E3o_de_Sa%FAde=", form_macrorregiao_de_saude$value, collapse = "&")
 
-  form_pesqmes5 <- "pesqmes5=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes7 <- "pesqmes7=Digite+o+texto+e+ache+f%E1cil"
 
   #microrregiao_ibge
   form_microrregiao_ibge <- dplyr::filter(microrregiao_ibge.df, microrregiao_ibge.df$id %in% microrregiao_ibge)
   form_microrregiao_ibge <- paste0("SMicrorregi%E3o_IBGE=", form_microrregiao_ibge$value, collapse = "&")
 
-  form_pesqmes6 <- "pesqmes6=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes8 <- "pesqmes8=Digite+o+texto+e+ache+f%E1cil"
 
   #ride
   form_ride <- dplyr::filter(ride.df, ride.df$id %in% ride)
   form_ride <- paste0("SRegi%E3o_Metropolitana_-_RIDE=", form_ride$value, collapse = "&")
 
-  form_pesqmes7 <- "pesqmes7=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes9 <- "pesqmes9=Digite+o+texto+e+ache+f%E1cil"
 
   #territorio_da_cidadania
   form_territorio_da_cidadania <- dplyr::filter(territorio_da_cidadania.df, territorio_da_cidadania.df$id %in% territorio_da_cidadania)
   form_territorio_da_cidadania <- paste0("STerrit%F3rio_da_Cidadania=", form_territorio_da_cidadania$value, collapse = "&")
 
-  form_pesqmes8 <- "pesqmes8=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes10 <- "pesqmes10=Digite+o+texto+e+ache+f%E1cil"
 
   #mesorregiao_pndr
   form_mesorregiao_pndr <- dplyr::filter(mesorregiao_pndr.df, mesorregiao_pndr.df$id %in% mesorregiao_pndr)
@@ -523,13 +517,13 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
   form_sexo <- dplyr::filter(sexo.df, sexo.df$id %in% sexo)
   form_sexo <- paste0("SSexo=", form_sexo$value, collapse = "&")
 
-  form_data <- paste(form_linha, form_coluna, form_conteudo, form_periodo, form_pesqmes1, form_municipio,
-                     form_pesqmes2, form_capital, form_pesqmes3, form_cir, form_pesqmes4, form_macrorregiao_de_saude,
-                     form_pesqmes5, form_microrregiao_ibge, form_pesqmes6, form_ride, form_pesqmes7,
-                     form_territorio_da_cidadania, form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal,
-                     form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
-                     form_causas_evitaveis, form_pesqmes15, form_capitulo_cid10, form_pesqmes16, form_categoria_cid10,
-                     form_faixa_etaria, form_sexo, form_cor_raca, form_estado_civil, form_local_ocorrencia,
+  form_data <- paste(form_linha, form_coluna, form_conteudo, form_periodo, form_pesqmes1, form_regiao, form_pesqmes2,
+                     form_unidade_da_federacao, form_pesqmes3, form_municipio, form_pesqmes4,
+                     form_capital, form_pesqmes5, form_cir, form_pesqmes6,form_macrorregiao_de_saude, form_pesqmes7,
+                     form_microrregiao_ibge, form_pesqmes8, form_ride, form_pesqmes9, form_territorio_da_cidadania,
+                     form_pesqmes10, form_mesorregiao_pndr, form_amazonia_legal, form_semiarido,
+                     form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza, form_sexo,
+                     form_faixa_etaria_1, form_faixa_etaria_2,
                      "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
