@@ -5,14 +5,13 @@
 \title{Scrapes Demographic projections of Resident Population from RIPSA}
 \usage{
 novapop_popbr_mun(linha = "Município", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", municipio = "all", capital = "all",
+  conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all,
+  municipio = "all", capital = "all",
   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-  causas_evitaveis = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
-  faixa_etaria = "all", sexo = "all", cor_raca = "all", escolaridade = "all",
-  estado_civil = "all", local_ocorrencia = "all")
+  sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all")
 }
 \arguments{
 \item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".}
@@ -58,14 +57,6 @@ novapop_popbr_mun(linha = "Município", coluna = "Não ativa",
 \item{faixa_etaria_1}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{faixa_etaria_2}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{cor_raca}{"all" or a character vector with the color/race (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{escolaridade}{"all" or a character vector with the instruction (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{estado_civil}{"all" or a character vector with the marital status (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{local_ocorrencia}{"all" or a character vector with the place of ocurrence to filter the data. Defaults to "all".}
 }
 \value{
 The function returns a data frame printed by parameters input.
@@ -84,7 +75,7 @@ novapop_popbr_mun(municipio = 500270)
 
 }
 \author{
-Rodrigo Borges  \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
 }
 \seealso{
 \code{\link{sim_evita10_mun}}
