@@ -5,7 +5,7 @@
 \title{Scrapes Demographic projections of Resident Population from RIPSA}
 \usage{
 novapop_popbr_mun(linha = "Município", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all,
+  conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
   municipio = "all", capital = "all",
   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
