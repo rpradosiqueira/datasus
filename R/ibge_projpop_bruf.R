@@ -82,7 +82,7 @@ ibge_projpop_bruf <- function(linha = "Unidade da Federa\u00e7\u00e3o", coluna =
   faixa_etaria_2.df[] <- lapply(faixa_etaria_2.df, as.character)
 
 
-  municipios.df$id[1] <- regiao.df$id[1] <- unidade_da_federacao.df$id[1] <- "all"
+  regiao.df$id[1] <- unidade_da_federacao.df$id[1] <- "all"
   sexo.df$id[1] <- faixa_etaria_1.df$id[1]  <- faixa_etaria_2.df$id[1] <- "all"
 
   #### ERROR HANDLING ####
