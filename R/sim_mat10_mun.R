@@ -190,9 +190,9 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
-  ride.df$id[1] <- local_ocorrencia.df$id[1]<- capitulo_cid10.df$id[1] <- grupo_cid10.df$id[1] <- categoria_cid10.df$id[1] <- "all"
+  ride.df$id[1] <- local_ocorrencia.df$id[1]<- capitulo_cid10.df$id[1] <- grupo_cid10.df$id[1] <- obito_gravidez_puerperio.df$id[1] <- "all"
   tipo_causa_obstetrica.df$id[1] <- obito_investigado.df$id[1] <- faixa_etaria.df$id[1] <- faixa_etaria_ops.df$id[1] <- "all"
-  faixa_etaria_det.df$id[1] <- faixa_etaria_menor1a.df$id[1] <- obito_gravidez_puerperio.df$id[1] <- cor_raca.df$id[1] <- escolaridade.df$id[1] <- "all"
+  faixa_etaria_det.df$id[1] <- cor_raca.df$id[1] <- escolaridade.df$id[1] <- "all"
   estado_civil.df$id[1] <- "all"
 
   ### retirados do modelo, não aplicáveis
@@ -399,13 +399,13 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (any(categoria_cid10 != "all")) {
-
-    categoria_cid10 <- as.character(categoria_cid10)
-
-    if (!(all(categoria_cid10 %in% categoria_cid10.df$id))) stop("Some element in 'categoria_cid10' argument is wrong")
-
-  }
+  # if (any(categoria_cid10 != "all")) {
+  #
+  #   categoria_cid10 <- as.character(categoria_cid10)
+  #
+  #   if (!(all(categoria_cid10 %in% categoria_cid10.df$id))) stop("Some element in 'categoria_cid10' argument is wrong")
+  #
+  # }
 
   if (any(tipo_causa_obstetrica != "all")) {
 
@@ -415,15 +415,15 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (any(causa_mal_definida != "all")) {
+  if (any(obito_investigado != "all")) {
 
-    if (!(all(causa_mal_definida %in% obito_investigado.df$id))) {
+    if (!(all(obito_investigado %in% obito_investigado.df$id))) {
 
-      causa_mal_definida <- as.character(causa_mal_definida)
+      obito_investigado <- as.character(obito_investigado)
 
-      if (!(all(causa_mal_definida %in% obito_investigado.df$value))) {
+      if (!(all(obito_investigado %in% obito_investigado.df$value))) {
 
-        stop("Some element in 'causa_mal_definida' argument is wrong")
+        stop("Some element in 'obito_investigado' argument is wrong")
 
       }
 
@@ -479,31 +479,31 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (any(faixa_etaria_menor1a != "all")) {
+  # if (any(faixa_etaria_menor1a != "all")) {
 
-    if (!(all(faixa_etaria_menor1a %in% faixa_etaria_menor1a.df$id))) {
+  #   if (!(all(faixa_etaria_menor1a %in% faixa_etaria_menor1a.df$id))) {
+  #
+  #     faixa_etaria_menor1a <- as.character(faixa_etaria_menor1a)
+  #
+  #     if (!(all(faixa_etaria_menor1a %in% faixa_etaria_menor1a.df$value))) {
+  #
+  #       stop("Some element in 'faixa_etaria_menor1a' argument is wrong")
+  #
+  #     }
+  #
+  #   }
+  #
+  # }
 
-      faixa_etaria_menor1a <- as.character(faixa_etaria_menor1a)
+  if (any(obito_gravidez_puerperio != "all")) {
 
-      if (!(all(faixa_etaria_menor1a %in% faixa_etaria_menor1a.df$value))) {
+    if (!(all(obito_gravidez_puerperio %in% obito_gravidez_puerperio.df$id))) {
 
-        stop("Some element in 'faixa_etaria_menor1a' argument is wrong")
+      obito_gravidez_puerperio <- as.character(obito_gravidez_puerperio)
 
-      }
+      if (!(all(obito_gravidez_puerperio %in% obito_gravidez_puerperio.df$value))) {
 
-    }
-
-  }
-
-  if (any(sexo != "all")) {
-
-    if (!(all(sexo %in% obito_gravidez_puerperio.df$id))) {
-
-      sexo <- as.character(sexo)
-
-      if (!(all(sexo %in% obito_gravidez_puerperio.df$value))) {
-
-        stop("Some element in 'sexo' argument is wrong")
+        stop("Some element in 'obito_gravidez_puerperio' argument is wrong")
 
       }
 
