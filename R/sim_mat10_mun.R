@@ -697,19 +697,15 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   form_pesqmes16 <- "pesqmes16=Digite+o+texto+e+ache+f%E1cil"
 
-  #categoria_cid10
-  form_categoria_cid10 <- dplyr::filter(categoria_cid10.df, categoria_cid10.df$id %in% categoria_cid10)
-  form_categoria_cid10 <- paste0("SCategoria_CID-10=", form_categoria_cid10$value, collapse = "&")
+  #tipo_causa_obstetrica
+  form_tipo_causa_obstetrica <- dplyr::filter(tipo_causa_obstetrica.df, tipo_causa_obstetrica.df$id %in% tipo_causa_obstetrica)
+  form_tipo_causa_obstetrica <- paste0("SSTipo_causa_obst\u00e9tr=", form_tipo_causa_obstetrica$value, collapse = "&")
 
   form_pesqmes17 <- "pesqmes17=Digite+o+texto+e+ache+f%E1cil"
 
-  #tipo_causa_obstetrica
-  form_tipo_causa_obstetrica <- dplyr::filter(tipo_causa_obstetrica.df, tipo_causa_obstetrica.df$id %in% tipo_causa_obstetrica)
-  form_tipo_causa_obstetrica <- paste0("SCausa_-_CID-BR-10=", form_tipo_causa_obstetrica$value, collapse = "&")
-
-  #causa_mal_definida
-  form_causa_mal_definida <- dplyr::filter(obito_investigado.df, obito_investigado.df$id %in% causa_mal_definida)
-  form_causa_mal_definida <- paste0("SCausa_mal_definidas=", form_causa_mal_definida$value, collapse = "&")
+  #obito_investigado
+  form_obito_investigado <- dplyr::filter(obito_investigado.df, obito_investigado.df$id %in% obito_investigado)
+  form_obito_investigado <- paste0("S\u00d3bito_investigado=", form_obito_investigado$value, collapse = "&")
 
   form_pesqmes19 <- "pesqmes19=Digite+o+texto+e+ache+f%E1cil"
 
@@ -729,13 +725,9 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_faixa_etaria_det <- dplyr::filter(faixa_etaria_det.df, faixa_etaria_det.df$id %in% faixa_etaria_det)
   form_faixa_etaria_det <- paste0("SFaixa_Et%E1ria_det=", form_faixa_etaria_det$value, collapse = "&")
 
-  #faixa_etaria_menor1a
-  form_faixa_etaria_menor1a <- dplyr::filter(faixa_etaria_menor1a.df, faixa_etaria_menor1a.df$id %in% faixa_etaria_menor1a)
-  form_faixa_etaria_menor1a <- paste0("SFx.Et%E1ria_Menor_1A=", form_faixa_etaria_menor1a$value, collapse = "&")
-
-  #sexo
-  form_sexo <- dplyr::filter(obito_gravidez_puerperio.df, obito_gravidez_puerperio.df$id %in% sexo)
-  form_sexo <- paste0("SSexo=", form_sexo$value, collapse = "&")
+    #sexo
+  form_obito_gravidez_puerperio <- dplyr::filter(obito_gravidez_puerperio.df, obito_gravidez_puerperio.df$id %in% obito_gravidez_puerperio)
+  form_obito_gravidez_puerperio <- paste0("SMorte_grav%2Fpuerp=", form_obito_gravidez_puerperio$value, collapse = "&")
 
   #cor_raca
   form_cor_raca <- dplyr::filter(cor_raca.df, cor_raca.df$id %in% cor_raca)
@@ -756,9 +748,9 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                      form_territorio_da_cidadania, form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal,
                      form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
                      form_pesqmes14, form_capitulo_cid10, form_pesqmes15, form_grupo_cid10, form_pesqmes16, form_categoria_cid10,
-                     form_pesqmes17, form_tipo_causa_obstetrica, form_causa_mal_definida, form_pesqmes19, form_faixa_etaria,
+                     form_pesqmes17, form_tipo_causa_obstetrica, form_obito_investigado, form_pesqmes19, form_faixa_etaria,
                      form_pesqmes20, form_faixa_etaria_ops, form_pesqmes21, form_faixa_etaria_det,
-                     form_faixa_etaria_menor1a, form_sexo, form_cor_raca, form_estado_civil, form_local_ocorrencia,
+                     form_obito_gravidez_puerperio, form_cor_raca, form_estado_civil, form_local_ocorrencia,
                      "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
