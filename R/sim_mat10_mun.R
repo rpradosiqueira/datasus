@@ -13,7 +13,7 @@
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
 #'   capitulo_cid10 = "all", grupo_cid10 = "all", categoria_cid10 = "all",
 #'   tipo_causa_obstetrica = "all", obito_investigado = "all", faixa_etaria = "all",
-#'   faixa_etaria_ops = "all", faixa_etaria_det = "all", faixa_etaria_menor1a = "all",
+#'   faixa_etaria_ops = "all", faixa_etaria_det = "all",
 #'   obito_gravidez_puerperio = "all", cor_raca = "all", escolaridade = "all", estado_civil = "all",
 #'   local_ocorrencia = "all")
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
@@ -60,13 +60,13 @@
 #' @importFrom utils head
 #' @export
 
-sim_mat10br_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", conteudo = 1, periodo = "last", municipio = "all",
+sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", conteudo = 1, periodo = "last", municipio = "all",
                           capital = "all", cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
                           territorio_da_cidadania = "all", mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
                           faixa_de_fronteira = "all", zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
                           capitulo_cid10 = "all", grupo_cid10 = "all", categoria_cid10 = "all", tipo_causa_obstetrica = "all",
-                          causa_mal_definida = "all", faixa_etaria = "all", faixa_etaria_ops = "all", faixa_etaria_det = "all",
-                          faixa_etaria_menor1a = "all", sexo = "all", cor_raca = "all", escolaridade = "all", estado_civil = "all",
+                          obito_investigado = "all", faixa_etaria = "all", faixa_etaria_ops = "all", faixa_etaria_det = "all",
+                          obito_gravidez_puerperio = "all", cor_raca = "all", escolaridade = "all", estado_civil = "all",
                           local_ocorrencia = "all") {
 
 
