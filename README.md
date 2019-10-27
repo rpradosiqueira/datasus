@@ -21,6 +21,8 @@ or the development version from github
 ``` r
 # install.packages("devtools")
 devtools::install_github("rpradosiqueira/datasus")
+#fork with new functions to further replicate tabnet 
+devtools::install_github("rodrigoesborges/datasus")
 ```
 
 Example

@@ -91,14 +91,13 @@ sim_inf10_bruf(regiao = 5)
 }
 
 }
-\author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
-}
 \seealso{
 \code{\link{sim_evita10_mun}}
+}
+\author{
+Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
 }
 \keyword{SIM}
 \keyword{child}
 \keyword{datasus}
 \keyword{mortality}
-

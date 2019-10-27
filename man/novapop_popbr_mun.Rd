@@ -74,15 +74,14 @@ novapop_popbr_mun(municipio = 500270)
 }
 
 }
-\author{
-Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
-}
 \seealso{
 \code{\link{sim_evita10_mun}}
+}
+\author{
+Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
 }
 \keyword{RIPSA}
 \keyword{datasus}
 \keyword{de}
 \keyword{estimativas}
 \keyword{população}
-

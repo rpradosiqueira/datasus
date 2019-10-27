@@ -24,7 +24,7 @@ Imports:
     stringr,
     xml2
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.99.9001
 Suggests:
     knitr,
     rmarkdown

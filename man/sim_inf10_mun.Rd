@@ -114,14 +114,13 @@ sim_inf10_mun(municipio = 500270)
 }
 
 }
-\author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
-}
 \seealso{
 \code{\link{sim_evita10_mun}}
+}
+\author{
+Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
 }
 \keyword{SIM}
 \keyword{child}
 \keyword{datasus}
 \keyword{mortality}
-

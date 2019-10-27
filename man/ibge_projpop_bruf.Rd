@@ -44,11 +44,11 @@ ibge_projpop_bruf(unidade_da_federacao = 32)
 }
 
 }
-\author{
-Rodrigo Borges based on work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
-}
 \seealso{
 \code{\link{novapop_popbr_mun}}
+}
+\author{
+Rodrigo Borges based on work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
 }
 \keyword{IBGE/RIPSA}
 \keyword{ProjPop}
@@ -56,4 +56,3 @@ Rodrigo Borges based on work by Renato Prado Siqueira  \email{<rodrigo@borges.ne
 \keyword{de}
 \keyword{estimativas}
 \keyword{população}
-

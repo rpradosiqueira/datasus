@@ -83,12 +83,11 @@ sinasc_pnv_uf(uf = "ms")
 }
 
 }
-\author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
-}
 \seealso{
 \code{\link{sinasc_nv_mun}}
 }
+\author{
+Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+}
 \keyword{SINASC}
 \keyword{datasus}
-

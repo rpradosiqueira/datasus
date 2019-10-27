@@ -81,12 +81,11 @@ sim_obt10_uf(uf = "ms")
 }
 
 }
-\author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
-}
 \seealso{
 \code{\link{sim_obt10_mun}}
 }
+\author{
+Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+}
 \keyword{SIM}
 \keyword{datasus}
-

@@ -97,12 +97,11 @@ sinasc_pnv_mun(municipio = 500270)
 }
 
 }
-\author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
-}
 \seealso{
 \code{\link{sinasc_pnv_uf}}
 }
+\author{
+Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+}
 \keyword{SINASC}
 \keyword{datasus}
-
