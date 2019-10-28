@@ -21,7 +21,7 @@ sim_mat10_mun(linha = "Município", coluna = "Não ativa",
 
 \item{coluna}{A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".}
 
-\item{conteudo}{A character of length = 1 with the state's acronym of interest.}
+\item{conteudo}{A character of length = 1 with type of morbility searched for.}
 
 \item{periodo}{A character vector describing the period of data. Defaults to the last available.}
 
@@ -57,17 +57,13 @@ sim_mat10_mun(linha = "Município", coluna = "Não ativa",
 
 \item{categoria_cid10}{"all" or a character vector with the ICD-10 category codes (capital letter and two numbers) to filter the data. Defaults to "all".}
 
-\item{tipo_causa_obstetrica}{"all" or a character vector with the ICD-10 cause codes to filter the data. Defaults to "all".}
-
-\item{obito_investigado}{"all" or a character vector with the ill-defined causes (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
+\item{tipo_causa_obstetrica}{"all" or a character vector with types of maternal deaths. Defaults to "all".}
 
 \item{faixa_etaria}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{faixa_etaria_ops}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all". "ops" in the argument name stands for Pan American Health Organization.}
 
 \item{faixa_etaria_det}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{obito_gravidez_puerperio}{"all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{cor_raca}{"all" or a character vector with the color/race (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
@@ -76,6 +72,10 @@ sim_mat10_mun(linha = "Município", coluna = "Não ativa",
 \item{estado_civil}{"all" or a character vector with the marital status (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{local_ocorrencia}{"all" or a character vector with the place of ocurrence to filter the data. Defaults to "all".}
+
+\item{obito_gravidez_puerperio}{"all" or a character vector with categories of deaths during pregnancy or giving birth. Defaults to "all".}
+
+\item{obito_investigado}{"all" or a character vector indicating if the death is being investigated and details on investigation if applicable. Defaults to "all".}
 }
 \value{
 The function returns a data frame printed by parameters input.
@@ -97,7 +97,7 @@ sim_mat10_mun(municipio = 500270)
 \code{\link{sinasc_nv_uf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Rodrigo Borges \email{<rodrigosborges@gmail.com>}
 }
 \keyword{SIM}
 \keyword{datasus}
