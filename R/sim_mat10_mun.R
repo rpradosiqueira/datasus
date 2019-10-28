@@ -136,18 +136,21 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                                   value = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_attr("value"))
   capitulo_cid10.df[] <- lapply(capitulo_cid10.df, as.character)
 
+
   grupo_cid10.df <- data.frame(id = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_text() %>% trimws(),
                                value = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_attr("value"))
   grupo_cid10.df[] <- lapply(grupo_cid10.df, as.character)
 
+
   categoria_cid10.df <- data.frame(id = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_text() %>% trimws(),
                                    value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
   categoria_cid10.df[] <- lapply(categoria_cid10.df, as.character)
-  categoria_cid10.df$id <- gsub(" .*$", "", categoria_cid10.df$id)
+  categoria_cid10.df$id <- substr(categoria_cid10.df$id,1,3)
 
   tipo_causa_obstetrica.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
                                   value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
   tipo_causa_obstetrica.df[] <- lapply(tipo_causa_obstetrica.df, as.character)
+  tipo_causa_obstetrica.df$id <- gsub("   .*$", "", tipo_causa_obstetrica.df$id)
 
   faixa_etaria.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
                                 value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
@@ -190,7 +193,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
   ride.df$id[1] <- local_ocorrencia.df$id[1]<- capitulo_cid10.df$id[1] <- grupo_cid10.df$id[1] <- obito_gravidez_puerperio.df$id[1] <- "all"
   tipo_causa_obstetrica.df$id[1] <- obito_investigado.df$id[1] <- faixa_etaria.df$id[1] <- faixa_etaria_ops.df$id[1] <- "all"
-  faixa_etaria_det.df$id[1] <- cor_raca.df$id[1] <- escolaridade.df$id[1] <- categoria_cid10.df[1] <- "all"
+  faixa_etaria_det.df$id[1] <- cor_raca.df$id[1] <- escolaridade.df$id[1] <- categoria_cid10.df$id[1] <- "all"
   estado_civil.df$id[1] <- "all"
 
   #### ERROR HANDLING ####
@@ -374,7 +377,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
     if (!(all(grupo_cid10 %in% grupo_cid10.df$id))) {
 
-      grupo_cid10 <- as.character(grupo_cid10)
+      grupo_cid10 <- as.numeric(grupo_cid10)
 
       if (!(all(grupo_cid10 %in% grupo_cid10.df$value))) {
 
@@ -398,7 +401,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
     tipo_causa_obstetrica <- as.character(tipo_causa_obstetrica)
 
-    if (!(all(tipo_causa_obstetrica %in% tipo_causa_obstetrica.df$id))) stop("Some element in 'tipo_causa_obstetrica' argument is wrong")
+    if (!(all(tipo_causa_obstetrica %in% tipo_causa_obstetrica.df$id))) stop("Some element in 'tipo_causa_obstétrica' argument is wrong")
 
   }
 
@@ -665,12 +668,15 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   #grupo_cid10
   form_grupo_cid10 <- dplyr::filter(grupo_cid10.df, grupo_cid10.df$id %in% grupo_cid10)
+  if (nrow(form_grupo_cid10) == 0) {
+  form_grupo_cid10 <- dplyr::filter(grupo_cid10.df,grupo_cid10.df$value %in% grupo_cid10)
+  }
   form_grupo_cid10 <- paste0("SGrupo_CID-10=", form_grupo_cid10$value, collapse = "&")
 
   form_pesqmes16 <- "pesqmes16=Digite+o+texto+e+ache+f%E1cil"
 
   #categoria_cid10
-  form_categoria_cid10 <- dplyr::filter(categoria_cid10.df, categoria_cid10.df$id %in% categoria_cid10)
+  form_categoria_cid10 <- dplyr::filter(categoria_cid10.df, id %in% categoria_cid10)
   form_categoria_cid10 <- paste0("SCategoria_CID-10=", form_categoria_cid10$value, collapse = "&")
 
   #tipo_causa_obstetrica
@@ -732,7 +738,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                      "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
- print(form_data)
+
   ##### REQUEST FORM AND DATA WRANGLING ####
   site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/mat10br.def",
                      body = form_data)
@@ -749,7 +755,6 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))
-  print(tabdados)
   tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
                                        ncol = length(col_tabdados), byrow = TRUE))
 
