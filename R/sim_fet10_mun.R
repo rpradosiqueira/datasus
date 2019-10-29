@@ -12,9 +12,7 @@
 #'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
 #'   capitulo_cid10 = "all", categoria_cid10 = "all", lista_mort_cid10 = "all",
-#'   causa_mal_definidas = "all", causas_evitaveis_0a4anos = "all",
-#'   faixa_etaria_1 = "all", faixa_etaria_2 = "all", faixa_etaria_3 = "all",
-#'   faixa_etaria_4 = "all", faixa_etaria_5 = "all", faixa_etaria_detalhada = "all",
+#'   causa_mal_definidas = "all",
 #'   sexo = "all", cor_raca = "all", local_ocorrencia = "all", idade_mae = "all",
 #'   escolaridade_mae = "all", duracao_gestacao = "all", tipo_gravidez = "all",
 #'   tipo_parto = "all", peso_ao_nascer = "all", obito_relacao_parto = "all",
@@ -40,13 +38,6 @@
 #' @param categoria_cid10 "all" or a character vector with the ICD-10 category codes (capital letter and two numbers) to filter the data. Defaults to "all".
 #' @param lista_mort_cid10 "all" or a character vector with the mortality type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param causa_mal_definidas "all" or a character vector with the ill-defined causes (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param causas_evitaveis_0a4anos "all" or a character vector with the evitable cause code (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param faixa_etaria_1 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param faixa_etaria_2 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param faixa_etaria_3 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param faixa_etaria_4 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param faixa_etaria_5 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param faixa_etaria_detalhada "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param sexo "all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param cor_raca "all" or a character vector with the color/race (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param local_ocorrencia "all" or a character vector with the place of ocurrence to filter the data. Defaults to "all".
@@ -76,8 +67,7 @@ sim_fet10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                           cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all",
                           mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all", zona_de_fronteira = "all",
                           municipio_de_extrema_pobreza = "all", capitulo_cid10 = "all", categoria_cid10 = "all", lista_mort_cid10 = "all",
-                          causa_mal_definidas = "all", causas_evitaveis_0a4anos = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all",
-                          faixa_etaria_3 = "all", faixa_etaria_4 = "all", faixa_etaria_5 = "all", faixa_etaria_detalhada = "all", sexo = "all",
+                          causa_mal_definidas = "all", sexo = "all",
                           cor_raca = "all", local_ocorrencia = "all", idade_mae = "all", escolaridade_mae = "all", duracao_gestacao = "all",
                           tipo_gravidez = "all", tipo_parto = "all", peso_ao_nascer = "all", obito_relacao_parto = "all",
                           obito_investigado = "all") {
@@ -162,87 +152,55 @@ sim_fet10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                                                         value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value")))
   causa_mal_definidas.df[] <- lapply(causa_mal_definidas.df, as.character)
 
-  causas_evitaveis_0a4anos.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
-  causas_evitaveis_0a4anos.df[] <- lapply(causas_evitaveis_0a4anos.df, as.character)
-  causas_evitaveis_0a4anos.df$id <- gsub(" .*$", "", causas_evitaveis_0a4anos.df$id)
-  causas_evitaveis_0a4anos.df$id <- gsub("\\.", " ", causas_evitaveis_0a4anos.df$id) %>% trimws()
-  causas_evitaveis_0a4anos.df$id <- gsub(" ", ".", causas_evitaveis_0a4anos.df$id)
-
-  faixa_etaria_1.df <- data.frame(id = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
-  faixa_etaria_1.df[] <- lapply(faixa_etaria_1.df, as.character)
-
-  faixa_etaria_2.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
-  faixa_etaria_2.df[] <- lapply(faixa_etaria_2.df, as.character)
-
-  faixa_etaria_3.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
-  faixa_etaria_3.df[] <- lapply(faixa_etaria_3.df, as.character)
-
-  faixa_etaria_4.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
-  faixa_etaria_4.df[] <- lapply(faixa_etaria_4.df, as.character)
-
-  faixa_etaria_5.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
-  faixa_etaria_5.df[] <- lapply(faixa_etaria_5.df, as.character)
-
-  faixa_etaria_detalhada.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
-                                          value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
-  faixa_etaria_detalhada.df[] <- lapply(faixa_etaria_detalhada.df, as.character)
-
-  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
-                        value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value"))
+  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
+                        value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
   sexo.df[] <- lapply(sexo.df, as.character)
 
-  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
-                            value = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_attr("value"))
+  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_text() %>% trimws(),
+                            value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
   cor_raca.df[] <- lapply(cor_raca.df, as.character)
 
-  local_ocorrencia.df <- data.frame(id = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_attr("value"))
+  local_ocorrencia.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
+                                    value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
   local_ocorrencia.df[] <- lapply(local_ocorrencia.df, as.character)
 
-  idade_mae.df <- data.frame(id = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_attr("value"))
+  idade_mae.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
+                                value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
   idade_mae.df[] <- lapply(idade_mae.df, as.character)
 
-  escolaridade_mae.df <- data.frame(id = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_text() %>% trimws(),
-                                       value = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_attr("value"))
+  escolaridade_mae.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
+                                       value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
   escolaridade_mae.df[] <- lapply(escolaridade_mae.df, as.character)
 
-  duracao_gestacao.df <- data.frame(id = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_text() %>% trimws(),
-                                       value = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_attr("value"))
+  duracao_gestacao.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
+                                       value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
   duracao_gestacao.df[] <- lapply(duracao_gestacao.df, as.character)
 
-  tipo_gravidez.df <- data.frame(id = page %>% rvest::html_nodes("#S31 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S31 option") %>% rvest::html_attr("value"))
+  tipo_gravidez.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
+                                    value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
   tipo_gravidez.df[] <- lapply(tipo_gravidez.df, as.character)
 
-  tipo_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S32 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S32 option") %>% rvest::html_attr("value"))
+  tipo_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
+                                    value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value"))
   tipo_parto.df[] <- lapply(tipo_parto.df, as.character)
 
-  peso_ao_nascer.df <- data.frame(id = page %>% rvest::html_nodes("#S33 option") %>% rvest::html_text() %>% trimws(),
-                                 value = page %>% rvest::html_nodes("#S33 option") %>% rvest::html_attr("value"))
+  peso_ao_nascer.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
+                                 value = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_attr("value"))
   peso_ao_nascer.df[] <- lapply(peso_ao_nascer.df, as.character)
 
-  obito_relacao_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S34 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S34 option") %>% rvest::html_attr("value"))
+  obito_relacao_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_text() %>% trimws(),
+                                  value = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_attr("value"))
   obito_relacao_parto.df[] <- lapply(obito_relacao_parto.df, as.character)
 
-  obito_investigado.df <- data.frame(id = page %>% rvest::html_nodes("#S35 option") %>% rvest::html_text() %>% trimws(),
-                                       value = page %>% rvest::html_nodes("#S35 option") %>% rvest::html_attr("value"))
+  obito_investigado.df <- data.frame(id = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_text() %>% trimws(),
+                                       value = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_attr("value"))
   obito_investigado.df[] <- lapply(obito_investigado.df, as.character)
 
   municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   ride.df$id[1] <- territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
   capitulo_cid10.df$id[1] <- categoria_cid10.df$id[1] <- lista_mort_cid10.df$id[1] <- causa_mal_definidas.df$id[1] <- "all"
-  causas_evitaveis_0a4anos.df$id[1] <- faixa_etaria_1.df$id[1] <- faixa_etaria_2.df$id[1] <- faixa_etaria_3.df$id[1] <- "all"
-  faixa_etaria_4.df$id[1] <- faixa_etaria_5.df$id[1] <- faixa_etaria_detalhada.df$id[1] <- sexo.df$id[1] <- cor_raca.df$id[1] <- "all"
+  sexo.df$id[1] <- cor_raca.df$id[1] <- "all"
   local_ocorrencia.df$id[1]<- escolaridade_mae.df$id[1] <- idade_mae.df$id[1] <- duracao_gestacao.df$id[1] <- "all"
   tipo_gravidez.df$id[1] <- tipo_parto.df$id[1] <- peso_ao_nascer.df$id[1] <- obito_relacao_parto.df$id[1] <- "all"
   obito_investigado.df$id[1] <- "all"
@@ -461,120 +419,6 @@ sim_fet10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
       if (!(all(causa_mal_definidas %in% causa_mal_definidas.df$value))) {
 
         stop("Some element in 'causa_mal_definidas' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(causas_evitaveis_0a4anos != "all")) {
-
-    causas_evitaveis_0a4anos <- as.character(causas_evitaveis_0a4anos)
-
-    if (!(all(causas_evitaveis_0a4anos %in% causas_evitaveis_0a4anos.df$id))) {
-
-      causas_evitaveis_0a4anos <- as.character(causas_evitaveis_0a4anos)
-
-      if (!(all(causas_evitaveis_0a4anos %in% causas_evitaveis_0a4anos.df$value))) {
-
-        stop("Some element in 'causas_evitaveis_0a4anos' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(faixa_etaria_1 != "all")) {
-
-    if (!(all(faixa_etaria_1 %in% faixa_etaria_1.df$id))) {
-
-      faixa_etaria_1 <- as.character(faixa_etaria_1)
-
-      if (!(all(faixa_etaria_1 %in% faixa_etaria_1.df$value))) {
-
-        stop("Some element in 'faixa_etaria_1' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(faixa_etaria_2 != "all")) {
-
-    if (!(all(faixa_etaria_2 %in% faixa_etaria_2.df$id))) {
-
-      faixa_etaria_2 <- as.character(faixa_etaria_2)
-
-      if (!(all(faixa_etaria_2 %in% faixa_etaria_2.df$value))) {
-
-        stop("Some element in 'faixa_etaria_2' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(faixa_etaria_3 != "all")) {
-
-    if (!(all(faixa_etaria_3 %in% faixa_etaria_3.df$id))) {
-
-      faixa_etaria_3 <- as.character(faixa_etaria_3)
-
-      if (!(all(faixa_etaria_3 %in% faixa_etaria_3.df$value))) {
-
-        stop("Some element in 'faixa_etaria_3' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(faixa_etaria_4 != "all")) {
-
-    if (!(all(faixa_etaria_4 %in% faixa_etaria_4.df$id))) {
-
-      faixa_etaria_4 <- as.character(faixa_etaria_4)
-
-      if (!(all(faixa_etaria_4 %in% faixa_etaria_4.df$value))) {
-
-        stop("Some element in 'faixa_etaria_4' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(faixa_etaria_5 != "all")) {
-
-    if (!(all(faixa_etaria_5 %in% faixa_etaria_5.df$id))) {
-
-      faixa_etaria_5 <- as.character(faixa_etaria_5)
-
-      if (!(all(faixa_etaria_5 %in% faixa_etaria_5.df$value))) {
-
-        stop("Some element in 'faixa_etaria_5' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(faixa_etaria_detalhada != "all")) {
-
-    if (!(all(faixa_etaria_detalhada %in% faixa_etaria_detalhada.df$id))) {
-
-      faixa_etaria_detalhada <- as.character(faixa_etaria_detalhada)
-
-      if (!(all(faixa_etaria_detalhada %in% faixa_etaria_detalhada.df$value))) {
-
-        stop("Some element in 'faixa_etaria_detalhada' argument is wrong")
 
       }
 
@@ -886,38 +730,6 @@ sim_fet10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_causa_mal_definidas <- dplyr::filter(causa_mal_definidas.df, causa_mal_definidas.df$id %in% causa_mal_definidas)
   form_causa_mal_definidas <- paste0("SCausa_mal_definidas=", form_causa_mal_definidas$value, collapse = "&")
 
-  #causas_evitaveis_0a4anos
-  form_causas_evitaveis_0a4anos <- dplyr::filter(causas_evitaveis_0a4anos.df, causas_evitaveis_0a4anos.df$id %in% causas_evitaveis_0a4anos)
-  form_causas_evitaveis_0a4anos <- paste0("SCausas_evit%E1veis_-_0_a_4_anos=", form_causas_evitaveis_0a4anos$value, collapse = "&")
-
-  #faixa_etaria_1
-  form_faixa_etaria_1 <- dplyr::filter(faixa_etaria_1.df, faixa_etaria_1.df$id %in% faixa_etaria_1)
-  form_faixa_etaria_1 <- paste0("SFaixa_Et%E1ria_1=", form_faixa_etaria_1$value, collapse = "&")
-
-  form_pesqmes20 <- "pesqmes20=Digite+o+texto+e+ache+f%E1cil"
-
-  #faixa_etaria_2
-  form_faixa_etaria_2 <- dplyr::filter(faixa_etaria_2.df, faixa_etaria_2.df$id %in% faixa_etaria_2)
-  form_faixa_etaria_2 <- paste0("SFaixa_Et%E2ria_2=", form_faixa_etaria_2$value, collapse = "&")
-
-  #faixa_etaria_3
-  form_faixa_etaria_3 <- dplyr::filter(faixa_etaria_3.df, faixa_etaria_3.df$id %in% faixa_etaria_3)
-  form_faixa_etaria_3 <- paste0("SFaixa_Et%E3ria_3=", form_faixa_etaria_3$value, collapse = "&")
-
-  #faixa_etaria_4
-  form_faixa_etaria_4 <- dplyr::filter(faixa_etaria_4.df, faixa_etaria_4.df$id %in% faixa_etaria_4)
-  form_faixa_etaria_4 <- paste0("SFaixa_Et%E4ria_4=", form_faixa_etaria_4$value, collapse = "&")
-
-  #faixa_etaria_5
-  form_faixa_etaria_5 <- dplyr::filter(faixa_etaria_5.df, faixa_etaria_5.df$id %in% faixa_etaria_5)
-  form_faixa_etaria_5 <- paste0("SFaixa_Et%E5ria_5=", form_faixa_etaria_5$value, collapse = "&")
-
-  form_pesqmes24 <- "pesqmes24=Digite+o+texto+e+ache+f%E1cil"
-
-  #faixa_etaria_detalhada
-  form_faixa_etaria_detalhada <- dplyr::filter(faixa_etaria_detalhada.df, faixa_etaria_detalhada.df$id %in% faixa_etaria_detalhada)
-  form_faixa_etaria_detalhada <- paste0("SFaixa_Et%E1ria_detalhada=", form_faixa_etaria_detalhada$value, collapse = "&")
-
   #sexo
   form_sexo <- dplyr::filter(sexo.df, sexo.df$id %in% sexo)
   form_sexo <- paste0("SSexo=", form_sexo$value, collapse = "&")
@@ -930,7 +742,7 @@ sim_fet10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_local_ocorrencia <- dplyr::filter(local_ocorrencia.df, local_ocorrencia.df$id %in% local_ocorrencia)
   form_local_ocorrencia <- paste0("SLocal_ocorr%EAncia=", form_local_ocorrencia$value, collapse = "&")
 
-  form_pesqmes28 <- "pesqmes28=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes21 <- "pesqmes21=Digite+o+texto+e+ache+f%E1cil"
 
   #idade_mae
   form_idade_mae <- dplyr::filter(idade_mae.df, idade_mae.df$id %in% idade_mae)
@@ -940,7 +752,7 @@ sim_fet10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_escolaridade_mae <- dplyr::filter(escolaridade_mae.df, escolaridade_mae.df$id %in% escolaridade_mae)
   form_escolaridade_mae <- paste0("SEscolaridade_m%E3e=", form_escolaridade_mae$value, collapse = "&")
 
-  form_pesqmes30 <- "pesqmes30=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes23 <- "pesqmes23=Digite+o+texto+e+ache+f%E1cil"
 
   #duracao_gestacao
   form_duracao_gestacao <- dplyr::filter(duracao_gestacao.df, duracao_gestacao.df$id %in% duracao_gestacao)
@@ -974,10 +786,8 @@ sim_fet10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
     form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal, form_semiarido, form_faixa_de_fronteira,
     form_zona_de_fronteira, form_municipio_de_extrema_pobreza, form_pesqmes14, form_capitulo_cid10,
     form_pesqmes15, form_categoria_cid10, form_pesqmes16, form_lista_mort_cid10, form_causa_mal_definidas,
-    form_causas_evitaveis_0a4anos, form_faixa_etaria_1, form_pesqmes20, form_faixa_etaria_2,
-    form_faixa_etaria_3, form_faixa_etaria_4, form_faixa_etaria_5, form_pesqmes24, form_faixa_etaria_detalhada,
-    form_sexo, form_cor_raca, form_local_ocorrencia, form_pesqmes28, form_idade_mae, form_escolaridade_mae,
-    form_pesqmes30, form_duracao_gestacao, form_tipo_gravidez,   form_tipo_parto, form_peso_ao_nascer,
+    form_sexo, form_cor_raca, form_local_ocorrencia, form_pesqmes21, form_idade_mae, form_escolaridade_mae,
+    form_pesqmes23, form_duracao_gestacao, form_tipo_gravidez,   form_tipo_parto, form_peso_ao_nascer,
     form_obito_relacao_parto, form_obito_investigado, "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)

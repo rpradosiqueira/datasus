@@ -11,9 +11,7 @@ sim_fet10_mun(linha = "Município", coluna = "Não ativa",
   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
   capitulo_cid10 = "all", categoria_cid10 = "all", lista_mort_cid10 = "all",
-  causa_mal_definidas = "all", causas_evitaveis_0a4anos = "all",
-  faixa_etaria_1 = "all", faixa_etaria_2 = "all", faixa_etaria_3 = "all",
-  faixa_etaria_4 = "all", faixa_etaria_5 = "all", faixa_etaria_detalhada = "all",
+  causa_mal_definidas = "all",
   sexo = "all", cor_raca = "all", local_ocorrencia = "all", idade_mae = "all",
   escolaridade_mae = "all", duracao_gestacao = "all", tipo_gravidez = "all",
   tipo_parto = "all", peso_ao_nascer = "all", obito_relacao_parto = "all",
@@ -61,20 +59,6 @@ sim_fet10_mun(linha = "Município", coluna = "Não ativa",
 \item{lista_mort_cid10}{"all" or a character vector with the mortality type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{causa_mal_definidas}{"all" or a character vector with the ill-defined causes (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{causas_evitaveis_0a4anos}{"all" or a character vector with the evitable cause code (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{faixa_etaria_1}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{faixa_etaria_2}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{faixa_etaria_3}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{faixa_etaria_4}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{faixa_etaria_5}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{faixa_etaria_detalhada}{"all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{sexo}{"all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
