@@ -76,9 +76,10 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
                           value = page %>% rvest::html_nodes("#C option") %>% rvest::html_attr("value"))
   coluna.df[] <- lapply(coluna.df, as.character)
 
-  conteudo.df <- data.frame(id1 = c(1, 2),
-                            id2 = c("\u00d3bitos_p/Resid\u00eanc", "\u00d3bitos_p/Ocorr\u00eanc"),
-                            value = c("\u00d3bitos_p/Resid\u00eanc", "\u00d3bitos_p/Ocorr\u00eanc"))
+  conteudo.df <- data.frame(id1 = c(1:15),
+                            id2 = c("Interna\u00E7\u00F5es", "AIH_aprovadas", "Valor_total", "Valor_servi\u00E7os_hospitalares", "Val_serv_hosp_-_compl_federal", "Val_serv_hosp_-_compl_gestor", "Valor_servi\u00E7os_profissionais", "Val_serv_prof_-_compl_federal", "Val_serv_prof_-_compl_gestor", "Valor_m\u00E9dio_AIH", "Valor_m\u00E9dio_intern", "Dias_perman\u00EAncia", "M\u00E9dia_perman\u00EAncia", "\u00D3bitos", "Taxa_mortalidade"),
+                            value = c("Interna\u00E7\u00F5es", "AIH aprovadas", "Valor total", "Valor servi\u00E7os hospitalares", "Val serv hosp - compl federal", "Val serv hosp - compl gestor", "Valor servi\u00E7os profissionais", "Val serv prof - compl federal", "Val serv prof - compl gestor", "Valor m\u00E9dio AIH", "Valor m\u00E9dio intern", "Dias perman\u00EAncia", "M\u00E9dia perman\u00EAncia", "\u00D3bitos", "Taxa mortalidade")
+                            )
 
   periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% as.numeric(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
