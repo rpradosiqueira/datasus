@@ -15,8 +15,7 @@
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
 #'   carater_atendimento = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
 #'   faixa_etaria = "all", faixa_etaria_detalhada = "all", sexo = "all",
-#'   cor_raca = "all", escolaridade = "all", estado_civil = "all",
-#'   local_ocorrencia = "all")
+#'   cor_raca = "all",regime = "all, carater_atendimento = "all)
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo A character of length = 1 with the state's acronym of interest.
@@ -61,8 +60,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
                             territorio_da_cidadania = "all", mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
                             faixa_de_fronteira = "all", zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
                             carater_atendimento = "all", regime = "all", capitulo_cid10 = "all", categoria_cid10 = "all", faixa_etaria = "all",
-                            faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all", escolaridade = "all",
-                            estado_civil = "all", local_ocorrencia = "all") {
+                            faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all") {
 
 
   page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sih/cnv/nrbr.def")
@@ -81,7 +79,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
                             value = c("Interna\u00E7\u00F5es", "AIH aprovadas", "Valor total", "Valor servi\u00E7os hospitalares", "Val serv hosp - compl federal", "Val serv hosp - compl gestor", "Valor servi\u00E7os profissionais", "Val serv prof - compl federal", "Val serv prof - compl gestor", "Valor m\u00E9dio AIH", "Valor m\u00E9dio intern", "Dias perman\u00EAncia", "M\u00E9dia perman\u00EAncia", "\u00D3bitos", "Taxa mortalidade")
                             )
 
-  periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% as.numeric(),
+  periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% trimws(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
 
   municipios.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_text() %>% readr::parse_number(),
@@ -170,24 +168,12 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
 
   cor_raca.df[] <- lapply(cor_raca.df, as.character)
 
-  escolaridade.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
-  escolaridade.df[] <- lapply(escolaridade.df, as.character)
-
-  estado_civil.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
-  estado_civil.df[] <- lapply(estado_civil.df, as.character)
-
-  local_ocorrencia.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
-  local_ocorrencia.df[] <- lapply(local_ocorrencia.df, as.character)
-
   municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
-  ride.df$id[1] <- local_ocorrencia.df$id[1]<- capitulo_cid10.df$id[1] <- categoria_cid10.df$id[1] <- "all"
+  ride.df$id[1] <- capitulo_cid10.df$id[1] <- categoria_cid10.df$id[1] <- "all"
   faixa_etaria.df$id[1] <- faixa_etaria_detalhada.df$id[1] <- sexo.df$id[1] <- cor_raca.df$id[1] <- "all"
-    escolaridade.df$id[1] <- estado_civil.df$id[1] <- carater_atendimento.df$id[1] <- regime.df$id[1] <- "all"
+    carater_atendimento.df$id[1] <- regime.df$id[1] <- "all"
 
   #### ERROR HANDLING ####
   if (linha != "Munic\u00edpio") {
@@ -226,9 +212,9 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (conteudo != 1 & conteudo != 2) {
+  if (conteudo != 1 & conteudo > 15) {
 
-    if (is.numeric(conteudo)) stop("The only numeric elements allowed are 1 or 2")
+    if (is.numeric(conteudo)) stop("The only numeric elements allowed are 1 to 15")
 
     if(length(conteudo) != 1) stop("The 'coluna' argument must have only one element")
 
@@ -474,53 +460,6 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (any(escolaridade != "all")) {
-
-    if (!(all(escolaridade %in% escolaridade.df$id))) {
-
-      escolaridade <- as.character(escolaridade)
-
-      if (!(all(escolaridade %in% escolaridade.df$value))) {
-
-        stop("Some element in 'escolaridade' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(estado_civil != "all")) {
-
-    if (!(all(estado_civil %in% estado_civil.df$id))) {
-
-      estado_civil <- as.character(estado_civil)
-
-      if (!(all(estado_civil %in% estado_civil.df$value))) {
-
-        stop("Some element in 'estado_civil' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(local_ocorrencia != "all")) {
-
-    if (!(all(local_ocorrencia %in% local_ocorrencia.df$id))) {
-
-      local_ocorrencia <- as.character(local_ocorrencia)
-
-      if (!(all(local_ocorrencia %in% local_ocorrencia.df$value))) {
-
-        stop("Some element in 'local_ocorrencia' argument is wrong")
-
-      }
-
-    }
-
-  }
 
 
   #### FILTERS APPLICATIONS ####
@@ -560,6 +499,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
   #periodo
   suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
+
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
   form_pesqmes1 <- "pesqmes1=Digite+o+texto+e+ache+f%E1cil"
@@ -664,13 +604,6 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
   form_cor_raca <- dplyr::filter(cor_raca.df, cor_raca.df$id %in% cor_raca)
   form_cor_raca <- paste0("SCor%2Fra%E7a=", form_cor_raca$value, collapse = "&")
 
-  #estado_civil
-  form_estado_civil <- dplyr::filter(estado_civil.df, estado_civil.df$id %in% estado_civil)
-  form_estado_civil <- paste0("SEstado_civil=", form_estado_civil$value, collapse = "&")
-
-  #local_ocorrencia
-  form_local_ocorrencia <- dplyr::filter(local_ocorrencia.df, local_ocorrencia.df$id %in% local_ocorrencia)
-  form_local_ocorrencia <- paste0("SLocal_ocorr%EAncia=", form_local_ocorrencia$value, collapse = "&")
 
 
   form_data <- paste(form_linha, form_coluna, form_conteudo, form_periodo, form_pesqmes1, form_municipio,
@@ -680,7 +613,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
                      form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
                      form_carater_atendimento, form_pesqmes15, form_capitulo_cid10, form_pesqmes16, form_categoria_cid10,
                      form_faixa_etaria, form_pesqmes18, form_faixa_etaria_detalhada, form_sexo, form_cor_raca,
-                     form_estado_civil, form_local_ocorrencia, "formato=table&mostre=Mostra", sep = "&")
+                     "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
 
@@ -697,6 +630,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
     rvest::html_nodes("th") %>%
     rvest::html_text() %>%
     trimws()
+
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))
