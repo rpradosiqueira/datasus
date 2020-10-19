@@ -538,7 +538,6 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
     rvest::html_text() %>%
     trimws()
 
-print(site[[1]])
   col_tabdados <- httr::content(site, encoding = "Latin1") %>%
     rvest::html_nodes("th") %>%
     rvest::html_text() %>%
