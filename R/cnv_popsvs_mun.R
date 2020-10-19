@@ -529,16 +529,15 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
                      "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
-  print(form_data)
+
   ##### REQUEST FORM AND DATA WRANGLING ####
   site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?popsvs/cnv/popbr.def",
                      body = form_data)
-print("Vamos ver se vai dar agora")
   tabdados <- httr::content(site, encoding = "Latin1") %>%
     rvest::html_nodes(".tabdados tbody td") %>%
     rvest::html_text() %>%
     trimws()
-print("muitodoido")
+
 print(site[[1]])
   col_tabdados <- httr::content(site, encoding = "Latin1") %>%
     rvest::html_nodes("th") %>%
@@ -547,8 +546,6 @@ print(site[[1]])
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))
-  print(sexo.df)
-  print(paste0("Comprimento tabela",length(tabdados)," e colunas",length(col_tabdados)))
   if(is.na(length(tabdados))) {
     print("Parece que deu ruim")
     print(tabdados[[1]])
