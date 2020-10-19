@@ -2,7 +2,7 @@
 % Please edit documentation in R/cnv_popsvs_mun.R
 \name{cnv_popsvs_mun}
 \alias{cnv_popsvs_mun}
-\title{Scrapes Demographic projections of Resident Population from RIPSA}
+\title{Scrapes Demographic projections of Resident Population from Health Ministry of Brazil}
 \usage{
 cnv_popsvs_mun(linha = "Município", coluna = "Não ativa",
   conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
@@ -63,7 +63,7 @@ The function returns a data frame printed by parameters input.
 }
 \description{
 This function allows the user to retrieve data from
-RIPSA database much in the same way that is done
+Health Ministry study's database much in the same way that is done
 by the online portal. The argument options refer to
 regions and population tipes
 }

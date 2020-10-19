@@ -1,7 +1,7 @@
-#' Scrapes Demographic projections of Resident Population from RIPSA
+#' Scrapes Demographic projections of Resident Population from Health Ministry of Brazil
 #'
 #' This function allows the user to retrieve data from
-#' RIPSA database much in the same way that is done
+#' Health Ministry study's database much in the same way that is done
 #' by the online portal. The argument options refer to
 #' regions and population tipes
 #'
