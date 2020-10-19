@@ -166,6 +166,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
 
   cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
                             value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
+
   cor_raca.df[] <- lapply(cor_raca.df, as.character)
 
   escolaridade.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
@@ -373,7 +374,8 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
     }
 
   }
-    if (any(regime != "all")) {
+
+      if (any(regime != "all")) {
 
       regime <- as.character(regime)
 
