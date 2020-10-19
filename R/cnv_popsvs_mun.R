@@ -546,10 +546,6 @@ print(site[[1]])
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))
-  if(is.na(length(tabdados))) {
-    print("Parece que deu ruim")
-    print(tabdados[[1]])
-    }
   tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
                                        ncol = length(col_tabdados), byrow = TRUE))
 
