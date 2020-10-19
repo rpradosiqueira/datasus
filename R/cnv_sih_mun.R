@@ -684,7 +684,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/evita10br.def",
+  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/nrbr.def",
                      body = form_data)
 
   tabdados <- httr::content(site, encoding = "Latin1") %>%
