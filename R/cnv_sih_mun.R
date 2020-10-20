@@ -81,6 +81,7 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
 
   periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% trimws(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
+  print(class(periodos.df$id))
 
   municipios.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_text() %>% readr::parse_number(),
                                                value = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_attr("value")))
@@ -232,9 +233,9 @@ cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", con
 
   if (periodo[1] != "last") {
 
-    if (is.character(periodo)) {
-      periodo <- as.numeric(periodo)
-    }
+    #if (is.character(periodo)) {
+    #  periodo <- as.numeric(periodo)
+    #}
 
     if (!(all(periodo %in% periodos.df$id))) stop("The 'periodo' argument is misspecified")
 
