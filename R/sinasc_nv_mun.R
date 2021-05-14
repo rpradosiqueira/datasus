@@ -39,6 +39,8 @@
 #' @param estado_civil_mae "all" or a character vector with the marital status of the mother (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param duracao_gestacao "all" or a character vector with the marital status of the mother (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param tipo_de_gravidez "all" or a character vector with the type of pregnancy (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param grupos_de_robson "all" or a character vector with the Robson Groups (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param adeq_pre_natal "all" or a character vector with the range of adequacy of prenatal consultation  (written in the same way - ex. 'Inadequado', 'Adequado') or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param tipo_de_parto "all" or a character vector with the Parturition type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param consult_pre_natal "all" or a character vector with the amount of prenatal consultation  (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param sexo "all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
@@ -158,47 +160,59 @@ sinasc_nv_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                                     value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
   tipo_de_gravidez.df[] <- lapply(tipo_de_gravidez.df, as.character)
 
-  tipo_de_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
-                                 value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
+  grupos_de_robson.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
+                                    value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
+
+  tipo_de_gravidez.df[] <- lapply(tipo_de_gravidez.df, as.character)
+
+  adeq_pre_natal.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
+                                     value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
+  adeq_pre_natal.df[] <- lapply(consult_pre_natal.df, as.character)
+
+
+  tipo_de_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
+                                 value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
   tipo_de_parto.df[] <- lapply(tipo_de_parto.df, as.character)
 
-  consult_pre_natal.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
-                                     value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
+  consult_pre_natal.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
+                                     value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
   consult_pre_natal.df[] <- lapply(consult_pre_natal.df, as.character)
 
-  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
-                        value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
+
+
+  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
+                        value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
   sexo.df[] <- lapply(sexo.df, as.character)
 
-  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
-                            value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
+  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
+                            value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value"))
   cor_raca.df[] <- lapply(cor_raca.df, as.character)
 
-  apgar_1_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
+  apgar_1_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
+                                  value = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_attr("value"))
   apgar_1_minuto.df[] <- lapply(apgar_1_minuto.df, as.character)
 
-  apgar_5_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value"))
+  apgar_5_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S2 option") %>% rvest::html_text() %>% trimws(),
+                                  value = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_attr("value"))
   apgar_5_minuto.df[] <- lapply(apgar_5_minuto.df, as.character)
 
-  peso_ao_nascer.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_attr("value"))
+  peso_ao_nascer.df <- data.frame(id = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_text() %>% trimws(),
+                                  value = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_attr("value"))
   peso_ao_nascer.df[] <- lapply(peso_ao_nascer.df, as.character)
 
-  anomalia_congenita.df <- data.frame(id = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_text() %>% trimws(),
-                                      value = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_attr("value"))
+  anomalia_congenita.df <- data.frame(id = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_text() %>% trimws(),
+                                      value = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_attr("value"))
   anomalia_congenita.df[] <- lapply(anomalia_congenita.df, as.character)
 
-  tipo_anomal_congen.df <- data.frame(id = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_text() %>% trimws(),
-                                      value = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_attr("value"))
+  tipo_anomal_congen.df <- data.frame(id = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_text() %>% trimws(),
+                                      value = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_attr("value"))
   tipo_anomal_congen.df[] <- lapply(tipo_anomal_congen.df, as.character)
 
   municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
   ride.df$id[1] <- local_ocorrencia.df$id[1]<- idade_da_mae.df$id[1] <- instrucao_da_mae.df$id[1] <- estado_civil_mae.df$id[1] <- "all"
-  duracao_gestacao.df$id[1] <- tipo_de_gravidez.df$id[1] <- tipo_de_parto.df$id[1] <- consult_pre_natal.df$id[1] <- sexo.df$id[1] <- "all"
+  duracao_gestacao.df$id[1] <- tipo_de_gravidez.df$id[1] <- grupos_de_robson.df$id[1] <- adeq_pre_natal.df$id[1] <- tipo_de_parto.df$id[1] <- consult_pre_natal.df$id[1] <- sexo.df$id[1] <- "all"
   cor_raca.df$id[1] <- apgar_1_minuto.df$id[1] <- apgar_5_minuto.df$id[1] <- peso_ao_nascer.df$id[1] <- anomalia_congenita.df$id[1] <- "all"
   tipo_anomal_congen.df$id[1] <- "all"
 
