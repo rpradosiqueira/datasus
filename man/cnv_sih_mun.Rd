@@ -12,8 +12,7 @@ cnv_sih_mun(linha = "Município", coluna = "Não ativa",
   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
   carater_atendimento = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
   faixa_etaria = "all", faixa_etaria_detalhada = "all", sexo = "all",
-  cor_raca = "all", escolaridade = "all", estado_civil = "all",
-  local_ocorrencia = "all")
+  cor_raca = "all",regime = "all, carater_atendimento = "all)
 }
 \arguments{
 \item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".}

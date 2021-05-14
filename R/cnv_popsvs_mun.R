@@ -1,7 +1,7 @@
-#' Scrapes Demographic projections of Resident Population from Health Ministry of Brazil
+#' Scrapes Demographic projections of Resident Population from RIPSA
 #'
 #' This function allows the user to retrieve data from
-#' Health Ministry study's database much in the same way that is done
+#' RIPSA database much in the same way that is done
 #' by the online portal. The argument options refer to
 #' regions and population tipes
 #'
@@ -9,7 +9,7 @@
 #'   conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
 #'   municipio = "all", capital = "all",
 #'   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
-#'   ride = "all", territorio_da_cidadania = "all", macrorregiao_pndr = "all",
+#'   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
 #'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
 #'   sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all")
@@ -26,7 +26,7 @@
 #' @param microrregiao_ibge "all" or a numeric vector with the IBGE's micro-region codes to filter the data. Defaults to "all".
 #' @param ride "all" or a numeric vector with the IBGE's metropolitan-region codes to filter the data. Defaults to "all".
 #' @param territorio_da_cidadania "all" or a numeric vector with the territory of citizenship codes to filter the data. Defaults to "all".
-#' @param macrorregiao_pndr "all" or a numeric vector with the PNDR's mesoregion codes to filter the data. Defaults to "all".
+#' @param mesorregiao_pndr "all" or a numeric vector with the PNDR's mesoregion codes to filter the data. Defaults to "all".
 #' @param amazonia_legal "all" or a character ("Sim" or "Não") indicating if only the Legal Amazon region must be included. Defaults to "all".
 #' @param semiarido "all" or a character ("Sim" or "Não") indicating if only the semiarid region must be included. Defaults to "all".
 #' @param faixa_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border area must be included. Defaults to "all".
@@ -49,13 +49,13 @@
 #' @importFrom utils head
 #' @export
 
-cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", conteudo = 1, periodo = "last", regiao = "all",
-                            unidade_da_federacao = "all", municipio = "all",capital = "all", cir = "all", macrorregiao_de_saude = "all",
-                            microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all", macrorregiao_pndr = "all",
-                            amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all", zona_de_fronteira = "all",
-                            municipio_de_extrema_pobreza = "all", sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
+cnv_popsvs_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria 2", conteudo = 1, periodo = "last", regiao = "all",
+                              unidade_da_federacao = "all", municipio = "all",capital = "all", cir = "all", macrorregiao_de_saude = "all",
+                              microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
+                              amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all", zona_de_fronteira = "all",
+                              municipio_de_extrema_pobreza = "all", sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
 
-#ajuste do link para tabela de população
+  #ajuste do link para tabela de população
   page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?popsvs/cnv/popbr.def")
 
   #### DF ####
@@ -67,14 +67,14 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
                           value = page %>% rvest::html_nodes("#C option") %>% rvest::html_attr("value"))
   coluna.df[] <- lapply(coluna.df, as.character)
 
-#ajuste do conteúdo da tabela
+  #ajuste do conteúdo da tabela
   conteudo.df <- data.frame(id1 = c(1),
-                            id2 = c("Popula\u00E7\u00E3o_residente"),
-                            value = c("Popula\u00E7\u00E3o_residente"))
+                            id2 = c("Popula\u00e7\u00e3o_residente"),
+                            value = c("Popula\u00e7\u00e3o_residente"))
 
   periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% as.numeric(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
-#adiciona regiao e uf cf tab e ref nac
+  #adiciona regiao e uf cf tab e ref nac
   regiao.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_text() %>% readr::parse_number(),
                                            value = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_attr("value")))
 
@@ -104,7 +104,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
   territorio_da_cidadania.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S9 option") %>% rvest::html_text() %>% readr::parse_number(),
                                                             value = page %>% rvest::html_nodes("#S9 option") %>% rvest::html_attr("value")))
 
-  macrorregiao_pndr.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S10 option") %>% rvest::html_text() %>% readr::parse_number(),
+  mesorregiao_pndr.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S10 option") %>% rvest::html_text() %>% readr::parse_number(),
                                                      value = page %>% rvest::html_nodes("#S10 option") %>% rvest::html_attr("value")))
 
   amazonia_legal.df <- data.frame(id = page %>% rvest::html_nodes("#S11 option") %>% rvest::html_text() %>% trimws(),
@@ -132,27 +132,27 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
                         value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
   sexo.df[] <- lapply(sexo.df, as.character)
 
-#remoção de variáveis que não aparecem, adição de faixa_etaria_1 e 2
+  #remoção de variáveis que não aparecem, adição de faixa_etaria_1 e 2
 
 
 
   faixa_etaria_1.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
+                                  value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
   faixa_etaria_1.df[] <- lapply(faixa_etaria_1.df, as.character)
 
   faixa_etaria_2.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
+                                  value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
   faixa_etaria_2.df[] <- lapply(faixa_etaria_2.df, as.character)
 
 
   municipios.df$id[1] <- regiao.df$id[1] <- unidade_da_federacao.df$id[1] <- capital.df$id[1] <- "all"
   cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
-  territorio_da_cidadania.df$id[1] <- macrorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
+  territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
   ride.df$id[1] <- sexo.df$id[1] <- faixa_etaria_1.df$id[1]  <- faixa_etaria_2.df$id[1] <- "all"
 
   #### ERROR HANDLING ####
-  if (linha != "Munic\u00EDpio") {
+  if (linha != "Munic\u00edpio") {
 
     if (!is.character(linha)) stop("The 'linha' argument must be a character element")
 
@@ -289,11 +289,11 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
 
   }
 
-  if (any(macrorregiao_pndr != "all")) {
+  if (any(mesorregiao_pndr != "all")) {
 
-    macrorregiao_pndr <- as.character(as.numeric(macrorregiao_pndr))
+    mesorregiao_pndr <- as.character(as.numeric(mesorregiao_pndr))
 
-    if (!(all(macrorregiao_pndr %in% macrorregiao_pndr.df$id))) stop("Some element in 'macrorregiao_pndr' argument is wrong")
+    if (!(all(mesorregiao_pndr %in% mesorregiao_pndr.df$id))) stop("Some element in 'mesorregiao_pndr' argument is wrong")
 
   }
 
@@ -336,7 +336,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
     if (!(all(municipio_de_extrema_pobreza %in% municipio_de_extrema_pobreza.df$id))) stop("The element in 'municipio_de_extrema_pobreza' argument is wrong")
 
   }
-#Trocado para faixa_etaria_1 e 2
+  #Trocado para faixa_etaria_1 e 2
   if (any(faixa_etaria_1 != "all")) {
 
     if (!(all(faixa_etaria_1 %in% faixa_etaria_1.df$id))) {
@@ -425,6 +425,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
+  form_pesqmes1 <- "pesqmes1=Digite+o+texto+e+ache+f%E1cil"
 
   #regiao
   form_regiao <- dplyr::filter(regiao.df, regiao.df$id %in% regiao)
@@ -480,9 +481,9 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
 
   form_pesqmes10 <- "pesqmes10=Digite+o+texto+e+ache+f%E1cil"
 
-  #macrorregiao_pndr
-  form_macrorregiao_pndr <- dplyr::filter(macrorregiao_pndr.df, macrorregiao_pndr.df$id %in% macrorregiao_pndr)
-  form_macrorregiao_pndr <- paste0("SMacrorregi%E3o_PNDR=", form_macrorregiao_pndr$value, collapse = "&")
+  #mesorregiao_pndr
+  form_mesorregiao_pndr <- dplyr::filter(mesorregiao_pndr.df, mesorregiao_pndr.df$id %in% mesorregiao_pndr)
+  form_mesorregiao_pndr <- paste0("SMesorregi%E3o_PNDR=", form_mesorregiao_pndr$value, collapse = "&")
 
   #amazonia_legal
   form_amazonia_legal <- dplyr::filter(amazonia_legal.df, amazonia_legal.df$id %in% amazonia_legal)
@@ -507,7 +508,6 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
   #faixa_etaria_1
   form_faixa_etaria_1 <- dplyr::filter(faixa_etaria_1.df, faixa_etaria_1.df$id %in% faixa_etaria_1)
   form_faixa_etaria_1 <- paste0("SFaixa_Et%E1ria_1=", form_faixa_etaria_1$value, collapse = "&")
-  form_pesqmes18 <- "pesqmes18=Digite+o+texto+e+ache+f%E1cil"
 
   #faixa_etaria_2
   form_faixa_etaria_2 <- dplyr::filter(faixa_etaria_2.df, faixa_etaria_2.df$id %in% faixa_etaria_2)
@@ -517,22 +517,21 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
   form_sexo <- dplyr::filter(sexo.df, sexo.df$id %in% sexo)
   form_sexo <- paste0("SSexo=", form_sexo$value, collapse = "&")
 
-  form_pesqmes17 <- "pesqmes17=Digite+o+texto+e+ache+f%E1cil"
-
-  form_data <- paste(form_linha, form_coluna, form_conteudo, form_periodo, form_regiao, form_pesqmes2,
+  form_data <- paste(form_linha, form_coluna, form_conteudo, form_periodo, form_pesqmes1, form_regiao, form_pesqmes2,
                      form_unidade_da_federacao, form_pesqmes3, form_municipio, form_pesqmes4,
                      form_capital, form_pesqmes5, form_cir, form_pesqmes6,form_macrorregiao_de_saude, form_pesqmes7,
                      form_microrregiao_ibge, form_pesqmes8, form_ride, form_pesqmes9, form_territorio_da_cidadania,
-                     form_pesqmes10, form_macrorregiao_pndr, form_amazonia_legal, form_semiarido,
+                     form_pesqmes10, form_mesorregiao_pndr, form_amazonia_legal, form_semiarido,
                      form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza, form_sexo,
-                     form_pesqmes17,form_faixa_etaria_1,form_pesqmes18, form_faixa_etaria_2,
+                     form_faixa_etaria_1, form_faixa_etaria_2,
                      "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?popsvs/cnv/popbr.def",
+  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?novapop/cnv/popbr.def",
                      body = form_data)
+
   tabdados <- httr::content(site, encoding = "Latin1") %>%
     rvest::html_nodes(".tabdados tbody td") %>%
     rvest::html_text() %>%
@@ -545,6 +544,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))
+
   tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
                                        ncol = length(col_tabdados), byrow = TRUE))
 
@@ -554,6 +554,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00e3o ativa", 
   tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
 
   tabela_final
+  123
 
 }
 
