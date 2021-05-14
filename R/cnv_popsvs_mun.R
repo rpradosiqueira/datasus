@@ -529,7 +529,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?novapop/cnv/popbr.def",
+  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?popsvs/cnv/popbr.def",
                      body = form_data)
 
   tabdados <- httr::content(site, encoding = "Latin1") %>%
@@ -544,7 +544,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))
-
+  print(head(tabdados))
   tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
                                        ncol = length(col_tabdados), byrow = TRUE))
 
@@ -554,7 +554,6 @@ cnv_popsvs_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria
   tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
 
   tabela_final
-  123
 
 }
 
