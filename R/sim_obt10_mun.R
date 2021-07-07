@@ -83,8 +83,8 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   coluna.df[] <- lapply(coluna.df, as.character)
 
   conteudo.df <- data.frame(id1 = c(1, 2),
-                            id2 = c("\u00d3bitos_p/Resid\u00eanc", "\u00d3bitos_p/Ocorr\u00eanc"),
-                            value = c("\u00d3bitos_p/Resid\u00eanc", "\u00d3bitos_p/Ocorr\u00eanc"))
+                            id2 = c("\u00D3bitos_p/Resid\u00eanc", "\u00D3bitos_p/Ocorr\u00eanc"),
+                            value = c("\u00D3bitos_p/Resid\u00eanc", "\u00D3bitos_p/Ocorr\u00eanc"))
 
   periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% as.numeric(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
@@ -735,6 +735,10 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_cor_raca <- dplyr::filter(cor_raca.df, cor_raca.df$id %in% cor_raca)
   form_cor_raca <- paste0("SCor%2Fra%E7a=", form_cor_raca$value, collapse = "&")
 
+  #escolaridade
+  form_escolaridade <- dplyr::filter(escolaridade.df, escolaridade.df$id %in% escolaridade)
+  form_escolaridade <- paste0("SEscolaridade=", form_escolaridade$value, collapse = "&")
+
   #estado_civil
   form_estado_civil <- dplyr::filter(estado_civil.df, estado_civil.df$id %in% estado_civil)
   form_estado_civil <- paste0("SEstado_civil=", form_estado_civil$value, collapse = "&")
@@ -752,11 +756,11 @@ sim_obt10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                      form_pesqmes14, form_capitulo_cid10, form_pesqmes15, form_grupo_cid10, form_pesqmes16, form_categoria_cid10,
                      form_pesqmes17, form_causa_br_cid10, form_causa_mal_definida, form_pesqmes19, form_faixa_etaria,
                      form_pesqmes20, form_faixa_etaria_ops, form_pesqmes21, form_faixa_etaria_det,
-                     form_faixa_etaria_menor1a, form_sexo, form_cor_raca, form_estado_civil, form_local_ocorrencia,
+                     form_faixa_etaria_menor1a, form_sexo, form_cor_raca, form_escolaridade, form_estado_civil, form_local_ocorrencia,
                      "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
-
+  print(form_data)
   ##### REQUEST FORM AND DATA WRANGLING ####
   site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/obt10br.def",
                      body = form_data)
