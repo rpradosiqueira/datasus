@@ -1,8 +1,8 @@
 Package: datasus
 Type: Package
 Title: An Interface to DATASUS System
-Version: 0.4.0
-Authors@R: person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"))
+Version: 0.4.5
+Authors@R: c(person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"),),person("Rodrigo E.", "Santana Borges", email = "rodrigoesborges@gmail.com", role = "aut",))
 Description: It allows the user to retrieve the data from the systems of
     DATASUS (SUS IT department related to the Brazilian Ministry of Health,
     see <http://datasus.saude.gov.br/informacoes-de-saude/tabnet/> for more
@@ -24,7 +24,7 @@ Imports:
     stringr,
     xml2
 LazyData: true
-RoxygenNote: 6.1.99.9001
+RoxygenNote: 7.1.1
 Suggests:
     knitr,
     rmarkdown

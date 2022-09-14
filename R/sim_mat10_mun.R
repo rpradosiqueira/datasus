@@ -83,7 +83,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   conteudo.df <- data.frame(id1 = c(1, 2, 3),
                             id2 = c("\u00d3bitos_mulheres_idade_f\u00e9rtil", "\u00d3bitos_maternos", "\u00d3bitos_maternos_tardios"),
-                            value = c("\u00d3bitos_mulheres_idade_f\u00e9rtil", "\u00d3bitos_maternos","\u00d3bitos_maternos_tardios"))
+                            value = c("\u00D3bitos_mulheres_idade_f\u00e9rtil", "\u00D3bitos_maternos","\u00D3bitos_maternos_tardios"))
 
   periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% as.numeric(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))

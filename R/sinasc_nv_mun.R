@@ -39,6 +39,8 @@
 #' @param estado_civil_mae "all" or a character vector with the marital status of the mother (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param duracao_gestacao "all" or a character vector with the marital status of the mother (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param tipo_de_gravidez "all" or a character vector with the type of pregnancy (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param grupos_de_robson "all" or a character vector with the Robson Groups (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param adeq_pre_natal "all" or a character vector with the range of adequacy of prenatal consultation  (written in the same way - ex. 'Inadequado', 'Adequado') or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param tipo_de_parto "all" or a character vector with the Parturition type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param consult_pre_natal "all" or a character vector with the amount of prenatal consultation  (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param sexo "all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
@@ -67,7 +69,8 @@ sinasc_nv_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                           territorio_da_cidadania = "all", mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
                           faixa_de_fronteira = "all", zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
                           local_ocorrencia = "all", idade_da_mae = "all", instrucao_da_mae = "all", estado_civil_mae = "all",
-                          duracao_gestacao = "all", tipo_de_gravidez = "all", tipo_de_parto = "all", consult_pre_natal = "all",
+                          duracao_gestacao = "all", tipo_de_gravidez = "all", grupos_de_robson = "all", adeq_pre_natal = "all",
+                          tipo_de_parto = "all", consult_pre_natal = "all",
                           sexo = "all", cor_raca = "all", apgar_1_minuto = "all", apgar_5_minuto = "all", peso_ao_nascer = "all",
                           anomalia_congenita = "all", tipo_anomal_congen = "all") {
 
@@ -158,47 +161,64 @@ sinasc_nv_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                                     value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
   tipo_de_gravidez.df[] <- lapply(tipo_de_gravidez.df, as.character)
 
-  tipo_de_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
-                                 value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
+  grupos_de_robson.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
+                                    value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
+
+  grupos_de_robson.df[] <- lapply(grupos_de_robson.df, as.character)
+
+
+  adeq_pre_natal.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
+                                     value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
+
+  adeq_pre_natal.df[] <- lapply(adeq_pre_natal.df, as.character)
+
+
+  tipo_de_parto.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
+                                 value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
   tipo_de_parto.df[] <- lapply(tipo_de_parto.df, as.character)
 
-  consult_pre_natal.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
-                                     value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
+  consult_pre_natal.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
+                                     value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
   consult_pre_natal.df[] <- lapply(consult_pre_natal.df, as.character)
 
-  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
-                        value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
+
+
+  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
+                        value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
   sexo.df[] <- lapply(sexo.df, as.character)
 
-  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
-                            value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
+
+
+
+  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
+                            value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value"))
   cor_raca.df[] <- lapply(cor_raca.df, as.character)
 
-  apgar_1_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
+  apgar_1_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
+                                  value = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_attr("value"))
   apgar_1_minuto.df[] <- lapply(apgar_1_minuto.df, as.character)
 
-  apgar_5_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value"))
+  apgar_5_minuto.df <- data.frame(id = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_text() %>% trimws(),
+                                  value = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_attr("value"))
   apgar_5_minuto.df[] <- lapply(apgar_5_minuto.df, as.character)
 
-  peso_ao_nascer.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
-                                  value = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_attr("value"))
+  peso_ao_nascer.df <- data.frame(id = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_text() %>% trimws(),
+                                  value = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_attr("value"))
   peso_ao_nascer.df[] <- lapply(peso_ao_nascer.df, as.character)
 
-  anomalia_congenita.df <- data.frame(id = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_text() %>% trimws(),
-                                      value = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_attr("value"))
+  anomalia_congenita.df <- data.frame(id = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_text() %>% trimws(),
+                                      value = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_attr("value"))
   anomalia_congenita.df[] <- lapply(anomalia_congenita.df, as.character)
 
-  tipo_anomal_congen.df <- data.frame(id = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_text() %>% trimws(),
-                                      value = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_attr("value"))
+  tipo_anomal_congen.df <- data.frame(id = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_text() %>% trimws(),
+                                      value = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_attr("value"))
   tipo_anomal_congen.df[] <- lapply(tipo_anomal_congen.df, as.character)
 
   municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
   ride.df$id[1] <- local_ocorrencia.df$id[1]<- idade_da_mae.df$id[1] <- instrucao_da_mae.df$id[1] <- estado_civil_mae.df$id[1] <- "all"
-  duracao_gestacao.df$id[1] <- tipo_de_gravidez.df$id[1] <- tipo_de_parto.df$id[1] <- consult_pre_natal.df$id[1] <- sexo.df$id[1] <- "all"
+  duracao_gestacao.df$id[1] <- tipo_de_gravidez.df$id[1] <- grupos_de_robson.df$id[1] <- adeq_pre_natal.df$id[1] <- tipo_de_parto.df$id[1] <- consult_pre_natal.df$id[1] <- sexo.df$id[1] <- "all"
   cor_raca.df$id[1] <- apgar_1_minuto.df$id[1] <- apgar_5_minuto.df$id[1] <- peso_ao_nascer.df$id[1] <- anomalia_congenita.df$id[1] <- "all"
   tipo_anomal_congen.df$id[1] <- "all"
 
@@ -466,6 +486,38 @@ sinasc_nv_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
     }
 
   }
+  if (any(grupos_de_robson.df != "all")) {
+
+    if (!(all(grupos_de_robson %in% grupos_de_robson.df$id))) {
+
+      grupos_de_robson <- as.character(grupos_de_robson)
+
+      if (!(all(grupos_de_robson %in% grupos_de_robson.df$value))) {
+
+        stop("Some element in 'grupos_de_robson' argument is wrong")
+
+      }
+
+    }
+
+  }
+
+  if (any(adeq_pre_natal.df != "all")) {
+
+    if (!(all(adeq_pre_natal %in% adeq_pre_natal.df$id))) {
+
+      adeq_pre_natal <- as.character(adeq_pre_natal)
+
+      if (!(all(adeq_pre_natal %in% adeq_pre_natal.df$value))) {
+
+        stop("Some element in 'adeq_pre_natal' argument is wrong")
+
+      }
+
+    }
+
+  }
+
 
   if (any(tipo_de_parto != "all")) {
 
@@ -747,6 +799,14 @@ sinasc_nv_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_tipo_de_gravidez <- dplyr::filter(tipo_de_gravidez.df, tipo_de_gravidez.df$id %in% tipo_de_gravidez)
   form_tipo_de_gravidez <- paste0("STipo_de_gravidez=", form_tipo_de_gravidez$value, collapse = "&")
 
+  #grupos_de_robson
+  form_grupos_de_robson <- dplyr::filter(grupos_de_robson.df, grupos_de_robson.df$id %in% grupos_de_robson)
+  form_grupos_de_robson <- paste0("SGrupos_de_Robson=", form_grupos_de_robson$value, collapse = "&")
+
+  #adeq_pre_natal
+  form_adeq_pre_natal <- dplyr::filter(adeq_pre_natal.df, adeq_pre_natal.df$id %in% adeq_pre_natal)
+  form_adeq_pre_natal <- paste0("SAdeq_quant_pr%E9-natal=", form_adeq_pre_natal$value, collapse = "&")
+
   #tipo_de_parto
   form_tipo_de_parto <- dplyr::filter(tipo_de_parto.df, tipo_de_parto.df$id %in% tipo_de_parto)
   form_tipo_de_parto <- paste0("STipo_de_parto=", form_tipo_de_parto$value, collapse = "&")
@@ -792,7 +852,7 @@ sinasc_nv_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                      form_territorio_da_cidadania, form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal,
                      form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
                      form_local_ocorrencia, form_pesqmes15, form_idade_da_mae, form_pesqmes16, form_instrucao_da_mae,
-                     form_estado_civil_mae, form_duracao_gestacao, form_tipo_de_gravidez, form_tipo_de_parto,
+                     form_estado_civil_mae, form_duracao_gestacao, form_tipo_de_gravidez, form_grupos_de_robson,form_adeq_pre_natal,form_tipo_de_parto,
                      form_consult_pre_natal, form_sexo, form_cor_raca, form_apgar_1_minuto, form_apgar_5_minuto,
                      form_peso_ao_nascer, form_anomalia_congenita, form_pesqmes28, form_tipo_anomal_congen,
                      "formato=table&mostre=Mostra", sep = "&")

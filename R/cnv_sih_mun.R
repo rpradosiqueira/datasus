@@ -1,21 +1,21 @@
-#' Scrapes SIM's ICD-10 evitable causes data from cities
+#' Scrapes SIM's ICD-10 hospital morbidity data from cities
 #'
 #' This function allows the user to retrieve data from
-#' SIM's ICD-10 database much in the same way that is done
+#' SIH-CNV's ICD-10 database much in the same way that is done
 #' by the online portal. The argument options refer to
-#' evitable causes data focused on brazilian cities and
-#' age ranging between 5-74 years old.
+#' hospital internations by morbidity and place of residence
+#' data focused on brazilian
+#' cities and age ranging between 5-74 years old.
 #'
-#' @usage sim_evitb10_mun(linha = "Município", coluna = "Não ativa",
+#' @usage cnv_sih_mun(linha = "Município", coluna = "Não ativa",
 #'   conteudo = 1, periodo = "last", municipio = "all", capital = "all",
 #'   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
 #'   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
 #'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-#'   causas_evitaveis = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
+#'   carater_atendimento = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
 #'   faixa_etaria = "all", faixa_etaria_detalhada = "all", sexo = "all",
-#'   cor_raca = "all", escolaridade = "all", estado_civil = "all",
-#'   local_ocorrencia = "all")
+#'   cor_raca = "all",regime = "all, carater_atendimento = "all)
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo A character of length = 1 with the state's acronym of interest.
@@ -33,23 +33,21 @@
 #' @param faixa_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border area must be included. Defaults to "all".
 #' @param zona_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border strip must be included. Defaults to "all".
 #' @param municipio_de_extrema_pobreza "all" or a character ("Sim" or "Não") indicating if only the municipalities of extreme poverty must be included. Defaults to "all".
-#' @param causas_evitaveis "all" or a character vector with the evitable cause code (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param carater_atendimento "all" or a character vector with the evitable cause code (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param regime "all" or a character vector with the evitable cause code (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param capitulo_cid10 "all" or a numeric vector with the ICD-10 chapter to filter the data. Defaults to "all".
 #' @param categoria_cid10 "all" or a character vector with the ICD-10 category codes (capital letter and two numbers) to filter the data. Defaults to "all".
 #' @param faixa_etaria "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param faixa_etaria_detalhada "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param sexo "all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param cor_raca "all" or a character vector with the color/race (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param escolaridade "all" or a character vector with the instruction (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param estado_civil "all" or a character vector with the marital status (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param local_ocorrencia "all" or a character vector with the place of ocurrence to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Renato Prado Siqueira \email{<rpradosiqueira@@gmail.com>}
+#' @author Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{<rodrigo@@borges.net.br>}
 #' @seealso \code{\link{sim_evita10_mun}}
 #' @examples
 #' \dontrun{
 #' ## Requesting data from the city of Campo Grande/MS
-#' sim_evitb10_mun(municipio = 500270)
+#' cnv_sih_mun(municipio = 500270)
 #' }
 #'
 #' @keywords SIM datasus causas evitáveis
@@ -57,16 +55,15 @@
 #' @importFrom utils head
 #' @export
 
-sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", conteudo = 1, periodo = "last", municipio = "all",
+cnv_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", conteudo = 1, periodo = "last", municipio = "all",
                             capital = "all", cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
                             territorio_da_cidadania = "all", mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
                             faixa_de_fronteira = "all", zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-                            causas_evitaveis = "all", capitulo_cid10 = "all", categoria_cid10 = "all", faixa_etaria = "all",
-                            faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all", escolaridade = "all",
-                            estado_civil = "all", local_ocorrencia = "all") {
+                            carater_atendimento = "all", regime = "all", capitulo_cid10 = "all", categoria_cid10 = "all", faixa_etaria = "all",
+                            faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all") {
 
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/evitb10br.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sih/cnv/nrbr.def")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -77,12 +74,14 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
                           value = page %>% rvest::html_nodes("#C option") %>% rvest::html_attr("value"))
   coluna.df[] <- lapply(coluna.df, as.character)
 
-  conteudo.df <- data.frame(id1 = c(1, 2),
-                            id2 = c("\u00d3bitos_p/Resid\u00eanc", "\u00d3bitos_p/Ocorr\u00eanc"),
-                            value = c("\u00d3bitos_p/Resid\u00eanc", "\u00d3bitos_p/Ocorr\u00eanc"))
+  conteudo.df <- data.frame(id1 = c(1:15),
+                            id2 = c("Interna\u00E7\u00F5es", "AIH_aprovadas", "Valor_total", "Valor_servi\u00E7os_hospitalares", "Val_serv_hosp_-_compl_federal", "Val_serv_hosp_-_compl_gestor", "Valor_servi\u00E7os_profissionais", "Val_serv_prof_-_compl_federal", "Val_serv_prof_-_compl_gestor", "Valor_m\u00E9dio_AIH", "Valor_m\u00E9dio_intern", "Dias_perman\u00EAncia", "M\u00E9dia_perman\u00EAncia", "\u00D3bitos", "Taxa_mortalidade"),
+                            value = c("Interna\u00E7\u00F5es", "AIH aprovadas", "Valor total", "Valor servi\u00E7os hospitalares", "Val serv hosp - compl federal", "Val serv hosp - compl gestor", "Valor servi\u00E7os profissionais", "Val serv prof - compl federal", "Val serv prof - compl gestor", "Valor m\u00E9dio AIH", "Valor m\u00E9dio intern", "Dias perman\u00EAncia", "M\u00E9dia perman\u00EAncia", "\u00D3bitos", "Taxa mortalidade")
+                            )
 
-  periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% as.numeric(),
+  periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% trimws(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
+  print(class(periodos.df$id))
 
   municipios.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_text() %>% readr::parse_number(),
                                                value = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_attr("value")))
@@ -128,56 +127,54 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
                                                 value = page %>% rvest::html_nodes("#S13 option") %>% rvest::html_attr("value"))
   municipio_de_extrema_pobreza.df[] <- lapply(municipio_de_extrema_pobreza.df, as.character)
 
-  causas_evitaveis.df <- data.frame(id = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_text() %>% trimws(),
+  carater_atendimento.df <- data.frame(id = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_text() %>% trimws(),
                                     value = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_attr("value"))
-  causas_evitaveis.df[] <- lapply(causas_evitaveis.df, as.character)
-  causas_evitaveis.df$id <- gsub(" .*$", "", causas_evitaveis.df$id)
-  causas_evitaveis.df$id <- gsub("\\.", " ", causas_evitaveis.df$id) %>% trimws()
-  causas_evitaveis.df$id <- gsub(" ", ".", causas_evitaveis.df$id)
+  carater_atendimento.df[] <- lapply(carater_atendimento.df, as.character)
+  carater_atendimento.df$id <- gsub(" .*$", "", carater_atendimento.df$id)
+  carater_atendimento.df$id <- gsub("\\.", " ", carater_atendimento.df$id) %>% trimws()
+  carater_atendimento.df$id <- gsub(" ", ".", carater_atendimento.df$id)
+
+  regime.df <- data.frame( id = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_text() %>% trimws(),
+                           value = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_attr("value") )
+
+  regime.df[] <- lapply(regime.df, as.character)
+  regime.df$id <- gsub(" .*$", "", regime.df$id)
+  regime.df$id <- gsub("\\.", " ", regime.df$id) %>% trimws()
+  regime.df$id <- gsub(" ", ".", regime.df$id)
+
 
   capitulo_cid10.df <- data.frame(id = 0:22,
-                                    value = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_attr("value"))
+                                    value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
   capitulo_cid10.df[] <- lapply(capitulo_cid10.df, as.character)
 
-  categoria_cid10.df <- data.frame(id = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
+  categoria_cid10.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
+                                    value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
   categoria_cid10.df[] <- lapply(categoria_cid10.df, as.character)
   categoria_cid10.df$id <- gsub(" .*$", "", categoria_cid10.df$id)
 
-  faixa_etaria.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
+  faixa_etaria.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
+                                value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
   faixa_etaria.df[] <- lapply(faixa_etaria.df, as.character)
 
-  faixa_etaria_detalhada.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
-                                          value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
+  faixa_etaria_detalhada.df <- data.frame(id = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_text() %>% trimws(),
+                                          value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
   faixa_etaria_detalhada.df[] <- lapply(faixa_etaria_detalhada.df, as.character)
 
-  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_text() %>% trimws(),
-                        value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
+  sexo.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
+                        value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
   sexo.df[] <- lapply(sexo.df, as.character)
 
-  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
-                            value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
+  cor_raca.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
+                            value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
+
   cor_raca.df[] <- lapply(cor_raca.df, as.character)
-
-  escolaridade.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
-  escolaridade.df[] <- lapply(escolaridade.df, as.character)
-
-  estado_civil.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
-  estado_civil.df[] <- lapply(estado_civil.df, as.character)
-
-  local_ocorrencia.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
-  local_ocorrencia.df[] <- lapply(local_ocorrencia.df, as.character)
 
   municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
-  ride.df$id[1] <- local_ocorrencia.df$id[1]<- capitulo_cid10.df$id[1] <- categoria_cid10.df$id[1] <- "all"
+  ride.df$id[1] <- capitulo_cid10.df$id[1] <- categoria_cid10.df$id[1] <- "all"
   faixa_etaria.df$id[1] <- faixa_etaria_detalhada.df$id[1] <- sexo.df$id[1] <- cor_raca.df$id[1] <- "all"
-    escolaridade.df$id[1] <- estado_civil.df$id[1] <- causas_evitaveis.df$id[1] <- "all"
+    carater_atendimento.df$id[1] <- regime.df$id[1] <- "all"
 
   #### ERROR HANDLING ####
   if (linha != "Munic\u00edpio") {
@@ -216,9 +213,9 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
 
   }
 
-  if (conteudo != 1 & conteudo != 2) {
+  if (conteudo != 1 & conteudo > 15) {
 
-    if (is.numeric(conteudo)) stop("The only numeric elements allowed are 1 or 2")
+    if (is.numeric(conteudo)) stop("The only numeric elements allowed are 1 to 15")
 
     if(length(conteudo) != 1) stop("The 'coluna' argument must have only one element")
 
@@ -236,9 +233,9 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
 
   if (periodo[1] != "last") {
 
-    if (is.character(periodo)) {
-      periodo <- as.numeric(periodo)
-    }
+    #if (is.character(periodo)) {
+    #  periodo <- as.numeric(periodo)
+    #}
 
     if (!(all(periodo %in% periodos.df$id))) stop("The 'periodo' argument is misspecified")
 
@@ -348,23 +345,41 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
 
   }
 
-  if (any(causas_evitaveis != "all")) {
+  if (any(carater_atendimento != "all")) {
 
-    causas_evitaveis <- as.character(causas_evitaveis)
+    carater_atendimento <- as.character(carater_atendimento)
 
-    if (!(all(causas_evitaveis %in% causas_evitaveis.df$id))) {
+    if (!(all(carater_atendimento %in% carater_atendimento.df$id))) {
 
-      causas_evitaveis <- as.character(causas_evitaveis)
+      carater_atendimento <- as.character(carater_atendimento)
 
-      if (!(all(causas_evitaveis %in% causas_evitaveis.df$value))) {
+      if (!(all(carater_atendimento %in% carater_atendimento.df$value))) {
 
-        stop("Some element in 'causas_evitaveis' argument is wrong")
+        stop("Some element in 'carater_atendimento' argument is wrong")
 
       }
 
     }
 
   }
+
+      if (any(regime != "all")) {
+
+      regime <- as.character(regime)
+
+      if (!(all(regime %in% regime.df$id))) {
+
+        regime <- as.character(regime)
+
+        if (!(all(regime %in% regime.df$value))) {
+
+          stop("Some element in 'regime' argument is wrong")
+
+        }
+
+      }
+
+    }
 
   if (any(capitulo_cid10 != "all")) {
 
@@ -446,53 +461,6 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
 
   }
 
-  if (any(escolaridade != "all")) {
-
-    if (!(all(escolaridade %in% escolaridade.df$id))) {
-
-      escolaridade <- as.character(escolaridade)
-
-      if (!(all(escolaridade %in% escolaridade.df$value))) {
-
-        stop("Some element in 'escolaridade' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(estado_civil != "all")) {
-
-    if (!(all(estado_civil %in% estado_civil.df$id))) {
-
-      estado_civil <- as.character(estado_civil)
-
-      if (!(all(estado_civil %in% estado_civil.df$value))) {
-
-        stop("Some element in 'estado_civil' argument is wrong")
-
-      }
-
-    }
-
-  }
-
-  if (any(local_ocorrencia != "all")) {
-
-    if (!(all(local_ocorrencia %in% local_ocorrencia.df$id))) {
-
-      local_ocorrencia <- as.character(local_ocorrencia)
-
-      if (!(all(local_ocorrencia %in% local_ocorrencia.df$value))) {
-
-        stop("Some element in 'local_ocorrencia' argument is wrong")
-
-      }
-
-    }
-
-  }
 
 
   #### FILTERS APPLICATIONS ####
@@ -532,6 +500,7 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
   #periodo
   suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
+
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
   form_pesqmes1 <- "pesqmes1=Digite+o+texto+e+ache+f%E1cil"
@@ -602,9 +571,9 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
   form_municipio_de_extrema_pobreza <- dplyr::filter(municipio_de_extrema_pobreza.df, municipio_de_extrema_pobreza.df$id %in% municipio_de_extrema_pobreza)
   form_municipio_de_extrema_pobreza <- paste0("SMunic%EDpio_de_extrema_pobreza=", form_municipio_de_extrema_pobreza$value, collapse = "&")
 
-  #causas_evitaveis
-  form_causas_evitaveis <- dplyr::filter(causas_evitaveis.df, causas_evitaveis.df$id %in% causas_evitaveis)
-  form_causas_evitaveis <- paste0("SCausas_evit%E1veis=", form_causas_evitaveis$value, collapse = "&")
+  #carater_atendimento
+  form_carater_atendimento <- dplyr::filter(carater_atendimento.df, carater_atendimento.df$id %in% carater_atendimento)
+  form_carater_atendimento <- paste0("SCausas_evit%E1veis=", form_carater_atendimento$value, collapse = "&")
 
   form_pesqmes15 <- "pesqmes15=Digite+o+texto+e+ache+f%E1cil"
 
@@ -636,13 +605,6 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
   form_cor_raca <- dplyr::filter(cor_raca.df, cor_raca.df$id %in% cor_raca)
   form_cor_raca <- paste0("SCor%2Fra%E7a=", form_cor_raca$value, collapse = "&")
 
-  #estado_civil
-  form_estado_civil <- dplyr::filter(estado_civil.df, estado_civil.df$id %in% estado_civil)
-  form_estado_civil <- paste0("SEstado_civil=", form_estado_civil$value, collapse = "&")
-
-  #local_ocorrencia
-  form_local_ocorrencia <- dplyr::filter(local_ocorrencia.df, local_ocorrencia.df$id %in% local_ocorrencia)
-  form_local_ocorrencia <- paste0("SLocal_ocorr%EAncia=", form_local_ocorrencia$value, collapse = "&")
 
 
   form_data <- paste(form_linha, form_coluna, form_conteudo, form_periodo, form_pesqmes1, form_municipio,
@@ -650,14 +612,14 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
                      form_pesqmes5, form_microrregiao_ibge, form_pesqmes6, form_ride, form_pesqmes7,
                      form_territorio_da_cidadania, form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal,
                      form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
-                     form_causas_evitaveis, form_pesqmes15, form_capitulo_cid10, form_pesqmes16, form_categoria_cid10,
+                     form_carater_atendimento, form_pesqmes15, form_capitulo_cid10, form_pesqmes16, form_categoria_cid10,
                      form_faixa_etaria, form_pesqmes18, form_faixa_etaria_detalhada, form_sexo, form_cor_raca,
-                     form_estado_civil, form_local_ocorrencia, "formato=table&mostre=Mostra", sep = "&")
+                     "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/evita10br.def",
+  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/nrbr.def",
                      body = form_data)
 
   tabdados <- httr::content(site, encoding = "Latin1") %>%
@@ -669,6 +631,7 @@ sim_evitb10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
     rvest::html_nodes("th") %>%
     rvest::html_text() %>%
     trimws()
+
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))

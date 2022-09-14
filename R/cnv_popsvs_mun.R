@@ -5,7 +5,7 @@
 #' by the online portal. The argument options refer to
 #' regions and population tipes
 #'
-#' @usage novapop_popbr_mun(linha = "Município", coluna = "Não ativa",
+#' @usage cnv_popsvs_mun(linha = "Município", coluna = "Não ativa",
 #'   conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
 #'   municipio = "all", capital = "all",
 #'   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
@@ -41,7 +41,7 @@
 #' @examples
 #' \dontrun{
 #' ## Requesting data from the city of Campo Grande/MS
-#' novapop_popbr_mun(municipio = 500270)
+#' cnv_popsvs_mun(municipio = 500270)
 #' }
 #'
 #' @keywords RIPSA datasus estimativas de população
@@ -49,14 +49,14 @@
 #' @importFrom utils head
 #' @export
 
-novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria 2", conteudo = 1, periodo = "last", regiao = "all",
-                            unidade_da_federacao = "all", municipio = "all",capital = "all", cir = "all", macrorregiao_de_saude = "all",
-                            microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
-                            amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all", zona_de_fronteira = "all",
-                            municipio_de_extrema_pobreza = "all", sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
+cnv_popsvs_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria 2", conteudo = 1, periodo = "last", regiao = "all",
+                              unidade_da_federacao = "all", municipio = "all",capital = "all", cir = "all", macrorregiao_de_saude = "all",
+                              microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
+                              amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all", zona_de_fronteira = "all",
+                              municipio_de_extrema_pobreza = "all", sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
 
-#ajuste do link para tabela de população
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?novapop/cnv/popbr.def")
+  #ajuste do link para tabela de população
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?popsvs/cnv/popbr.def")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -67,14 +67,14 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
                           value = page %>% rvest::html_nodes("#C option") %>% rvest::html_attr("value"))
   coluna.df[] <- lapply(coluna.df, as.character)
 
-#ajuste do conteúdo da tabela
+  #ajuste do conteúdo da tabela
   conteudo.df <- data.frame(id1 = c(1),
                             id2 = c("Popula\u00e7\u00e3o_residente"),
                             value = c("Popula\u00e7\u00e3o_residente"))
 
   periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% as.numeric(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
-#adiciona regiao e uf cf tab e ref nac
+  #adiciona regiao e uf cf tab e ref nac
   regiao.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_text() %>% readr::parse_number(),
                                            value = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_attr("value")))
 
@@ -132,16 +132,16 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
                         value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
   sexo.df[] <- lapply(sexo.df, as.character)
 
-#remoção de variáveis que não aparecem, adição de faixa_etaria_1 e 2
+  #remoção de variáveis que não aparecem, adição de faixa_etaria_1 e 2
 
 
 
   faixa_etaria_1.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
+                                  value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
   faixa_etaria_1.df[] <- lapply(faixa_etaria_1.df, as.character)
 
   faixa_etaria_2.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
+                                  value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
   faixa_etaria_2.df[] <- lapply(faixa_etaria_2.df, as.character)
 
 
@@ -336,7 +336,7 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
     if (!(all(municipio_de_extrema_pobreza %in% municipio_de_extrema_pobreza.df$id))) stop("The element in 'municipio_de_extrema_pobreza' argument is wrong")
 
   }
-#Trocado para faixa_etaria_1 e 2
+  #Trocado para faixa_etaria_1 e 2
   if (any(faixa_etaria_1 != "all")) {
 
     if (!(all(faixa_etaria_1 %in% faixa_etaria_1.df$id))) {
@@ -529,7 +529,7 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?novapop/cnv/popbr.def",
+  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?popsvs/cnv/popbr.def",
                      body = form_data)
 
   tabdados <- httr::content(site, encoding = "Latin1") %>%
@@ -544,7 +544,7 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
 
   f1 <- function(x) x <- gsub("\\.", "", x)
   f2 <- function(x) x <- as.numeric(as.character(x))
-
+  print(head(tabdados))
   tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
                                        ncol = length(col_tabdados), byrow = TRUE))
 
