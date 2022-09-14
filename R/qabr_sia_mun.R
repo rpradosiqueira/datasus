@@ -80,7 +80,7 @@ qabr_sia_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", co
                          tipo_prestador = "all",natureza_juridica = "all",esfera_juridica = "all",aprovacao_producao = "all",profissional_cbo = "all") {
 
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sia/cnv/qabr.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sia/cnv/qabr.def", encoding = "ISO-8859-1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -153,7 +153,7 @@ qabr_sia_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", co
 
 
 
-  grupo_procedimento.df <- data.frame(id = 0:22,
+  grupo_procedimento.df <- data.frame(id = 0:8,
                                     value = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_attr("value"))
   grupo_procedimento.df[] <- lapply(grupo_procedimento.df, as.character)
 
