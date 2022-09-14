@@ -63,6 +63,10 @@ sinasc_nv_mun(linha = "Município", coluna = "Não ativa",
 
 \item{tipo_de_gravidez}{"all" or a character vector with the type of pregnancy (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
+\item{grupos_de_robson}{"all" or a character vector with the Robson Groups (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
+
+\item{adeq_pre_natal}{"all" or a character vector with the range of adequacy of prenatal consultation  (written in the same way - ex. 'Inadequado', 'Adequado') or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
+
 \item{tipo_de_parto}{"all" or a character vector with the Parturition type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{consult_pre_natal}{"all" or a character vector with the amount of prenatal consultation  (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
@@ -80,10 +84,6 @@ sinasc_nv_mun(linha = "Município", coluna = "Não ativa",
 \item{anomalia_congenita}{"all" or a character vector with the indicative of congenital anomaly (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{tipo_anomal_congen}{"all" or a character vector with the congenital anomaly type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{grupos_de_robson}{"all" or a character vector with the Robson Groups (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{adeq_pre_natal}{"all" or a character vector with the range of adequacy of prenatal consultation  (written in the same way - ex. 'Inadequado', 'Adequado') or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 }
 \value{
 The function returns a data frame printed by parameters input.
