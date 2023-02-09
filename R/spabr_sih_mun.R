@@ -70,10 +70,9 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                          capital = "all", cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
                          territorio_da_cidadania = "all", mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
                          faixa_de_fronteira = "all", zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-                         procedimento_principal = "all", grupo_procedimento_principal = "all", subgrupo_procedimento_principal = "all", forma_organizacao = "all",
-                         procedimento = "all", grupo_procedimento = "all", subgrupo_procedimento = "all",complexidade = "all", financiamento = "all", subtipo_financiamento = "all", servico_classificacao = "all",
-                         carater_atendimento = "all",gestao = "all",documento_registro = "all",esfera_administrativa = "all",
-                         tipo_prestador = "all",natureza_juridica = "all",esfera_juridica = "all",aprovacao_producao = "all",profissional_cbo = "all") {
+                         procedimento_principal = "all", grupo_procedimento_principal = "all", subgrupo_procedimento_principal = "all", forma_organizacao_principal = "all",
+                         procedimento = "all", grupo_procedimento = "all", subgrupo_procedimento = "all",forma_organizacao = "all",complexidade = "all", financiamento = "all", subtipo_financiamento = "all", servico_classificacao = "all",
+                        profissional_cbo = "all") {
 
 
   page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sih/cnv/spabr.def", encoding = "ISO-8859-1")
@@ -462,7 +461,7 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
     if (!(all(forma_organizacao_principal %in% forma_organizacao_principal.df$id))) {
 
-      forma_organizacao_principal <- as.character(forma_organizacao_principal)
+      forma_organizacao_principal.df <- as.character(forma_organizacao_principal.df)
 
       if (!(all(forma_organizacao_principal %in% forma_organizacao_principal.df$value))) {
 
@@ -748,7 +747,7 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                      form_territorio_da_cidadania, form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal,
                      form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
                      form_procedimento_principal, form_pesqmes14, form_grupo_procedimento_principal, form_pesqmes16, form_subgrupo_procedimento_principal,
-                     form_pesqmes17,form_forma_organizacao, form_complexidade, form_financiamento, form_pesqmes20,form_subtipo_financiamento,
+                     form_pesqmes17,form_forma_organizacao_principal,form_forma_organizacao, form_complexidade, form_financiamento, form_pesqmes20,form_subtipo_financiamento,
                      form_pesqmes21,form_servico_classificacao,form_pesqmes25,form_profissional_cbo,form_pesqmes26,
                      "formato=table&mostre=Mostra", sep = "&")
 

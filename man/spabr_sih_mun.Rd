@@ -58,13 +58,15 @@ spabr_sih_mun(linha = "Município", coluna = "Não ativa",
 
 \item{subgrupo_procedimento_principal}{"all" or a character vector with the procedure group to filter the data. Defaults to "all".}
 
-\item{forma_organizacao}{"all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
+\item{forma_organizacao_principal}{"all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{procedimento}{"all" or a character vector with the procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{grupo_procedimento}{"all" or a numeric vector with the procedure group to filter the data. Defaults to "all".}
 
 \item{subgrupo_procedimento}{"all" or a character vector with the procedure group to filter the data. Defaults to "all".}
+
+\item{forma_organizacao}{"all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{complexidade}{"all" or a character vector with procedure complexity or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
@@ -75,8 +77,6 @@ spabr_sih_mun(linha = "Município", coluna = "Não ativa",
 \item{servico_classificacao}{"all" or a character vector with the contractual rule (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{profissional_cbo}{"all" or a character vector with the professional occupation code according to Brazilian Occupations' Classifications (CBO, written in the same way as presented in the site) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
-
-\item{forma_organizacao_principal}{"all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 }
 \value{
 The function returns a data frame printed by parameters input.
