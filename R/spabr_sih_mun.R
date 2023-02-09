@@ -684,8 +684,8 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_pesqmes16 <- "pesqmes16=Digite+o+texto+e+ache+f%E1cil"
 
   #forma_organizacao
-  form_forma_organizacao_principal <- dplyr::filter(forma_organizacao.df, forma_organizacao.df$id %in% forma_organizacao)
-  form_forma_organizacao_principal <- paste0("SForma_organiza%E7%E3o=", form_forma_organizacao$value, collapse = "&")
+  form_forma_organizacao_principal <- dplyr::filter(forma_organizacao_principal.df, forma_organizacao_principal.df$id %in% forma_organizacao_principal)
+  form_forma_organizacao_principal <- paste0("SForma_organiza%E7%E3o=", form_forma_organizacao_principal$value, collapse = "&")
 
   form_pesqmes17 <- "pesqmes17=Digite+o+texto+e+ache+f%E1cil"
 
