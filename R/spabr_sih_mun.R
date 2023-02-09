@@ -17,7 +17,7 @@
 #'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
 #'   procedimento = "all", grupo_procedimento = "all", subgrupo_procedimento = "all",
 #'   forma_organizacao = "all", complexidade = "all", financiamento = "all",
-#'   subtipo_financiamento = "all",regra_contratual = "all", carater_atendimento = "all",
+#'   subtipo_financiamento = "all",servico_classificacao = "all", carater_atendimento = "all",
 #'   gestao = "all", documento_registro = "all", esfera_administrativa = "all",
 #'   tipo_prestador = "all", natureza_juridica = "all", esfera_juridica = "all",
 #'   aprovacao_producao = "all", profissional_cbo = "all" )
@@ -38,23 +38,19 @@
 #' @param faixa_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border area must be included. Defaults to "all".
 #' @param zona_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border strip must be included. Defaults to "all".
 #' @param municipio_de_extrema_pobreza "all" or a character ("Sim" or "Não") indicating if only the municipalities of extreme poverty must be included. Defaults to "all".
+#' @param procedimento_principal "all" or a character vector with the procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param servico_classificacao "all" or a character vector with the contractual rule (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param grupo_procedimento_principal "all" or a numeric vector with the procedure group to filter the data. Defaults to "all".
+#' @param subgrupo_procedimento_principal "all" or a character vector with the procedure group to filter the data. Defaults to "all".
+#' @param forma_organizacao_principal "all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param procedimento "all" or a character vector with the procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param regra_contratual "all" or a character vector with the contractual rule (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param grupo_procedimento "all" or a numeric vector with the procedure group to filter the data. Defaults to "all".
 #' @param subgrupo_procedimento "all" or a character vector with the procedure group to filter the data. Defaults to "all".
 #' @param forma_organizacao "all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param complexidade "all" or a character vector with procedure complexity or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param financiamento "all" or a character vector with financing form (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param subtipo_financiamento "all" or a character vector with the financing form subtype (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param regra_contratual "all" or a character vector with the contractual rule (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param carater_atendimento "all" or a character vector with the service character (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param gestao "all" or a character vector with the management (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param documento_registro "all" or a character vector with the registry document (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param esfera_administrativa "all" or a character vector with the administrative sphere (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param tipo_prestador "all" or a character vector with the service provider type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param natureza_juridica "all" or a character vector with the legal nature (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param esfera_juridica "all" or a character vector with the legal sphere (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param aprovacao_producao "all" or a character vector with the approval status (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param servico_classificacao "all" or a character vector with the contractual rule (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param profissional_cbo "all" or a character vector with the professional occupation code according to Brazilian Occupations' Classifications (CBO, written in the same way as presented in the site) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
 #' @author Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{<rodrigo@@borges.net.br>}
@@ -74,8 +70,8 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                          capital = "all", cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
                          territorio_da_cidadania = "all", mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
                          faixa_de_fronteira = "all", zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-                         procedimento = "all", grupo_procedimento = "all", subgrupo_procedimento = "all", forma_organizacao = "all",
-                         complexidade = "all", financiamento = "all", subtipo_financiamento = "all", regra_contratual = "all",
+                         procedimento_principal = "all", grupo_procedimento_principal = "all", subgrupo_procedimento_principal = "all", forma_organizacao = "all",
+                         procedimento = "all", grupo_procedimento = "all", subgrupo_procedimento = "all",complexidade = "all", financiamento = "all", subtipo_financiamento = "all", servico_classificacao = "all",
                          carater_atendimento = "all",gestao = "all",documento_registro = "all",esfera_administrativa = "all",
                          tipo_prestador = "all",natureza_juridica = "all",esfera_juridica = "all",aprovacao_producao = "all",profissional_cbo = "all") {
 
@@ -144,8 +140,31 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                                                 value = page %>% rvest::html_nodes("#S13 option") %>% rvest::html_attr("value"))
   municipio_de_extrema_pobreza.df[] <- lapply(municipio_de_extrema_pobreza.df, as.character)
 
-  procedimento.df <- data.frame(id = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_text() %>% trimws(),
+  procedimento_principal.df <- data.frame(id = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_text() %>% trimws(),
                                     value = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_attr("value"))
+  procedimento_principal.df[] <- lapply(procedimento_principal.df, as.character)
+  procedimento_principal.df$id <- gsub(" .*$", "", procedimento_principal.df$id)
+  procedimento_principal.df$id <- gsub("\\.", " ", procedimento_principal.df$id) %>% trimws()
+  procedimento_principal.df$id <- gsub(" ", ".", procedimento_principal.df$id)
+
+
+
+  grupo_procedimento_principal.df <- data.frame(id = 0:8,
+                                    value = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_attr("value"))
+  grupo_procedimento_principal.df[] <- lapply(grupo_procedimento_principal.df, as.character)
+
+  subgrupo_procedimento_principal.df <- data.frame(id = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_text() %>% trimws(),
+                                    value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
+  subgrupo_procedimento_principal.df[] <- lapply(subgrupo_procedimento_principal.df, as.character)
+  subgrupo_procedimento_principal.df$id <- gsub(" .*$", "", subgrupo_procedimento_principal.df$id)
+
+  forma_organizacao_principal.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
+                                value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
+  forma_organizacao_principal.df[] <- lapply(forma_organizacao_principal.df, as.character)
+
+
+  procedimento.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
+                                value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
   procedimento.df[] <- lapply(procedimento.df, as.character)
   procedimento.df$id <- gsub(" .*$", "", procedimento.df$id)
   procedimento.df$id <- gsub("\\.", " ", procedimento.df$id) %>% trimws()
@@ -154,94 +173,51 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
 
   grupo_procedimento.df <- data.frame(id = 0:8,
-                                    value = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_attr("value"))
+                                      value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
   grupo_procedimento.df[] <- lapply(grupo_procedimento.df, as.character)
 
-  subgrupo_procedimento.df <- data.frame(id = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_text() %>% trimws(),
-                                    value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
+  subgrupo_procedimento.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
+                                         value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
   subgrupo_procedimento.df[] <- lapply(subgrupo_procedimento.df, as.character)
   subgrupo_procedimento.df$id <- gsub(" .*$", "", subgrupo_procedimento.df$id)
 
-  forma_organizacao.df <- data.frame(id = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_text() %>% trimws(),
-                                value = page %>% rvest::html_nodes("#S17 option") %>% rvest::html_attr("value"))
+  forma_organizacao.df <- data.frame(id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
+                                               value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value"))
   forma_organizacao.df[] <- lapply(forma_organizacao.df, as.character)
 
-  complexidade.df <- data.frame(id = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_text() %>% trimws(),
-                                          value = page %>% rvest::html_nodes("#S18 option") %>% rvest::html_attr("value"))
+  complexidade.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
+                                          value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
   complexidade.df[] <- lapply(complexidade.df, as.character)
 
-  financiamento.df <- data.frame(id = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_text() %>% trimws(),
-                        value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
+  financiamento.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
+                        value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
   financiamento.df[] <- lapply(financiamento.df, as.character)
 
-  subtipo_financiamento.df <- data.frame(id = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_text() %>% trimws(),
-                            value = page %>% rvest::html_nodes("#S20 option") %>% rvest::html_attr("value"))
+  subtipo_financiamento.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
+                            value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
 
   subtipo_financiamento.df[] <- lapply(subtipo_financiamento.df, as.character)
 
-  regra_contratual.df <- data.frame( id = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_text() %>% trimws(),
-                                     value = page %>% rvest::html_nodes("#S21 option") %>% rvest::html_attr("value") )
+  servico_classificacao.df <- data.frame( id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
+                                     value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value") )
 
-  regra_contratual.df[] <- lapply(regra_contratual.df, as.character)
-  regra_contratual.df$id <- gsub(" .*$", "", regra_contratual.df$id)
-  regra_contratual.df$id <- gsub("\\.", " ", regra_contratual.df$id) %>% trimws()
-  regra_contratual.df$id <- gsub(" ", ".", regra_contratual.df$id)
+  servico_classificacao.df[] <- lapply(servico_classificacao.df, as.character)
+  servico_classificacao.df$id <- gsub(" .*$", "", servico_classificacao.df$id)
+  servico_classificacao.df$id <- gsub("\\.", " ", servico_classificacao.df$id) %>% trimws()
+  servico_classificacao.df$id <- gsub(" ", ".", servico_classificacao.df$id)
 
-  carater_atendimento.df <- data.frame(id = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_text() %>% trimws(),
-                                       value = page %>% rvest::html_nodes("#S22 option") %>% rvest::html_attr("value"))
-  carater_atendimento.df[] <- lapply(carater_atendimento.df, as.character)
-  carater_atendimento.df$id <- gsub(" .*$", "", carater_atendimento.df$id)
-  carater_atendimento.df$id <- gsub("\\.", " ", carater_atendimento.df$id) %>% trimws()
-  carater_atendimento.df$id <- gsub(" ", ".", carater_atendimento.df$id)
-
-  gestao.df <- data.frame(id = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_text() %>% trimws(),
-                                         value = page %>% rvest::html_nodes("#S23 option") %>% rvest::html_attr("value"))
-
-  gestao.df[] <- lapply(gestao.df, as.character)
-
-  documento_registro.df <- data.frame(id = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_text() %>% trimws(),
-                          value = page %>% rvest::html_nodes("#S24 option") %>% rvest::html_attr("value"))
-
-  documento_registro.df[] <- lapply(documento_registro.df, as.character)
-
-  esfera_administrativa.df <- data.frame(id = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_text() %>% trimws(),
-                          value = page %>% rvest::html_nodes("#S25 option") %>% rvest::html_attr("value"))
-
-  esfera_administrativa.df[] <- lapply(esfera_administrativa.df, as.character)
-
-  tipo_prestador.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
+  profissional_cbo.df <- data.frame(id = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_text() %>% trimws(),
                           value = page %>% rvest::html_nodes("#S26 option") %>% rvest::html_attr("value"))
-
-  tipo_prestador.df[] <- lapply(tipo_prestador.df, as.character)
-
-  natureza_juridica.df <- data.frame(id = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_text() %>% trimws(),
-                          value = page %>% rvest::html_nodes("#S27 option") %>% rvest::html_attr("value"))
-
-  natureza_juridica.df[] <- lapply(natureza_juridica.df, as.character)
-
-  esfera_juridica.df <- data.frame(id = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_text() %>% trimws(),
-                          value = page %>% rvest::html_nodes("#S28 option") %>% rvest::html_attr("value"))
-
-  esfera_juridica.df[] <- lapply(esfera_juridica.df, as.character)
-
-  aprovacao_producao.df <- data.frame(id = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_text() %>% trimws(),
-                          value = page %>% rvest::html_nodes("#S29 option") %>% rvest::html_attr("value"))
-
-  aprovacao_producao.df[] <- lapply(aprovacao_producao.df, as.character)
-
-  profissional_cbo.df <- data.frame(id = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_text() %>% trimws(),
-                          value = page %>% rvest::html_nodes("#S30 option") %>% rvest::html_attr("value"))
 
   profissional_cbo.df[] <- lapply(profissional_cbo.df, as.character)
 
   municipios.df$id[1] <- capital.df$id[1] <- cir.df$id[1] <- macrorregiao_de_saude.df$id[1] <- microrregiao_ibge.df$id[1] <- "all"
   territorio_da_cidadania.df$id[1] <- mesorregiao_pndr.df$id[1] <- amazonia_legal.df$id[1] <- semiarido.df$id[1] <- "all"
   faixa_de_fronteira.df$id[1] <- zona_de_fronteira.df$id[1] <- municipio_de_extrema_pobreza.df$id[1] <- "all"
-  ride.df$id[1] <- grupo_procedimento.df$id[1] <- subgrupo_procedimento.df$id[1] <- "all"
+  ride.df$id[1] <- grupo_procedimento_principal.df$id[1] <- subgrupo_procedimento_principal.df$id[1] <- "all"
+  forma_organizacao_principal.df$id[1] <- grupo_procedimento.df$id[1] <- subgrupo_procedimento.df$id[1] <- "all"
   forma_organizacao.df$id[1] <- complexidade.df$id[1] <- financiamento.df$id[1] <- subtipo_financiamento.df$id[1] <- "all"
-  procedimento.df$id[1] <- regra_contratual.df$id[1] <- carater_atendimento.df$id[1] <- gestao.df$id[1] <- documento_registro.df$id[1] <-
-  esfera_administrativa.df$id[1] <- tipo_prestador.df$id[1] <- natureza_juridica.df$id[1] <- esfera_juridica.df$id[1] <-
-    aprovacao_producao.df$id[1] <- profissional_cbo.df$id[1] <- "all"
+  procedimento_principal.df$id[1] <- servico_classificacao.df$id[1] <- profissional_cbo.df$id[1] <- "all"
 
   #### ERROR HANDLING ####
   if (linha != "Munic\u00edpio") {
@@ -412,6 +388,24 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
+  if (any(procedimento_principal != "all")) {
+
+    procedimento_principal <- as.character(procedimento_principal)
+
+    if (!(all(procedimento_principal %in% procedimento_principal.df$id))) {
+
+      procedimento_principal <- as.character(procedimento_principal)
+
+      if (!(all(procedimento_principal %in% procedimento_principal.df$value))) {
+
+        stop("Some element in 'procedimento_principal' argument is wrong")
+
+      }
+
+    }
+
+  }
+
   if (any(procedimento != "all")) {
 
     procedimento <- as.character(procedimento)
@@ -430,23 +424,55 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-      if (any(regra_contratual != "all")) {
+      if (any(servico_classificacao != "all")) {
 
-      regra_contratual <- as.character(regra_contratual)
+      servico_classificacao <- as.character(servico_classificacao)
 
-      if (!(all(regra_contratual %in% regra_contratual.df$id))) {
+      if (!(all(servico_classificacao %in% servico_classificacao.df$id))) {
 
-        regra_contratual <- as.character(regra_contratual)
+        servico_classificacao <- as.character(servico_classificacao)
 
-        if (!(all(regra_contratual %in% regra_contratual.df$value))) {
+        if (!(all(servico_classificacao %in% servico_classificacao.df$value))) {
 
-          stop("Some element in 'regra_contratual' argument is wrong")
+          stop("Some element in 'servico_classificacao' argument is wrong")
 
         }
 
       }
 
     }
+
+  if (any(grupo_procedimento_principal != "all")) {
+
+    grupo_procedimento_principal <- as.character(grupo_procedimento_principal)
+
+    if (!(all(grupo_procedimento_principal %in% grupo_procedimento_principal.df$id))) stop("Some element in 'grupo_procedimento_principal' argument is wrong")
+
+  }
+
+  if (any(subgrupo_procedimento_principal != "all")) {
+
+    subgrupo_procedimento_principal <- as.character(subgrupo_procedimento_principal)
+
+    if (!(all(subgrupo_procedimento_principal %in% subgrupo_procedimento_principal.df$id))) stop("Some element in 'subgrupo_procedimento_principal' argument is wrong")
+
+  }
+
+  if (any(forma_organizacao_principal != "all")) {
+
+    if (!(all(forma_organizacao_principal %in% forma_organizacao_principal.df$id))) {
+
+      forma_organizacao_principal <- as.character(forma_organizacao_principal)
+
+      if (!(all(forma_organizacao_principal %in% forma_organizacao_principal.df$value))) {
+
+        stop("Some element in 'forma_organizacao_principal' argument is wrong")
+
+      }
+
+    }
+
+  }
 
   if (any(grupo_procedimento != "all")) {
 
@@ -640,29 +666,53 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_municipio_de_extrema_pobreza <- dplyr::filter(municipio_de_extrema_pobreza.df, municipio_de_extrema_pobreza.df$id %in% municipio_de_extrema_pobreza)
   form_municipio_de_extrema_pobreza <- paste0("SMunic%EDpio_de_extrema_pobreza=", form_municipio_de_extrema_pobreza$value, collapse = "&")
 
+  #procedimento_principal
+  form_procedimento_principal <- dplyr::filter(procedimento_principal.df, procedimento_principal.df$id %in% procedimento_principal)
+  form_procedimento_principal <- paste0("SProcedimento=", form_procedimento_principal$value, collapse = "&")
+
+  form_pesqmes14 <- "pesqmes14=Digite+o+texto+e+ache+f%E1cil"
+
+  #grupo_procedimento_principal
+  form_grupo_procedimento_principal <- dplyr::filter(grupo_procedimento_principal.df, grupo_procedimento_principal.df$id %in% grupo_procedimento_principal)
+  form_grupo_procedimento_principal <- paste0("SGrupo_procedimento_principal=", form_grupo_procedimento_principal$value, collapse = "&")
+
+
+
+  #subgrupo_procedimento_principal
+  form_subgrupo_procedimento_principal <- dplyr::filter(subgrupo_procedimento_principal.df, subgrupo_procedimento_principal.df$id %in% subgrupo_procedimento_principal)
+  form_subgrupo_procedimento_principal <- paste0("SSubgrupo_proced.=", form_subgrupo_procedimento_principal$value, collapse = "&")
+
+  form_pesqmes16 <- "pesqmes16=Digite+o+texto+e+ache+f%E1cil"
+
+  #forma_organizacao
+  form_forma_organizacao_principal <- dplyr::filter(forma_organizacao.df, forma_organizacao.df$id %in% forma_organizacao)
+  form_forma_organizacao_principal <- paste0("SForma_organiza%E7%E3o=", form_forma_organizacao$value, collapse = "&")
+
+  form_pesqmes17 <- "pesqmes17=Digite+o+texto+e+ache+f%E1cil"
+
   #procedimento
   form_procedimento <- dplyr::filter(procedimento.df, procedimento.df$id %in% procedimento)
   form_procedimento <- paste0("SProcedimento=", form_procedimento$value, collapse = "&")
 
-  form_pesqmes14 <- "pesqmes14=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes18 <- "pesqmes18=Digite+o+texto+e+ache+f%E1cil"
 
   #grupo_procedimento
   form_grupo_procedimento <- dplyr::filter(grupo_procedimento.df, grupo_procedimento.df$id %in% grupo_procedimento)
   form_grupo_procedimento <- paste0("SGrupo_procedimento=", form_grupo_procedimento$value, collapse = "&")
 
-
+  form_pesqmes19 <- "pesqmes19=Digite+o+texto+e+ache+f%E1cil"
 
   #subgrupo_procedimento
   form_subgrupo_procedimento <- dplyr::filter(subgrupo_procedimento.df, subgrupo_procedimento.df$id %in% subgrupo_procedimento)
   form_subgrupo_procedimento <- paste0("SSubgrupo_proced.=", form_subgrupo_procedimento$value, collapse = "&")
 
-  form_pesqmes16 <- "pesqmes16=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes20 <- "pesqmes20=Digite+o+texto+e+ache+f%E1cil"
 
   #forma_organizacao
   form_forma_organizacao <- dplyr::filter(forma_organizacao.df, forma_organizacao.df$id %in% forma_organizacao)
   form_forma_organizacao <- paste0("SForma_organiza%E7%E3o=", form_forma_organizacao$value, collapse = "&")
 
-  form_pesqmes17 <- "pesqmes17=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes21 <- "pesqmes21=Digite+o+texto+e+ache+f%E1cil"
 
   #complexidade
   form_complexidade <- dplyr::filter(complexidade.df, complexidade.df$id %in% complexidade)
@@ -678,68 +728,28 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   form_pesqmes20 <- "pesqmes20=Digite+o+texto+e+ache+f%E1cil"
 
-  #regra_contratual
-  form_regra_contratual <- dplyr::filter(regra_contratual.df,regra_contratual.df$id %in% regra_contratual)
-  form_regra_contratual <- paste0("SRegra_contratual=", form_regra_contratual$value, collapse = "&")
+  #servico_classificacao
+  form_servico_classificacao <- dplyr::filter(servico_classificacao.df,servico_classificacao.df$id %in% servico_classificacao)
+  form_servico_classificacao <- paste0("SServi%E7o/Classifica%E7%E3o=", form_servico_classificacao$value, collapse = "&")
 
-  form_pesqmes21 <- "pesqmes21=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes25 <- "pesqmes25=Digite+o+texto+e+ache+f%E1cil"
 
-  #carater_atendimento
-  form_carater_atendimento <- dplyr::filter(carater_atendimento.df,carater_atendimento.df$id %in% carater_atendimento)
-  form_carater_atendimento <- paste0("SCar%E1ter_Atendiment=", form_carater_atendimento$value, collapse = "&")
-
-
-
-  #gestao
-  form_gestao <- dplyr::filter(gestao.df,gestao.df$id %in% gestao)
-  form_gestao <- paste0("SGest%E3o=", form_gestao$value, collapse = "&")
-
-
-  #documento_registro
-  form_documento_registro <- dplyr::filter(documento_registro.df,documento_registro.df$id %in% documento_registro)
-  form_documento_registro <- paste0("SDocumento_registro=", form_documento_registro$value, collapse = "&")
-
-
-  #esfera_administrativa
-  form_esfera_administrativa <- dplyr::filter(esfera_administrativa.df,esfera_administrativa.df$id %in% esfera_administrativa)
-  form_esfera_administrativa <- paste0("SEsfera_administrat=", form_esfera_administrativa$value, collapse = "&")
-
-
-  #tipo_prestador
-  form_tipo_prestador <- dplyr::filter(tipo_prestador.df,tipo_prestador.df$id %in% tipo_prestador)
-  form_tipo_prestador <- paste0("STipo_de_prestador=", form_tipo_prestador$value, collapse = "&")
-
-  #natureza_juridica
-  form_natureza_juridica <- dplyr::filter(natureza_juridica.df,natureza_juridica.df$id %in% natureza_juridica)
-  form_natureza_juridica <- paste0("SNatureza_Jur%EDdica=", form_natureza_juridica$value, collapse = "&")
-
-  form_pesqmes27 <- "pesqmes27=Digite+o+texto+e+ache+f%E1cil"
-  #esfera_juridica
-  form_esfera_juridica <- dplyr::filter(esfera_juridica.df,esfera_juridica.df$id %in% esfera_juridica)
-  form_esfera_juridica <- paste0("SEsfera_Jur%EDdica=", form_esfera_juridica$value, collapse = "&")
-
-  form_pesqmes28 <- "pesqmes28=Digite+o+texto+e+ache+f%E1cil"
-  #aprovacao_producao
-  form_aprovacao_producao <- dplyr::filter(aprovacao_producao.df,aprovacao_producao.df$id %in% aprovacao_producao)
-  form_aprovacao_producao <- paste0("SAprova%E7%E3o_produ%E7%E3o=", form_aprovacao_producao$value, collapse = "&")
 
     #profissional_cbo
 
   form_profissional_cbo <- dplyr::filter(profissional_cbo.df,profissional_cbo.df$id %in% profissional_cbo)
-  form_profissional_cbo <- paste0("SProfissional_-_CBO=", form_profissional_cbo$value, collapse = "&")
+  form_profissional_cbo <- paste0("SCBO_do_Profissional=", form_profissional_cbo$value, collapse = "&")
 
-  form_pesqmes30 <- "pesqmes30=Digite+o+texto+e+ache+f%E1cil"
+  form_pesqmes26 <- "pesqmes26=Digite+o+texto+e+ache+f%E1cil"
 
   form_data <- paste(form_linha, form_coluna, form_conteudo, form_periodo, form_pesqmes1, form_municipio,
                      form_pesqmes2, form_capital, form_pesqmes3, form_cir, form_pesqmes4, form_macrorregiao_de_saude,
                      form_pesqmes5, form_microrregiao_ibge, form_pesqmes6, form_ride, form_pesqmes7,
                      form_territorio_da_cidadania, form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal,
                      form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
-                     form_procedimento, form_pesqmes14, form_grupo_procedimento, form_pesqmes16, form_subgrupo_procedimento,
+                     form_procedimento_principal, form_pesqmes14, form_grupo_procedimento_principal, form_pesqmes16, form_subgrupo_procedimento_principal,
                      form_pesqmes17,form_forma_organizacao, form_complexidade, form_financiamento, form_pesqmes20,form_subtipo_financiamento,
-                     form_pesqmes21,form_regra_contratual,form_carater_atendimento,form_gestao,form_documento_registro,form_esfera_administrativa,
-                     form_tipo_prestador,form_pesqmes27,form_natureza_juridica,form_pesqmes28,form_esfera_juridica,form_aprovacao_producao,
-                     form_pesqmes30,form_profissional_cbo,
+                     form_pesqmes21,form_servico_classificacao,form_pesqmes25,form_profissional_cbo,form_pesqmes26,
                      "formato=table&mostre=Mostra", sep = "&")
 
   form_data <- gsub("\\\\u00", "%", form_data)
