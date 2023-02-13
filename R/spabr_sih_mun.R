@@ -587,9 +587,9 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   if(is.numeric(conteudo)){
   form_conteudo <- conteudo.df$value[conteudo]
   } else if(grepl("_",conteudo)){
-    conteudo.df[conteudo.df$value == conteudo,]$value
+    form_conteudo <- conteudo.df[conteudo.df$value == conteudo,]$value
   } else {
-    conteudo.df[conteudo.df$id2 == conteudo,]$value
+    form_conteudo <- conteudo.df[conteudo.df$id2 == conteudo,]$value
   }
 
   # if (!stringi::stri_enc_isascii(form_conteudo)) {
