@@ -23,7 +23,7 @@
 #'   aprovacao_producao = "all", profissional_cbo = "all" )
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
-#' @param conteudo A character of length = 1 with the state's acronym of interest.
+#' @param conteudo A character of length = 1 with indicating wether approved quantity or values should be returned.
 #' @param periodo A character vector describing the period of data. Defaults to the last available.
 #' @param municipio "all" or a numeric vector with the IBGE's city codes codes to filter the data. Defaults to "all".
 #' @param capital "all" or a numeric vector with the IBGE's cities codes to filter the data. Defaults to "all".
@@ -38,11 +38,11 @@
 #' @param faixa_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border area must be included. Defaults to "all".
 #' @param zona_de_fronteira "all" or a character ("Sim" or "Não") indicating if only the border strip must be included. Defaults to "all".
 #' @param municipio_de_extrema_pobreza "all" or a character ("Sim" or "Não") indicating if only the municipalities of extreme poverty must be included. Defaults to "all".
-#' @param procedimento_principal "all" or a character vector with the procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param procedimento_principal "all" or a character vector with the MAIN procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param servico_classificacao "all" or a character vector with the contractual rule (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
-#' @param grupo_procedimento_principal "all" or a numeric vector with the procedure group to filter the data. Defaults to "all".
-#' @param subgrupo_procedimento_principal "all" or a character vector with the procedure group to filter the data. Defaults to "all".
-#' @param forma_organizacao_principal "all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
+#' @param grupo_procedimento_principal "all" or a numeric vector with the MAIN procedure group to filter the data. Defaults to "all".
+#' @param subgrupo_procedimento_principal "all" or a character vector with the MAIN procedure group to filter the data. Defaults to "all".
+#' @param forma_organizacao_principal "all" or a character vector with the MAIN organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param procedimento "all" or a character vector with the procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param grupo_procedimento "all" or a numeric vector with the procedure group to filter the data. Defaults to "all".
 #' @param subgrupo_procedimento "all" or a character vector with the procedure group to filter the data. Defaults to "all".
@@ -86,7 +86,7 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                           value = page %>% rvest::html_nodes("#C option") %>% rvest::html_attr("value"))
   coluna.df[] <- lapply(coluna.df, as.character)
 
-  conteudo.df <- data.frame(id1 = c(1:8),
+  conteudo.df <- data.frame(id1 = c(1:2),
                             id2 = page %>% rvest::html_nodes("#I option") %>% rvest::html_text() %>% trimws(),
                             value = page %>% rvest::html_nodes("#I option") %>% rvest::html_attr("value")
                             )
@@ -255,11 +255,13 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   }
 
-  if (conteudo != 1 & conteudo > 15) {
+  if(length(conteudo) != 1) stop("The 'conteudo' argument must have only one element")
 
-    if (is.numeric(conteudo)) stop("The only numeric elements allowed are 1 to 15")
-
-    if(length(conteudo) != 1) stop("The 'coluna' argument must have only one element")
+    if (is.numeric(conteudo))  {
+      if (!(conteudo %in% 1:2)) {
+        stop("The only numeric elements allowed are 1 or 2")
+      }
+   print(conteudo.df)
 
     if (!(all(conteudo %in% conteudo.df$id2))) {
 
@@ -582,12 +584,19 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   }
 
   #conteudo
+  if(is.numeric(conteudo)){
   form_conteudo <- conteudo.df$value[conteudo]
-  if (!stringi::stri_enc_isascii(form_conteudo)) {
-    form_conteudo <- paste0("Incremento=", stringi::stri_escape_unicode(form_conteudo))
+  } else if(grepl("_",conteudo)){
+    conteudo.df[conteudo.df$value == conteudo,]$value
   } else {
-    form_conteudo <- paste0("Incremento=", form_conteudo)
+    conteudo.df[conteudo.df$id2 == conteudo,]$value
   }
+
+  # if (!stringi::stri_enc_isascii(form_conteudo)) {
+  #   form_conteudo <- paste0("Incremento=", stringi::stri_escape_unicode(form_conteudo))
+  # } else {
+    form_conteudo <- paste0("Incremento=", form_conteudo)
+  # }
 
   #periodo
   suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )

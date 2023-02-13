@@ -22,7 +22,7 @@ spabr_sih_mun(linha = "Município", coluna = "Não ativa",
 
 \item{coluna}{A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".}
 
-\item{conteudo}{A character of length = 1 with the state's acronym of interest.}
+\item{conteudo}{A character of length = 1 with indicating wether approved quantity or values should be returned.}
 
 \item{periodo}{A character vector describing the period of data. Defaults to the last available.}
 
@@ -52,13 +52,13 @@ spabr_sih_mun(linha = "Município", coluna = "Não ativa",
 
 \item{municipio_de_extrema_pobreza}{"all" or a character ("Sim" or "Não") indicating if only the municipalities of extreme poverty must be included. Defaults to "all".}
 
-\item{procedimento_principal}{"all" or a character vector with the procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
+\item{procedimento_principal}{"all" or a character vector with the MAIN procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
-\item{grupo_procedimento_principal}{"all" or a numeric vector with the procedure group to filter the data. Defaults to "all".}
+\item{grupo_procedimento_principal}{"all" or a numeric vector with the MAIN procedure group to filter the data. Defaults to "all".}
 
-\item{subgrupo_procedimento_principal}{"all" or a character vector with the procedure group to filter the data. Defaults to "all".}
+\item{subgrupo_procedimento_principal}{"all" or a character vector with the MAIN procedure group to filter the data. Defaults to "all".}
 
-\item{forma_organizacao_principal}{"all" or a character vector with the organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
+\item{forma_organizacao_principal}{"all" or a character vector with the MAIN organization_type or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{procedimento}{"all" or a character vector with the procedure or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
