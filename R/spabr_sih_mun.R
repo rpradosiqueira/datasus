@@ -756,7 +756,7 @@ spabr_sih_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                      form_territorio_da_cidadania, form_pesqmes8, form_mesorregiao_pndr, form_amazonia_legal,
                      form_semiarido, form_faixa_de_fronteira, form_zona_de_fronteira, form_municipio_de_extrema_pobreza,
                      form_procedimento_principal, form_pesqmes14, form_grupo_procedimento_principal, form_pesqmes16, form_subgrupo_procedimento_principal,
-                     form_pesqmes17,form_forma_organizacao_principal,form_forma_organizacao, form_complexidade, form_financiamento, form_pesqmes20,form_subtipo_financiamento,
+                     form_pesqmes17,form_forma_organizacao_principal,form_procedimento,form_grupo_procedimento,form_subgrupo_procedimento,form_forma_organizacao, form_complexidade, form_financiamento, form_pesqmes20,form_subtipo_financiamento,
                      form_pesqmes21,form_servico_classificacao,form_pesqmes25,form_profissional_cbo,form_pesqmes26,
                      "formato=table&mostre=Mostra", sep = "&")
 
