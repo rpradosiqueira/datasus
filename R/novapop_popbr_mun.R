@@ -56,7 +56,8 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
                             municipio_de_extrema_pobreza = "all", sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
 
 #ajuste do link para tabela de população
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?novapop/cnv/popbr.def")
+  #page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?novapop/cnv/popbr.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
