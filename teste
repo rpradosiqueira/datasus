@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="pt-BR"><HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>TabNet Win32 3.2:  Proje&ccedil;&atilde;o da Popula&ccedil;&atilde;o das Unidades da Federa&ccedil;&atilde;o por sexo, idade simples ou faixa-et&aacute;ria: 2010-2060 (edi&ccedil;&atilde;o 2018)</TITLE>
+<LINK REL="stylesheet" HREF="/tabnet/tabnet2.css" TYPE="text/css"><!-- com a opção JCSS -->
+<LINK REL="stylesheet" HREF="/tabnet/tabnetp2.css" MEDIA="print"  TYPE="text/css"><!-- com a opção JCSSP -->
+</HEAD>
+<BODY>
+ <div name="governo" class="todalargura">
+ <div class="testeira" cellspacing="0" cellpadding="0">
+   <div class="Escondido" style="background-color: #ffcc00;">
+      <div>
+         <a href="http://www.saude.gov.br" target="_blank">
+            <img alt="Ministério da Saúde" src="http://www.datasus.gov.br/gifs/principal_r1_c1_res.gif" height="21" id="img1" />
+         </a>
+     </div>
+ </div>
+ <div class="testeira" cellspacing="0" cellpadding="0">
+    <div class="info_saude">
+         <a href="/tabnet/tabnet.htm" alt="Informações de Saúde" title="Informações de Saúde">Informa&ccedil;&otilde;es de Sa&uacute;de</a>
+   </div>
+      <div class="marca_tabnet">
+       <p>DATASUS<span>&nbsp;&nbsp;Tecnologia da Informa&ccedil;&atilde;o a Servi&ccedil;o do SUS<a href="http://www.datasus.gov.br" alt="MS/SE/Datasus" title="MS/SE/Datasus"></a></span></p>
+   </div>
+        <div class="ajuda">
+          <a href="/tabnet/tabdescr.htm">Ajuda</a>
+      </div>
+           <div class="notific">
+        <a href="Ibge/projpop.pdf">Notas T&eacute;cnicas</a></p>
+   </div>       <div class="datasus">
+       <p>DATASUS</p>
+   </div>
+   </div>
+<TABLE CLASS="tabdados" ALIGN="CENTER">
+<COLGROUP>
+<COL ALIGN="LEFT" VALIGN="TOP">
+<COLGROUP>
+<COL SPAN=2 ALIGN="RIGHT" VALIGN="TOP">
+<THEAD>
+<TR CLASS="cabtabela">
+<TD COLSPAN=3>
+<H1 CLASS="Nivel0"> Proje&ccedil;&atilde;o da Popula&ccedil;&atilde;o das Unidades da Federa&ccedil;&atilde;o por sexo, idade simples ou faixa-et&aacute;ria: 2010-2060 (edi&ccedil;&atilde;o 2018)</H1>
+<b>Popula&ccedil;&atilde;o residente segundo Unidade da Federa&ccedil;&atilde;o</b><br>
+<b>Per&iacute;odo:</b> 2060<TR VALIGN="BOTTOM">
+<TH CLASS="cabesquerdo">Unidade da Federa&ccedil;&atilde;o
+<TH CLASS="cabdireito">Popula&ccedil;&atilde;o residente
+</THEAD>
+<TFOOT>
+<TR VALIGN="BOTTOM">
+<TD CLASS="rodape" COLSPAN=3>
+<div class="rodape_htm">
+ Fonte:
+ <blockquote>
+ IBGE/Diretoria de Pesquisas. Coordenação de População e Indicadores Sociais. Gerência de Estudos e Análises da Dinâmica Demográfica.<br />
+ <a href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9109-projecao-da-populacao.html?edicao=21830" target="_blank">Projeção da população do Brasil e Unidades da Federação por sexo e idade para o período 2010-2060 (edição 2018)</a>
+ <blockquote>
+</div>
+&nbsp;
+</TFOOT>
+<TBODY VALIGN="BOTTOM">
+<TR CLASS="separador" align="right">
+<TD align="left"> TOTAL
+<TD>228.286.347
+<TR align="right">
+<TD ALIGN=LEFT>11 Rond&ocirc;nia
+<TD>2.120.212
+<TR align="right">
+<TD ALIGN=LEFT>12 Acre
+<TD>1.192.647
+<TR align="right">
+<TD ALIGN=LEFT>13 Amazonas
+<TD>5.815.537
+<TR align="right">
+<TD ALIGN=LEFT>14 Roraima
+<TD>984.511
+<TR align="right">
+<TD ALIGN=LEFT>15 Par&aacute;
+<TD>10.321.412
+<TR align="right">
+<TD ALIGN=LEFT>16 Amap&aacute;
+<TD>1.312.240
+<TR align="right">
+<TD ALIGN=LEFT>17 Tocantins
+<TD>1.935.575
+<TR align="right">
+<TD ALIGN=LEFT>21 Maranh&atilde;o
+<TD>7.357.617
+<TR align="right">
+<TD ALIGN=LEFT>22 Piau&iacute;
+<TD>2.948.119
+<TR align="right">
+<TD ALIGN=LEFT>23 Cear&aacute;
+<TD>9.345.192
+<TR align="right">
+<TD ALIGN=LEFT>24 Rio Grande do Norte
+<TD>3.815.691
+<TR align="right">
+<TD ALIGN=LEFT>25 Para&iacute;ba
+<TD>4.048.336
+<TR align="right">
+<TD ALIGN=LEFT>26 Pernambuco
+<TD>9.945.508
+<TR align="right">
+<TD ALIGN=LEFT>27 Alagoas
+<TD>3.230.875
+<TR align="right">
+<TD ALIGN=LEFT>28 Sergipe
+<TD>2.598.353
+<TR align="right">
+<TD ALIGN=LEFT>29 Bahia
+<TD>13.825.958
+<TR align="right">
+<TD ALIGN=LEFT>31 Minas Gerais
+<TD>21.160.005
+<TR align="right">
+<TD ALIGN=LEFT>32 Esp&iacute;rito Santo
+<TD>4.927.795
+<TR align="right">
+<TD ALIGN=LEFT>33 Rio de Janeiro
+<TD>17.647.842
+<TR align="right">
+<TD ALIGN=LEFT>35 S&atilde;o Paulo
+<TD>50.596.822
+<TR align="right">
+<TD ALIGN=LEFT>41 Paran&aacute;
+<TD>12.342.362
+<TR align="right">
+<TD ALIGN=LEFT>42 Santa Catarina
+<TD>9.015.090
+<TR align="right">
+<TD ALIGN=LEFT>43 Rio Grande do Sul
+<TD>10.945.217
+<TR align="right">
+<TD ALIGN=LEFT>50 Mato Grosso do Sul
+<TD>3.440.594
+<TR align="right">
+<TD ALIGN=LEFT>51 Mato Grosso
+<TD>4.433.798
+<TR align="right">
+<TD ALIGN=LEFT>52 Goi&aacute;s
+<TD>9.189.311
+<TR align="right">
+<TD ALIGN=LEFT>53 Distrito Federal
+<TD>3.789.728
+</TABLE>
+<BR>
+</TABLE>
+<BR><BR>
+<DIV CLASS="NIVEL2">
+<table width=60% cellpadding=1 cellspacing=2 align=center border=0 class="escondido">
+<TR>
+<td class="botao_opcao" style="TEXT-ALIGN:CENTER" ALIGN="CENTER"><A HREF=/csv/ibge_cnv_projpopuf15265338_242_154_34.csv>Copia como .CSV</A>
+<td class="botao_opcao" style="TEXT-ALIGN:CENTER" ALIGN="CENTER"><A HREF=/csv/ibge_cnv_projpopuf15265338_242_154_34.tab>Copia para TabWin</A>
+</TR>
+</table>
+<BR><BR>
+ <p>
+ <p>
+</DIV>
+</BODY>
+<!--
+<TABELA>
+Planilha=
+Titulo=Projeção da População das Unidades da Federação por sexo, idade simples ou faixa-etária: 2010-2060 (edição 2018)
+Def=ibge/cnv/projpopuf.def
+Varmunic=
+Linha=Unidade_da_Federação
+Coluna=--Não-Ativa--
+Incremento=População_residente
+Periodo=60
+</TABELA>
+-->
+</HTML>

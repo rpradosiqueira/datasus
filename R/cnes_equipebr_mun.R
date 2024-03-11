@@ -21,8 +21,8 @@
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo fixed to 1 since the only variable is quantity.
 #' @param periodo A character vector describing the period of data. Defaults to the last available.
-#' @param regiao
-#' @param unidade_da_federacao
+#' @param regiao Region
+#' @param unidade_da_federacao State or Federative Unit
 #' @param municipio "all" or a numeric vector with the IBGE's city codes codes to filter the data. Defaults to "all".
 #' @param municipio_gestor "all" or a numeric vector with the IBGE's city codes codes to filter the data. Defaults to "all".
 #' @param capital "all" or a numeric vector with the IBGE's state capital (city) codes codes to filter the data. Defaults to "all".

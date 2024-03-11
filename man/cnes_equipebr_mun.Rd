@@ -26,6 +26,10 @@ cnes_equipebr_mun(linha = "Município", coluna = "Não ativa", conteudo = 1,
 
 \item{periodo}{A character vector describing the period of data. Defaults to the last available.}
 
+\item{regiao}{Region}
+
+\item{unidade_da_federacao}{State or Federative Unit}
+
 \item{municipio}{"all" or a numeric vector with the IBGE's city codes codes to filter the data. Defaults to "all".}
 
 \item{municipio_gestor}{"all" or a numeric vector with the IBGE's city codes codes to filter the data. Defaults to "all".}

@@ -1,7 +1,7 @@
-#' Scrapes Demographic projections of Resident Population from RIPSA
+#' Scrapes Demographic projections of Resident Population from RIPSA / IBGE
 #'
 #' This function allows the user to retrieve data from
-#' RIPSA database much in the same way that is done
+#' RIPSA database and SVS studies much in the same way that is done
 #' by the online portal. The argument options refer to
 #' regions and population tipes
 #'
@@ -50,13 +50,13 @@
 #' @export
 
 cnv_popsvs_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria 2", conteudo = 1, periodo = "last", regiao = "all",
-                              unidade_da_federacao = "all", municipio = "all",capital = "all", cir = "all", macrorregiao_de_saude = "all",
-                              microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
-                              amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all", zona_de_fronteira = "all",
-                              municipio_de_extrema_pobreza = "all", sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
+                           unidade_da_federacao = "all", municipio = "all",capital = "all", cir = "all", macrorregiao_de_saude = "all",
+                           microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
+                           amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all", zona_de_fronteira = "all",
+                           municipio_de_extrema_pobreza = "all", sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
 
   #ajuste do link para tabela de população
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?popsvs/cnv/popbr.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -529,7 +529,7 @@ cnv_popsvs_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1ria
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?popsvs/cnv/popbr.def",
+  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?ibge/cnv/popsvsbr.def",
                      body = form_data)
 
   tabdados <- httr::content(site, encoding = "Latin1") %>%
