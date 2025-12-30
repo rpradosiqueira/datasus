@@ -101,7 +101,7 @@ sim_inf10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
   categoria_cid10.df <- data.frame(id = page %>% rvest::html_nodes("#S4 option") %>% rvest::html_text() %>% trimws(),
                                     value = page %>% rvest::html_nodes("#S4 option") %>% rvest::html_attr("value"))
   categoria_cid10.df[] <- lapply(categoria_cid10.df, as.character)
-  categoria_cid10.df$id <- gsub(" .*$", "", categoria_cid10.df$id)
+  categoria_cid10.df$id <- substr(categoria_cid10.df$id,1,3)
 
   lista_mort_cid10.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S5 option") %>% rvest::html_text() %>% trimws(),
                                                      value = page %>% rvest::html_nodes("#S5 option") %>% rvest::html_attr("value")))
@@ -249,7 +249,7 @@ sim_inf10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   }
 
-  if (periodo[1] != "last") {
+  if (periodo[1] != "last" & periodo[1] != "all") {
 
     if (is.character(periodo)) {
       periodo <- as.numeric(periodo)
@@ -654,6 +654,7 @@ sim_inf10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", con
 
   #periodo
   suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
+  suppressWarnings( if (periodo == "all") {periodo <- periodos.df$id} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
