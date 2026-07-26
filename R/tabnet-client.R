@@ -214,6 +214,59 @@
   result
 }
 
+.tabnet_split_webtabx_rows <- function(text) {
+  characters <- strsplit(text, "", fixed = TRUE)[[1L]]
+  rows <- character()
+  row_start <- NA_integer_
+  depth <- 0L
+  quote <- ""
+  escaped <- FALSE
+
+  for (index in seq_along(characters)) {
+    character <- characters[[index]]
+
+    if (nzchar(quote)) {
+      if (escaped) {
+        escaped <- FALSE
+      } else if (identical(character, "\\")) {
+        escaped <- TRUE
+      } else if (identical(character, quote)) {
+        quote <- ""
+      }
+      next
+    }
+
+    if (character %in% c("\"", "'")) {
+      quote <- character
+      next
+    }
+
+    if (identical(character, "[")) {
+      if (depth == 0L) {
+        row_start <- index
+      }
+      depth <- depth + 1L
+    } else if (identical(character, "]")) {
+      depth <- depth - 1L
+      if (depth < 0L) {
+        stop("TABNET webtabx returned malformed row data", call. = FALSE)
+      }
+      if (depth == 0L && !is.na(row_start)) {
+        rows <- c(
+          rows,
+          paste(characters[row_start:index], collapse = "")
+        )
+        row_start <- NA_integer_
+      }
+    }
+  }
+
+  if (nzchar(quote) || depth != 0L) {
+    stop("TABNET webtabx returned malformed row data", call. = FALSE)
+  }
+  rows
+}
+
 .tabnet_parse_webtabx <- function(page) {
   scripts <- rvest::html_elements(page, "script") |>
     rvest::html_text2()
@@ -260,10 +313,10 @@
     rows_block,
     perl = TRUE
   )
-  rows <- strsplit(rows_block, "\\r\\n|\\r|\\n", perl = TRUE)[[1L]]
-  rows <- trimws(rows)
-  rows <- sub("^,\\s*", "", rows, perl = TRUE)
-  rows <- rows[grepl("^\\[", rows)]
+  rows <- .tabnet_split_webtabx_rows(rows_block)
+  if (!length(rows)) {
+    stop("TABNET webtabx returned no rows", call. = FALSE)
+  }
 
   token_pattern <- paste0(
     "\"(?:\\\\.|[^\"\\\\])*\"",

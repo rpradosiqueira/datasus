@@ -156,4 +156,13 @@ test_that("webtabx JavaScript tables are parsed without evaluating code", {
   expect_identical(names(result), c("Municipio", "Doses"))
   expect_identical(result$Municipio, c("TOTAL", "500001 D'OESTE"))
   expect_identical(result$Doses, c(1234, 12))
+
+  compact_page <- xml2::read_html(paste0(
+    "<html><body><script>",
+    gsub("\r", " ", script, fixed = TRUE),
+    "</script></body></html>"
+  ))
+  compact_result <- datasus:::.tabnet_parse_webtabx(compact_page)
+
+  expect_identical(compact_result, result)
 })
