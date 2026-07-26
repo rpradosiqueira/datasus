@@ -107,6 +107,12 @@ SIM's ICD-10 database much in the same way that is done
 by the online portal. The argument options refer to
 child mortality data focused on brazilian cities.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
 \dontrun{
 ## Requesting data from the city of Campo Grande/MS
@@ -118,7 +124,7 @@ sim_inf10_mun(municipio = 500270)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{child}

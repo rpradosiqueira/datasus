@@ -5,37 +5,353 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 # datasus
 
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/datasus)](https://CRAN.R-project.org/package=datasus)
-[![CRAC_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/datasus)](https://CRAN.R-project.org/package=datasus)
+[![R-CMD-check](https://github.com/rpradosiqueira/datasus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rpradosiqueira/datasus/actions/workflows/R-CMD-check.yaml)
 
-The "datasus" R package seeks to provide direct access to the data of TABNET/DATASUS 
-within the R environment much in the same way that is done in the online portal. For now
-the package allows access to the systematic record of mortality and survival data 
-(Vital Statistics - Mortality and Live Births) through SIM and SINASC's systems
+The "datasus" R package provides direct access to TABNET/DATASUS and
+OpenDataSUS from R.
+It covers vital statistics (SIM and SINASC), hospital production and
+morbidity (SIH/SUS), ambulatory production (SIA/SUS), the National Registry
+of Health Establishments (CNES), resident population estimates, and
+notifiable conditions (SINAN). Historical immunization, nutritional
+surveillance and financing tables and current SISCAN exam tables are also
+available.
 
 ## Installation
 
-Install the release version from CRAN:
+The package is currently under active redevelopment and is not available from CRAN.
+Install the development version from GitHub:
 
 ```{r , eval = FALSE}
-install.packages("datasus")
+install.packages("remotes")
+remotes::install_github("rpradosiqueira/datasus")
 ```
-
-or the development version from github
-
-```{r , eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("rpradosiqueira/datasus")
-````
 
 ## Example
 
-In this example we will download the last mortality data for the IBGE's micro-region where the micro-regions are in the rows and the ICD-10 chapters in the columns:
+SIM and SINASC now use the same catalog-driven interface as the other TABNET
+systems:
 
 ```{r, eval = FALSE}
-sim_obt10_mun(linha = "Microrregião IBGE",
-              coluna = "Capítulo CID-10")
+# Discover the mortality tables and inspect the current form
+datasus_catalogo("sim")
+datasus_opcoes("sim", "obitos", abrangencia = "municipio")
 
+# Mortality by IBGE micro-region and ICD-10 chapter
+sim(
+  conjunto = "obitos",
+  linha = "Microrregião IBGE",
+  coluna = "Capítulo CID-10"
+)
+
+# State totals and live births within São Paulo municipalities
+sim(abrangencia = "uf", periodo = 2024)
+sinasc(uf = "SP", periodo = 2024)
 ```
 
-To more examples, see the vignette ["Introduction to datasus"](https://CRAN.R-project.org/package=datasus/vignettes/Introduction_to_datasus.html).
+The historical functions such as `sim_obt10_mun()` and `sinasc_nv_uf()` remain
+as deprecated compatibility wrappers. New code should use `sim()` and
+`sinasc()`.
+
+The health-services API uses the same arguments for SIH, SIA and CNES:
+
+```{r, eval = FALSE}
+# Discover all supported datasets without accessing the network
+datasus_catalogo()
+datasus_catalogo("cnes")
+
+# Inspect the live dimensions, measures, periods and filter values
+op <- datasus_opcoes("sih", uf = "MS")
+op$conteudo
+op$filtros$carater_atendimento
+
+# Hospital and ambulatory production
+sih_producao(uf = "MS", conteudo = "Internações")
+sia_producao(uf = "MS", conteudo = "Qtd.aprovada")
+
+# Establishments and physical resources from CNES
+cnes(uf = "MS")
+cnes(conjunto = "leitos_internacao", uf = "MS")
+```
+
+Use `periodo = "last"` for the latest available competence, an exact label
+such as `"Mai/2026"`, or a year such as `2025` to select all available
+competences in that year. Named filters use the keys returned by
+`datasus_opcoes()`.
+
+Population, hospital morbidity and SINAN use the same query conventions:
+
+```{r, eval = FALSE}
+# Municipal population estimates; the official series currently ends in 2021
+populacao_residente(uf = "MS", periodo = 2021)
+
+# Hospital morbidity by ICD-10 chapter
+sih_morbidade(
+  uf = "MS",
+  linha = "Capítulo CID-10",
+  conteudo = "Internações",
+  periodo = 2025
+)
+
+# Notifiable diseases and conditions
+datasus_catalogo("sinan")
+sinan("dengue", uf = "MS", periodo = 2025)
+```
+
+Additional health-service and surveillance tables:
+
+```{r, eval = FALSE}
+# PNI legacy series; the official page currently exposes data through 2022
+pni_imunizacoes(uf = "MS")
+pni_imunizacoes("cobertura", uf = "MS")
+
+# Cervical and breast cancer exams
+siscan(uf = "MS")
+siscan("mamografia_residencia", uf = "MS", periodo = 2025)
+
+# Historical SISVAN and financing tables
+sisvan(uf = "MS")
+financiamento_sus(uf = "MS")
+```
+
+Requests use HTTPS, an explicit response encoding, timeouts, and retries. The
+defaults can be adjusted for slow connections:
+
+```{r, eval = FALSE}
+options(
+  datasus.timeout = 30,
+  datasus.download_timeout = 300,
+  datasus.max_tries = 2,
+  datasus.cache_ttl = 3600
+)
+```
+
+## OpenDataSUS microdata
+
+The package also discovers, downloads and reads modern surveillance
+microdata from the official OpenDataSUS portal:
+
+```{r, eval = FALSE}
+# Search datasets and inspect their published resources
+opendatasus_catalogo("dengue")
+opendatasus_recursos("arboviroses-dengue")
+
+# Read only a sample while exploring a large annual file
+srag <- sivep_gripe(ano = 2025, n_max = 1000)
+dengue <- sinan_dengue(ano = 2025, n_max = 1000)
+cases <- sinan_mpox(ano = 2025, n_max = 1000)
+
+# Contemporary e-SUS and PNI sources use their published partitions
+adverse_events <- esavi(n_max = 1000)
+mild_cases <- esus_sindrome_gripal(
+  uf = "MS",
+  ano = "last",
+  n_max = 1000,
+  colunas = c(
+    "dataNotificacao", "municipioIBGE", "idade", "sexo"
+  ),
+  normalizar = TRUE
+)
+doses <- pni_doses(
+  ano = "last",
+  mes = "last",
+  n_max = 1000,
+  normalizar = TRUE
+)
+occupancy <- ocupacao_hospitalar(
+  ano = "last",
+  n_max = 1000,
+  normalizar = TRUE
+)
+
+# Every result records its URL, retrieval time, local file and checksum
+datasus_proveniencia(dengue)
+datasus_validar_esquema(
+  doses,
+  "pni_doses",
+  campos = c("data_vacinacao", "cnes")
+)
+```
+
+Downloads are atomic and cached on disk. Set `atualizar = TRUE` to force a
+fresh metadata query and download, or use `opendatasus_baixar()` when another
+engine should read the file. `esus_sindrome_gripal()` is distinct from
+hospitalized SRAG in `sivep_gripe()`, while `pni_doses()` provides
+record-level files rather than the legacy aggregated TABNET series from
+`pni_imunizacoes()`.
+
+Some state resources are split into many physical files. Inspect their actual
+parts with `opendatasus_arquivos()`. For files that should not be loaded in
+memory, process bounded-size chunks:
+
+```{r, eval = FALSE}
+sg_resources <- opendatasus_recursos(
+  "notificacoes-de-sindrome-gripal-leve-2020"
+)
+sg_ms <- sg_resources$id[
+  sg_resources$formato == "CSV" &
+    grepl("^Dados MS", sg_resources$nome)
+]
+opendatasus_arquivos(
+  "notificacoes-de-sindrome-gripal-leve-2020",
+  recurso = sg_ms,
+  formato = "CSV"
+)
+
+totals <- opendatasus_processar(
+  "notificacoes-de-sindrome-gripal-leve-2020",
+  recurso = sg_ms,
+  ano = NULL,
+  colunas = c("municipioIBGE", "resultadoTeste"),
+  tamanho_bloco = 50000,
+  sistema = "sindrome_gripal",
+  FUN = function(dados, posicao, arquivo) {
+    table(dados$codigo_municipio_residencia)
+  }
+)
+```
+
+## Raw DBC/DBF microdata
+
+Record-level SIM, SINASC and SIH files are available through a common API.
+Start from the local catalog and inspect the official files before downloading:
+
+```{r, eval = FALSE}
+microdados_catalogo()
+microdados_arquivos("sih", ano = 2024, mes = 1, uf = "AC")
+
+admissions <- sih_microdados(
+  ano = 2024,
+  mes = 1,
+  uf = "AC",
+  colunas = c("MUNIC_RES", "DT_INTER", "DIAG_PRINC", "VAL_TOT"),
+  n_max = 1000,
+  normalizar = TRUE
+)
+```
+
+The same workflow is exposed by `sim_microdados()` and
+`sinasc_microdados()`. DBC files are decoded directly in memory; selecting
+columns and limiting rows avoids allocating an entire large file during
+exploration.
+
+Common fields can be inspected and standardized conservatively:
+
+```{r, eval = FALSE}
+datasus_dicionario("sih")
+datasus_padronizar(admissions, "sih")
+datasus_proveniencia(admissions)
+```
+
+## Territorial reference
+
+The package includes an offline IBGE hierarchy for current municipalities,
+states and macroregions:
+
+```{r, eval = FALSE}
+# Discover current territories without a network request
+datasus_territorios("regiao")
+datasus_territorios("uf")
+municipios_ms <- datasus_territorios("municipio", uf = "MS")
+
+# Convert six-digit DATASUS codes to full seven-digit IBGE codes
+normalizar_codigo_ibge(c("500270", "500370"))
+extrair_codigo_ibge(c("500270 Campo Grande", "500370 Dourados"))
+
+# Append municipality, state and region attributes
+casos <- data.frame(
+  codmun = c("500270", "500370"),
+  ano = 2025,
+  casos = c(10, 5)
+)
+adicionar_territorio(casos, "codmun")
+```
+
+Missing territory-period combinations can be created explicitly without
+overwriting observed values:
+
+```{r, eval = FALSE}
+completar_territorios(
+  casos,
+  codigo = "codmun",
+  periodo = "ano",
+  periodos = 2023:2025,
+  preencher = list(casos = 0)
+)
+```
+
+The reference describes the current territorial hierarchy. Historical
+observations are not automatically redistributed across boundary changes.
+
+## Epidemiological analysis
+
+Validated helpers cover frequent calculations after data retrieval:
+
+```{r, eval = FALSE}
+# Vectorized crude rates and exact Poisson confidence intervals
+calcular_taxa(eventos = c(10, 25), populacao = c(10000, 20000))
+intervalo_taxa(eventos = 10, populacao = 10000)
+
+# Aggregate first, then calculate a grouped incidence rate
+taxa_incidencia(
+  dados,
+  casos = "casos",
+  populacao = "populacao",
+  grupo = c("codigo_municipio", "ano"),
+  confianca = 0.95
+)
+
+# Proportions, ratios and case fatality use the same validated engine
+proporcao(dados, "vacinados", "elegiveis", grupo = "ano")
+letalidade(dados, "obitos", "casos", grupo = "ano")
+
+# Brazilian Sunday-to-Saturday epidemiological calendar
+semana_epidemiologica(as.Date(c("2025-01-01", "2026-01-01")))
+calendario_epidemiologico(2026)
+
+# Right-aligned seven-observation moving average
+media_movel(casos_diarios, janela = 7)
+```
+
+Population denominators can be joined without silently duplicating rows or
+accepting ambiguous keys:
+
+```{r, eval = FALSE}
+dados <- juntar_populacao(
+  eventos,
+  denominadores,
+  por = c(codmun = "codigo_municipio", ano = "ano"),
+  coluna_populacao = "habitantes"
+)
+taxa_mortalidade(dados, "obitos", "populacao", grupo = c("codmun", "ano"))
+```
+
+Direct age standardization accepts named standard-population weights and can
+calculate separate results for years, municipalities or other groups. WHO,
+Segi and Scandinavian standards are ready to use:
+
+```{r, eval = FALSE}
+padronizar_idade(
+  eventos = obitos_por_idade,
+  populacao = habitantes_por_idade,
+  idade = faixa_etaria,
+  populacao_padrao = populacao_padrao("oms"),
+  grupo = ano,
+  confianca = 0.95
+)
+```
+
+## Vignettes
+
+Five guides provide complete learning paths through the package:
+
+```{r, eval = FALSE}
+vignette("Introduction_to_datasus", package = "datasus")
+vignette("accessing-datasus", package = "datasus")
+vignette("modern-surveillance", package = "datasus")
+vignette("geography-and-analysis", package = "datasus")
+vignette("large-files-and-microdata", package = "datasus")
+```
+
+The four task-oriented guides cover TABNET access, modern OpenDataSUS
+surveillance, territorial and epidemiological analysis, and efficient
+processing of large microdata files.

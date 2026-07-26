@@ -65,6 +65,12 @@ by the online portal. The argument options refer to
 evitable causes in 5-74 age group data from the states
 unities.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
 \dontrun{
 ## Requesting data from the state of Mato Grosso do Sul
@@ -76,7 +82,7 @@ sim_evitb10_uf(uf = "ms")
 \code{\link{sim_evita10_uf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{causas}
