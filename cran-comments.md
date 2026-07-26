@@ -6,7 +6,13 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 1 note
+
+The CRAN incoming feasibility check reports the expected note that this is a
+new submission of a package archived in 2020 for policy violation "On Internet
+access." The archived release rebuilt its vignette using live network
+requests. Version 0.16.0 replaces those calls with deterministic embedded
+examples; live integration tests are opt-in and skipped on CRAN.
 
 This release rebuilds the network layer, makes vignettes independent of live
 services, fixes response encoding and endpoint routing, and adds automated
