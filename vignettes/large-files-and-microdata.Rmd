@@ -1,0 +1,195 @@
+---
+title: "Large files, raw microdata and provenance"
+author: "Renato Prado Siqueira"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Large files, raw microdata and provenance}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, comment = "#>")
+library(datasus)
+```
+
+## Overview
+
+Record-level health data can be much larger than TABNET aggregates. The
+package provides two complementary workflows:
+
+- DBC/DBF microdata from the traditional DATASUS file servers;
+- CSV and JSON resources published through OpenDataSUS.
+
+Both workflows support discovery, local caching, selected columns,
+standardized schemas and provenance.
+
+## Traditional DBC/DBF microdata
+
+The raw microdata catalog covers SIM, SINASC and SIH/SUS:
+
+```{r raw-catalog, eval=FALSE}
+microdados_catalogo()
+
+microdados_arquivos(
+  sistema = "sih",
+  ano = 2024,
+  mes = 1,
+  uf = "AC"
+)
+```
+
+Select only the columns required by the analysis and start with a small
+number of records:
+
+```{r raw-read, eval=FALSE}
+admissions <- sih_microdados(
+  ano = 2024,
+  mes = 1,
+  uf = "AC",
+  colunas = c(
+    "MUNIC_RES", "DT_INTER", "DIAG_PRINC", "VAL_TOT"
+  ),
+  n_max = 1000,
+  normalizar = TRUE
+)
+
+deaths <- sim_microdados(
+  ano = 2023,
+  uf = "RR",
+  colunas = c("CODMUNRES", "DTOBITO", "CAUSABAS"),
+  n_max = 1000,
+  normalizar = TRUE
+)
+
+births <- sinasc_microdados(
+  ano = 2023,
+  uf = "RR",
+  colunas = c("CODMUNRES", "DTNASC", "SEXO", "PESO"),
+  n_max = 1000,
+  normalizar = TRUE
+)
+```
+
+DBC files are decoded directly and read through the same public interface as
+DBF files.
+
+## Inspect schemas before reading
+
+```{r raw-dictionary}
+head(datasus_dicionario("sih"), 10)
+```
+
+After a read, validate the critical analysis fields:
+
+```{r raw-validation, eval=FALSE}
+datasus_validar_esquema(
+  admissions,
+  sistema = "sih",
+  campos = c(
+    "codigo_municipio_residencia",
+    "data_internacao",
+    "diagnostico_principal_cid10",
+    "valor_total"
+  ),
+  estrito = TRUE
+)
+```
+
+## Selected OpenDataSUS columns
+
+For ordinary files, `opendatasus_ler()` can select columns while parsing:
+
+```{r generic-open-read, eval=FALSE}
+resources <- opendatasus_recursos("arboviroses-dengue")
+csv_id <- resources$id[resources$formato == "CSV"][1]
+
+sample <- opendatasus_ler(
+  "arboviroses-dengue",
+  recurso = csv_id,
+  colunas = c("DT_NOTIFIC", "SG_UF", "ID_MUNICIP"),
+  n_max = 1000
+)
+```
+
+Convenience wrappers should be preferred when available because they encode
+the dataset's partition rules and curated schema.
+
+## Process CSV files in bounded memory
+
+`opendatasus_processar()` calls a function for each block instead of retaining
+the entire dataset:
+
+```{r chunked, eval=FALSE}
+resources <- opendatasus_recursos(
+  "notificacoes-de-sindrome-gripal-leve-2020"
+)
+ms_id <- resources$id[
+  resources$formato == "CSV" & grepl("^Dados MS", resources$nome)
+][1]
+
+processed <- opendatasus_processar(
+  "notificacoes-de-sindrome-gripal-leve-2020",
+  recurso = ms_id,
+  ano = NULL,
+  colunas = c("municipioIBGE", "resultadoTeste"),
+  tamanho_bloco = 50000,
+  sistema = "sindrome_gripal",
+  FUN = function(dados, posicao, arquivo) {
+    data.frame(
+      arquivo = arquivo,
+      bloco_inicial = posicao,
+      registros = nrow(dados),
+      positivos = sum(
+        dados$resultado_teste == "Positivo",
+        na.rm = TRUE
+      )
+    )
+  }
+)
+
+processed$linhas
+processed$blocos
+processed$resultados
+```
+
+The callback receives the standardized block when `sistema` is supplied.
+Physical parts are processed in catalog order and are listed in
+`processed$arquivos`.
+
+## Cache and provenance
+
+Downloads are written atomically. Cached files are reused unless
+`atualizar = TRUE` is requested:
+
+```{r cache, eval=FALSE}
+first <- ocupacao_hospitalar(
+  ano = 2022,
+  n_max = 1000,
+  cache = TRUE
+)
+
+source <- datasus_proveniencia(first)
+str(source)
+```
+
+The provenance record identifies the official URL, resource, portal update
+time, local path, download time and MD5 checksum. Multipart reads retain a
+record for each physical file.
+
+## Practical strategy
+
+For large resources:
+
+1. inspect resource metadata and partitions;
+2. select the smallest useful year, month and state;
+3. provide `colunas` before increasing `n_max`;
+4. use `opendatasus_processar()` for reductions that do not need all rows in
+   memory;
+5. validate critical fields with `datasus_validar_esquema()`;
+6. retain provenance with the analytical output.
+
+`n_max` limits parsed rows, but a remote file may still need to be downloaded
+in full before parsing. Cache reuse prevents that transfer from being
+repeated.

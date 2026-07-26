@@ -1,30 +1,49 @@
 Package: datasus
 Type: Package
 Title: An Interface to DATASUS System
-Version: 0.4.0
+Version: 0.16.0
 Authors@R: person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"))
 Description: It allows the user to retrieve the data from the systems of 
     DATASUS (SUS IT department related to the Brazilian Ministry of Health, 
-    see <http://datasus.saude.gov.br/informacoes-de-saude/tabnet/> for more
+    see <https://datasus.saude.gov.br/informacoes-de-saude-tabnet/> for more
     information) much in the same way that is done in the online portal.
-    For now the package allows access to the SINASC and SIM's (ICD-10) 
-    systems, that is, the 'Estatísticas Vitais'.
+    It provides access to vital statistics from SIM and SINASC, hospital
+    production and morbidity from SIH/SUS, ambulatory production from
+    SIA/SUS, the National Registry of Health Establishments (CNES),
+    resident population estimates, notifiable conditions from SINAN,
+    legacy immunization and nutritional surveillance series, cancer
+    screening and diagnostic exams, historical SUS financing tables, and
+    modern surveillance microdata published by OpenDataSUS, including
+    ESAVI, e-SUS influenza-like illness, individual PNI doses and COVID-19
+    hospital occupancy, and record-level DBC/DBF files from SIM, SINASC and
+    SIH/SUS. Curated schemas, selective columns, multipart downloads and
+    chunk processing support memory-efficient analysis of large files. It also
+    provides validated grouped rates, proportions, ratios, case fatality,
+    confidence intervals, population-denominator joins, epidemiological
+    weeks, moving averages, direct age standardization and ready-made
+    standard populations.
+    An offline IBGE territorial reference supports current municipality,
+    state and region codes, DATASUS code conversion, territorial joins and
+    completion of geographic time series.
 License: GPL-3
 Encoding: UTF-8
-URL: http://github.com/rpradosiqueira/datasus
-BugReports: http://github.com/rpradosiqueira/datasus/issues
+URL: https://github.com/rpradosiqueira/datasus
+BugReports: https://github.com/rpradosiqueira/datasus/issues
+Depends:
+    R (>= 4.1.0)
 Imports:
-    dplyr,
-    httr,
-    magrittr,
-    RCurl,
+    datasusr (>= 0.1.0),
+    httr2,
+    jsonlite,
     readr,
     rvest,
     stringi,
-    stringr,
     xml2
-LazyData: true
-RoxygenNote: 6.0.1
-Suggests: knitr,
-    rmarkdown
+Suggests:
+    foreign,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

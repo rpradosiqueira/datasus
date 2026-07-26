@@ -90,6 +90,12 @@ SINASC database much in the same way that is done
 by the online portal. The argument options refer to
 data focused on brazilian cities.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
 \dontrun{
 ## Requesting data from the city of Campo Grande/MS
@@ -101,7 +107,7 @@ sinasc_nv_mun(municipio = 500270)
 \code{\link{sinasc_nv_uf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SINASC}
 \keyword{datasus}

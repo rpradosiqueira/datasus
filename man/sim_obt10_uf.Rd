@@ -74,6 +74,12 @@ SIM's ICD-10 database much in the same way that is done
 by the online portal. The argument options refer to
 data from the states unities.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
 \dontrun{
 ## Requesting data from the state of Mato Grosso do Sul
@@ -85,7 +91,7 @@ sim_obt10_uf(uf = "ms")
 \code{\link{sim_obt10_mun}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{datasus}

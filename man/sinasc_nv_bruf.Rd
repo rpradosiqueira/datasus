@@ -64,6 +64,12 @@ SINASC database much in the same way that is done
 by the online portal. The argument options refer to
 data focused on the regions and states.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
 \dontrun{
 ## Requesting data from Midwest region
@@ -75,7 +81,7 @@ sinasc_nv_bruf(region = 5)
 \code{\link{sinasc_nv_uf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SINASC}
 \keyword{datasus}
