@@ -23,8 +23,16 @@ A data frame with one row per published resource, including its
 List resources from an OpenDataSUS dataset
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 opendatasus_recursos("srag-2019-a-2026")
 opendatasus_recursos("arboviroses-dengue")
+})
+options(old_options)
 }
 }

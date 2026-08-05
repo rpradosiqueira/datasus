@@ -69,9 +69,17 @@ This function is deprecated. Use `sim()` or `sinasc()` with a named
 }
 
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 ## Requesting data from Midwest region
 sim_obt10_bruf(region = 5)
+})
+options(old_options)
 }
 
 }

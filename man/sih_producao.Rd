@@ -39,7 +39,13 @@ A data frame containing the TABNET result.
 Query hospital production from SIH/SUS
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 sih_producao(uf = "MS")
 sih_producao(
   uf = "MS",
@@ -48,5 +54,7 @@ sih_producao(
   periodo = 2025,
   filtros = list(carater_atendimento = "Urgência")
 )
+})
+options(old_options)
 }
 }

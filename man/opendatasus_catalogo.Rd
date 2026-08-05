@@ -43,8 +43,16 @@ for matching datasets. Use [opendatasus_recursos()] to inspect the files
 and API links published for one dataset.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 opendatasus_catalogo("dengue")
 opendatasus_catalogo(grupo = "arboviroses", formato = "CSV")
+})
+options(old_options)
 }
 }

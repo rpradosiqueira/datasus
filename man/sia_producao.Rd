@@ -39,12 +39,20 @@ A data frame containing the TABNET result.
 Query ambulatory production from SIA/SUS
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 sia_producao(uf = "MS")
 sia_producao(
   linha = "UF",
   conteudo = "Qtd.aprovada",
   periodo = "last"
 )
+})
+options(old_options)
 }
 }

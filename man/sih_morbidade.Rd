@@ -41,7 +41,13 @@ hospitalization or residence. Use `datasus_catalogo("sih")` and select
 rows whose category is `"morbidade hospitalar"` to list the datasets.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 sih_morbidade(uf = "MS")
 sih_morbidade(
   uf = "MS",
@@ -49,5 +55,7 @@ sih_morbidade(
   conteudo = "Internações",
   periodo = 2025
 )
+})
+options(old_options)
 }
 }

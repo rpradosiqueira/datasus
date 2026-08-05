@@ -41,8 +41,16 @@ Familia beneficiaries. These are legacy series and should not be
 interpreted as the current SISVAN coverage.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 sisvan(uf = "MS")
 sisvan(conjunto = "bolsa_familia", uf = "MS")
+})
+options(old_options)
 }
 }

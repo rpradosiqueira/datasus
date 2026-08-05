@@ -1,30 +1,30 @@
 Package: datasus
 Type: Package
-Title: An Interface to DATASUS System
-Version: 0.16.0
+Title: An Interface to Brazilian Public Health Data
+Version: 0.16.1
 Authors@R: person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"))
-Description: It allows the user to retrieve the data from the systems of 
-    DATASUS (SUS IT department related to the Brazilian Ministry of Health, 
-    see <https://datasus.saude.gov.br/informacoes-de-saude-tabnet/> for more
-    information) much in the same way that is done in the online portal.
-    It provides access to vital statistics from SIM and SINASC, hospital
-    production and morbidity from SIH/SUS, ambulatory production from
-    SIA/SUS, the National Registry of Health Establishments (CNES),
-    resident population estimates, notifiable conditions from SINAN,
-    legacy immunization and nutritional surveillance series, cancer
-    screening and diagnostic exams, historical SUS financing tables, and
-    modern surveillance microdata published by OpenDataSUS, including
-    ESAVI, e-SUS influenza-like illness, individual PNI doses and COVID-19
-    hospital occupancy, and record-level DBC/DBF files from SIM, SINASC and
-    SIH/SUS. Curated schemas, selective columns, multipart downloads and
-    chunk processing support memory-efficient analysis of large files. It also
-    provides validated grouped rates, proportions, ratios, case fatality,
-    confidence intervals, population-denominator joins, epidemiological
-    weeks, moving averages, direct age standardization and ready-made
-    standard populations.
-    An offline IBGE territorial reference supports current municipality,
-    state and region codes, DATASUS code conversion, territorial joins and
-    completion of geographic time series.
+Description: Retrieves public health data from the Department of Informatics
+    ('DATASUS') of the Brazilian Unified Health System ('Sistema Unico de
+    Saude', 'SUS') through its online tabulation service and open-data catalog.
+    It covers the Mortality Information System ('SIM'), Live Birth Information
+    System ('SINASC'), Hospital Information System of the Unified Health System
+    ('SIH/SUS'), Outpatient Information System of the Unified Health System
+    ('SIA/SUS'), National Register of Health Establishments ('CNES'),
+    Notifiable Diseases Information System ('SINAN'), National Immunization
+    Program ('PNI'), Cancer Information System ('SISCAN'), and Food and
+    Nutrition Surveillance System ('SISVAN'). Contemporary sources from the
+    'OpenDataSUS' portal include Events Supposedly Attributable to Vaccination
+    or Immunization ('ESAVI'), influenza-like illness notifications from
+    'e-SUS Notifica', individual vaccination doses, coronavirus disease 2019
+    (COVID-19) hospital occupancy, and record-level mortality, live-birth and
+    hospital-admission microdata. Curated schemas, selective columns,
+    multipart downloads and chunk processing support memory-efficient
+    analysis of large files. The package also provides grouped epidemiological
+    indicators, confidence intervals, population-denominator joins,
+    epidemiological calendars, moving averages and direct age standardization.
+    An offline reference from the Brazilian Institute of Geography and
+    Statistics (IBGE) supports territorial codes, joins and completion of
+    geographic time series.
 License: GPL-3
 Encoding: UTF-8
 URL: https://github.com/rpradosiqueira/datasus

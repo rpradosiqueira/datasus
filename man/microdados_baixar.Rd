@@ -54,8 +54,16 @@ dedicated cache below option `datasus.cache_dir`; `atualizar = TRUE`
 requests a fresh copy.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 files <- microdados_baixar("sih", ano = 2024, mes = 1, uf = "AC")
 datasus_proveniencia(files)
+})
+options(old_options)
 }
 }

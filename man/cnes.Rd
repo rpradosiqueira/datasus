@@ -40,12 +40,20 @@ Supports establishments, physical resources, human resources and health
 teams. Use `datasus_catalogo("cnes")` to list the available datasets.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 cnes(uf = "MS")
 cnes(
   conjunto = "leitos_internacao",
   uf = "MS",
   periodo = "last"
 )
+})
+options(old_options)
 }
 }

@@ -41,11 +41,19 @@ datasets published in the DATASUS population section. The default dataset
 contains municipal estimates by sex and age from 2000 through 2021.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 populacao_residente(uf = "MS", periodo = 2021)
 populacao_residente(
   linha = "Unidade da Federação",
   periodo = c(2020, 2021)
 )
+})
+options(old_options)
 }
 }

@@ -1,3 +1,16 @@
+## Resubmission
+
+This is a resubmission. In version 0.16.1 I have:
+
+* revised `Title` and `Description` so software and health-information-system
+  names are enclosed in single quotes and every domain-specific acronym is
+  expanded at first use;
+* replaced all 44 `\\dontrun{}` wrappers with `\\donttest{}`. These examples
+  access remote 'DATASUS' or 'OpenDataSUS' services, download data, and may
+  exceed five seconds; none requires credentials or additional software. The
+  examples use bounded request timeouts and `try()` so a temporary upstream
+  outage remains visible without interrupting package checks.
+
 ## Test environments
 
 * local Windows 11 x64, R 4.6.0
@@ -11,7 +24,7 @@
 The CRAN incoming feasibility check reports the expected note that this is a
 new submission of a package archived in 2020 for policy violation "On Internet
 access." The archived release rebuilt its vignette using live network
-requests. Version 0.16.0 replaces those calls with deterministic embedded
+requests. Version 0.16.1 replaces those calls with deterministic embedded
 examples; live integration tests are opt-in and skipped on CRAN.
 
 This release rebuilds the network layer, makes vignettes independent of live

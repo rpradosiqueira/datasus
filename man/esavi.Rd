@@ -44,9 +44,17 @@ continuously updated. An event following immunization does not by itself
 establish a causal association with a vaccine.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 eventos <- esavi(n_max = 1000)
 datasus_proveniencia(eventos)
+})
+options(old_options)
 }
 }
 \references{

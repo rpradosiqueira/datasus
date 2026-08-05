@@ -585,10 +585,18 @@ datasus_catalogo <- function(sistema = NULL) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' op <- datasus_opcoes("sih", uf = "MS")
 #' op$conteudo
 #' op$filtros$carater_atendimento
+#' })
+#' options(old_options)
 #' }
 datasus_opcoes <- function(sistema, conjunto = NULL, uf = NULL,
                            abrangencia = NULL) {
@@ -644,7 +652,13 @@ print.datasus_opcoes <- function(x, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' sih_producao(uf = "MS")
 #' sih_producao(
 #'   uf = "MS",
@@ -653,6 +667,8 @@ print.datasus_opcoes <- function(x, ...) {
 #'   periodo = 2025,
 #'   filtros = list(carater_atendimento = "Urgência")
 #' )
+#' })
+#' options(old_options)
 #' }
 sih_producao <- function(conjunto = "aih_rd_internacao", uf = NULL,
                          linha = NULL, coluna = NULL, conteudo = 1,
@@ -670,13 +686,21 @@ sih_producao <- function(conjunto = "aih_rd_internacao", uf = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' sia_producao(uf = "MS")
 #' sia_producao(
 #'   linha = "UF",
 #'   conteudo = "Qtd.aprovada",
 #'   periodo = "last"
 #' )
+#' })
+#' options(old_options)
 #' }
 sia_producao <- function(conjunto = "atendimento", uf = NULL,
                          linha = NULL, coluna = NULL, conteudo = 1,
@@ -697,13 +721,21 @@ sia_producao <- function(conjunto = "atendimento", uf = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' cnes(uf = "MS")
 #' cnes(
 #'   conjunto = "leitos_internacao",
 #'   uf = "MS",
 #'   periodo = "last"
 #' )
+#' })
+#' options(old_options)
 #' }
 cnes <- function(conjunto = "estabelecimentos", uf = NULL,
                  linha = NULL, coluna = NULL, conteudo = 1,
@@ -725,7 +757,13 @@ cnes <- function(conjunto = "estabelecimentos", uf = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' sih_morbidade(uf = "MS")
 #' sih_morbidade(
 #'   uf = "MS",
@@ -733,6 +771,8 @@ cnes <- function(conjunto = "estabelecimentos", uf = NULL,
 #'   conteudo = "Internações",
 #'   periodo = 2025
 #' )
+#' })
+#' options(old_options)
 #' }
 sih_morbidade <- function(conjunto = "geral_internacao", uf = NULL,
                           linha = NULL, coluna = NULL, conteudo = 1,
@@ -754,12 +794,20 @@ sih_morbidade <- function(conjunto = "geral_internacao", uf = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' populacao_residente(uf = "MS", periodo = 2021)
 #' populacao_residente(
 #'   linha = "Unidade da Federação",
 #'   periodo = c(2020, 2021)
 #' )
+#' })
+#' options(old_options)
 #' }
 populacao_residente <- function(conjunto = "estimativa_municipal",
                                 uf = NULL, linha = NULL, coluna = NULL,
@@ -797,13 +845,21 @@ populacao_residente <- function(conjunto = "estimativa_municipal",
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' sinan("dengue", uf = "MS")
 #' sinan(
 #'   "violencia_interpessoal_autoprovocada",
 #'   uf = "MS",
 #'   periodo = 2024
 #' )
+#' })
+#' options(old_options)
 #' }
 sinan <- function(agravo = "dengue", uf = NULL, linha = NULL,
                   coluna = NULL, conteudo = 1, periodo = "last",
@@ -826,13 +882,21 @@ sinan <- function(agravo = "dengue", uf = NULL, linha = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' pni_imunizacoes(uf = "MS")
 #' pni_imunizacoes(
 #'   conjunto = "cobertura",
 #'   uf = "MS",
 #'   periodo = 2022
 #' )
+#' })
+#' options(old_options)
 #' }
 pni_imunizacoes <- function(conjunto = "doses_aplicadas", uf = NULL,
                             linha = NULL, coluna = NULL, conteudo = 1,
@@ -856,13 +920,21 @@ pni_imunizacoes <- function(conjunto = "doses_aplicadas", uf = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' siscan(uf = "MS")
 #' siscan(
 #'   conjunto = "mamografia_residencia",
 #'   uf = "MS",
 #'   periodo = 2025
 #' )
+#' })
+#' options(old_options)
 #' }
 siscan <- function(conjunto = "citologia_colo_residencia", uf = NULL,
                    linha = NULL, coluna = NULL, conteudo = 1,
@@ -884,9 +956,17 @@ siscan <- function(conjunto = "citologia_colo_residencia", uf = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' sisvan(uf = "MS")
 #' sisvan(conjunto = "bolsa_familia", uf = "MS")
+#' })
+#' options(old_options)
 #' }
 sisvan <- function(conjunto = "atencao_basica", uf = NULL,
                    linha = NULL, coluna = NULL, conteudo = 1,
@@ -908,9 +988,17 @@ sisvan <- function(conjunto = "atencao_basica", uf = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' financiamento_sus(uf = "MS")
 #' financiamento_sus(conjunto = "producao_prestador", uf = "MS")
+#' })
+#' options(old_options)
 #' }
 financiamento_sus <- function(conjunto = "recursos_federais", uf = NULL,
                               linha = NULL, coluna = NULL, conteudo = 1,

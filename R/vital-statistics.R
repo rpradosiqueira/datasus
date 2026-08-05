@@ -27,7 +27,13 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' datasus_catalogo("sim")
 #' op <- datasus_opcoes(
 #'   "sim", "obitos", abrangencia = "uf"
@@ -38,6 +44,8 @@
 #'   periodo = 2024,
 #'   filtros = list(sexo = "Masculino")
 #' )
+#' })
+#' options(old_options)
 #' }
 sim <- function(conjunto = "obitos",
                 abrangencia = c("municipio", "uf"),
@@ -64,7 +72,13 @@ sim <- function(conjunto = "obitos",
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' op <- datasus_opcoes(
 #'   "sinasc", abrangencia = "municipio", uf = "SP"
 #' )
@@ -73,6 +87,8 @@ sim <- function(conjunto = "obitos",
 #'   periodo = 2024,
 #'   filtros = list(sexo = "Masculino")
 #' )
+#' })
+#' options(old_options)
 #' }
 sinasc <- function(conjunto = "nascidos_vivos",
                    abrangencia = c("municipio", "uf"),

@@ -49,7 +49,13 @@ Information System (SIM). Available datasets are listed by
 choices can be inspected with `datasus_opcoes("sim", ...)`.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 datasus_catalogo("sim")
 op <- datasus_opcoes(
   "sim", "obitos", abrangencia = "uf"
@@ -60,5 +66,7 @@ obitos <- sim(
   periodo = 2024,
   filtros = list(sexo = "Masculino")
 )
+})
+options(old_options)
 }
 }

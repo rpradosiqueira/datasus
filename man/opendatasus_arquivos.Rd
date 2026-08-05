@@ -36,11 +36,19 @@ description instead of the primary URL field. This function expands both
 representations to one row per downloadable file.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 opendatasus_arquivos(
   "notificacoes-de-sindrome-gripal-leve-2024",
   recurso = "Dados MS - 20/12",
   formato = "CSV"
 )
+})
+options(old_options)
 }
 }

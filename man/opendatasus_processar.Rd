@@ -66,7 +66,13 @@ Returning small summaries or `NULL` from the callback keeps memory use
 independent of the complete dataset size.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 summary <- opendatasus_processar(
   "doses-aplicadas-pelo-programa-de-nacional-de-imunizacoes-pni-2026",
   recurso = "Vacinação - Julho 2026",
@@ -75,5 +81,7 @@ summary <- opendatasus_processar(
   FUN = function(dados, posicao, arquivo) nrow(dados),
   tamanho_bloco = 50000
 )
+})
+options(old_options)
 }
 }

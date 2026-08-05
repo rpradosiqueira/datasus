@@ -44,8 +44,16 @@ each file currently exists. SIM and SINASC files are annual; SIH files are
 monthly.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 microdados_arquivos("sim", ano = 2023, uf = "RR")
 microdados_arquivos("sih", ano = 2024, mes = 1, uf = "AC")
+})
+options(old_options)
 }
 }
