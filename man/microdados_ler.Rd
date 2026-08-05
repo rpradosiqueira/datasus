@@ -72,7 +72,13 @@ the native `datasusr` decoder. Column selection and `n_max` are applied
 during parsing, which is useful for large SIH files.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 admissions <- microdados_ler(
   "sih",
   ano = 2024,
@@ -82,5 +88,7 @@ admissions <- microdados_ler(
   n_max = 1000,
   normalizar = TRUE
 )
+})
+options(old_options)
 }
 }

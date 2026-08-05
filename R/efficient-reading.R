@@ -259,7 +259,13 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' summary <- opendatasus_processar(
 #'   "doses-aplicadas-pelo-programa-de-nacional-de-imunizacoes-pni-2026",
 #'   recurso = "Vacinação - Julho 2026",
@@ -268,6 +274,8 @@
 #'   FUN = function(dados, posicao, arquivo) nrow(dados),
 #'   tamanho_bloco = 50000
 #' )
+#' })
+#' options(old_options)
 #' }
 opendatasus_processar <- function(conjunto, FUN, recurso = NULL,
                                   ano = "last", formato = "CSV",

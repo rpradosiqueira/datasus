@@ -42,12 +42,20 @@ coverage and applied-dose data are under review for integration
 inconsistencies.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 pni_imunizacoes(uf = "MS")
 pni_imunizacoes(
   conjunto = "cobertura",
   uf = "MS",
   periodo = 2022
 )
+})
+options(old_options)
 }
 }

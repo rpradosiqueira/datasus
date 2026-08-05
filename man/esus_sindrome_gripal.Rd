@@ -52,8 +52,16 @@ hospitalized severe acute respiratory syndrome records returned by
 [sivep_gripe()].
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 casos <- esus_sindrome_gripal(uf = "MS", ano = 2024, n_max = 1000)
+})
+options(old_options)
 }
 }
 \references{

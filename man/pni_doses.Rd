@@ -51,8 +51,16 @@ National Immunization Program. This record-level source complements the
 aggregated historical TABNET series returned by [pni_imunizacoes()].
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 doses <- pni_doses(ano = 2025, mes = 1, n_max = 1000)
+})
+options(old_options)
 }
 }
 \references{

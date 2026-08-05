@@ -48,8 +48,16 @@ allocated to suspected or confirmed COVID-19 cases. Fields added in 2022
 are not populated in earlier records.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 leitos <- ocupacao_hospitalar(ano = 2022, n_max = 1000)
+})
+options(old_options)
 }
 }
 \references{

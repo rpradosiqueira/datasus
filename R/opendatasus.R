@@ -254,9 +254,17 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' opendatasus_catalogo("dengue")
 #' opendatasus_catalogo(grupo = "arboviroses", formato = "CSV")
+#' })
+#' options(old_options)
 #' }
 opendatasus_catalogo <- function(busca = NULL, grupo = NULL, formato = NULL,
                                  pagina = 1L, limite = 20L, cache = TRUE,
@@ -412,9 +420,17 @@ opendatasus_catalogo <- function(busca = NULL, grupo = NULL, formato = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' opendatasus_recursos("srag-2019-a-2026")
 #' opendatasus_recursos("arboviroses-dengue")
+#' })
+#' options(old_options)
 #' }
 opendatasus_recursos <- function(conjunto, cache = TRUE,
                                  atualizar = FALSE) {
@@ -477,12 +493,20 @@ opendatasus_recursos <- function(conjunto, cache = TRUE,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' opendatasus_arquivos(
 #'   "notificacoes-de-sindrome-gripal-leve-2024",
 #'   recurso = "Dados MS - 20/12",
 #'   formato = "CSV"
 #' )
+#' })
+#' options(old_options)
 #' }
 opendatasus_arquivos <- function(conjunto, recurso = NULL, formato = NULL,
                                  cache = TRUE, atualizar = FALSE) {
@@ -698,13 +722,21 @@ opendatasus_arquivos <- function(conjunto, recurso = NULL, formato = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' file <- opendatasus_baixar(
 #'   "arboviroses-dengue",
 #'   ano = 2025,
 #'   formato = "CSV"
 #' )
 #' datasus_proveniencia(file)
+#' })
+#' options(old_options)
 #' }
 opendatasus_baixar <- function(conjunto, recurso = NULL, ano = "last",
                                formato = NULL, destino = NULL, cache = TRUE,
@@ -903,7 +935,13 @@ opendatasus_baixar <- function(conjunto, recurso = NULL, ano = "last",
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' dengue <- opendatasus_ler(
 #'   "arboviroses-dengue",
 #'   ano = 2025,
@@ -911,6 +949,8 @@ opendatasus_baixar <- function(conjunto, recurso = NULL, ano = "last",
 #'   n_max = 1000
 #' )
 #' datasus_proveniencia(dengue)
+#' })
+#' options(old_options)
 #' }
 opendatasus_ler <- function(conjunto, recurso = NULL, ano = "last",
                             formato = NULL, destino = NULL, cache = TRUE,
@@ -968,8 +1008,16 @@ datasus_proveniencia <- function(x) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' srag <- sivep_gripe(ano = 2025, n_max = 1000)
+#' })
+#' options(old_options)
 #' }
 sivep_gripe <- function(ano = "last", formato = "CSV", destino = NULL,
                          cache = TRUE, atualizar = FALSE, n_max = Inf, ...) {
@@ -996,8 +1044,16 @@ sivep_gripe <- function(ano = "last", formato = "CSV", destino = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' dengue <- sinan_dengue(ano = 2025, n_max = 1000)
+#' })
+#' options(old_options)
 #' }
 sinan_dengue <- function(ano = "last", formato = "CSV", destino = NULL,
                           cache = TRUE, atualizar = FALSE, n_max = Inf, ...) {
@@ -1021,8 +1077,16 @@ sinan_dengue <- function(ano = "last", formato = "CSV", destino = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' cases <- sinan_mpox(ano = 2025, n_max = 1000)
+#' })
+#' options(old_options)
 #' }
 sinan_mpox <- function(ano = "last", formato = "CSV", destino = NULL,
                         cache = TRUE, atualizar = FALSE, n_max = Inf, ...) {

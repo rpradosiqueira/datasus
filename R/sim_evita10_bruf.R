@@ -29,9 +29,17 @@
 #' @author Renato Prado Siqueira \email{rpradosiqueira@@gmail.com}
 #' @seealso \code{\link{sinasc_nv_uf}}
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' ## Requesting data from Midwest region
 #' sim_evita10_bruf(regiao = 5)
+#' })
+#' options(old_options)
 #' }
 #'
 #' @keywords SIM datasus causas evitáveis

@@ -36,7 +36,15 @@ The parsed OpenDataSUS resource.
 Read SIVEP-Gripe severe acute respiratory syndrome microdata
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 srag <- sivep_gripe(ano = 2025, n_max = 1000)
+})
+options(old_options)
 }
 }

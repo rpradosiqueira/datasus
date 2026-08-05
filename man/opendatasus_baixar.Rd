@@ -45,12 +45,20 @@ the package cache. A cached file is refreshed automatically when the
 resource update timestamp changes.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 file <- opendatasus_baixar(
   "arboviroses-dengue",
   ano = 2025,
   formato = "CSV"
 )
 datasus_proveniencia(file)
+})
+options(old_options)
 }
 }

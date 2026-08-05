@@ -170,9 +170,17 @@ microdados_catalogo <- function(sistema = NULL) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' microdados_arquivos("sim", ano = 2023, uf = "RR")
 #' microdados_arquivos("sih", ano = 2024, mes = 1, uf = "AC")
+#' })
+#' options(old_options)
 #' }
 microdados_arquivos <- function(sistema, tipo = NULL, ano, mes = NULL,
                                 uf = NULL, preliminares = TRUE,
@@ -283,9 +291,17 @@ microdados_arquivos <- function(sistema, tipo = NULL, ano, mes = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' files <- microdados_baixar("sih", ano = 2024, mes = 1, uf = "AC")
 #' datasus_proveniencia(files)
+#' })
+#' options(old_options)
 #' }
 microdados_baixar <- function(sistema, tipo = NULL, ano, mes = NULL,
                               uf = NULL, destino = NULL, cache = TRUE,
@@ -441,7 +457,13 @@ microdados_baixar <- function(sistema, tipo = NULL, ano, mes = NULL,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' admissions <- microdados_ler(
 #'   "sih",
 #'   ano = 2024,
@@ -451,6 +473,8 @@ microdados_baixar <- function(sistema, tipo = NULL, ano, mes = NULL,
 #'   n_max = 1000,
 #'   normalizar = TRUE
 #' )
+#' })
+#' options(old_options)
 #' }
 microdados_ler <- function(sistema, tipo = NULL, ano, mes = NULL,
                            uf = NULL, destino = NULL, cache = TRUE,

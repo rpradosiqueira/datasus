@@ -40,12 +40,20 @@ Supports cervical cytology and histology, mammography, and breast cytology
 and histology by residence, attendance location or patient.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 siscan(uf = "MS")
 siscan(
   conjunto = "mamografia_residencia",
   uf = "MS",
   periodo = 2025
 )
+})
+options(old_options)
 }
 }

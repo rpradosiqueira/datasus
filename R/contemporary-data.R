@@ -238,9 +238,17 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' eventos <- esavi(n_max = 1000)
 #' datasus_proveniencia(eventos)
+#' })
+#' options(old_options)
 #' }
 esavi <- function(formato = "CSV", destino = NULL, cache = TRUE,
                   atualizar = FALSE, n_max = Inf, colunas = NULL,
@@ -284,8 +292,16 @@ esavi <- function(formato = "CSV", destino = NULL, cache = TRUE,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' casos <- esus_sindrome_gripal(uf = "MS", ano = 2024, n_max = 1000)
+#' })
+#' options(old_options)
 #' }
 esus_sindrome_gripal <- function(uf, ano = "last", formato = "CSV",
                                   destino = NULL, cache = TRUE,
@@ -351,8 +367,16 @@ esus_sindrome_gripal <- function(uf, ano = "last", formato = "CSV",
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' doses <- pni_doses(ano = 2025, mes = 1, n_max = 1000)
+#' })
+#' options(old_options)
 #' }
 pni_doses <- function(ano = "last", mes = "last", formato = "CSV",
                       destino = NULL, cache = TRUE, atualizar = FALSE,
@@ -416,8 +440,16 @@ pni_doses <- function(ano = "last", mes = "last", formato = "CSV",
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' old_options <- options(
+#'   datasus.timeout = 5,
+#'   datasus.download_timeout = 15,
+#'   datasus.max_tries = 1
+#' )
+#' try({
 #' leitos <- ocupacao_hospitalar(ano = 2022, n_max = 1000)
+#' })
+#' options(old_options)
 #' }
 ocupacao_hospitalar <- function(ano = "last", formato = "CSV",
                                 destino = NULL, cache = TRUE,

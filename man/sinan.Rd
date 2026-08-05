@@ -43,12 +43,20 @@ Febre amarela is not included because its official link points to a
 separate open-data platform rather than a TABNET form.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 sinan("dengue", uf = "MS")
 sinan(
   "violencia_interpessoal_autoprovocada",
   uf = "MS",
   periodo = 2024
 )
+})
+options(old_options)
 }
 }

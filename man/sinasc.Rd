@@ -47,7 +47,13 @@ Provides a single interface to the Live Birth Information System
 inspected with `datasus_opcoes("sinasc", ...)`.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 op <- datasus_opcoes(
   "sinasc", abrangencia = "municipio", uf = "SP"
 )
@@ -56,5 +62,7 @@ nascimentos <- sinasc(
   periodo = 2024,
   filtros = list(sexo = "Masculino")
 )
+})
+options(old_options)
 }
 }

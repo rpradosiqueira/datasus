@@ -41,8 +41,16 @@ federal resources, approved production values by provider, and payment
 authorization guides. Availability periods vary and may be historical.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 financiamento_sus(uf = "MS")
 financiamento_sus(conjunto = "producao_prestador", uf = "MS")
+})
+options(old_options)
 }
 }

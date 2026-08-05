@@ -30,9 +30,17 @@ period and filter choices. Filter names in the returned `filtros` list
 are the names accepted by the query functions.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 op <- datasus_opcoes("sih", uf = "MS")
 op$conteudo
 op$filtros$carater_atendimento
+})
+options(old_options)
 }
 }

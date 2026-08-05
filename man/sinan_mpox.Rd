@@ -36,7 +36,15 @@ The parsed OpenDataSUS resource.
 Read current e-SUS SINAN Mpox microdata
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 cases <- sinan_mpox(ano = 2025, n_max = 1000)
+})
+options(old_options)
 }
 }

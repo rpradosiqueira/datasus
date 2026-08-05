@@ -1,3 +1,13 @@
+# datasus 0.16.1
+
+* Revised the package title and description to quote software and health-system
+  names consistently and to expand all domain-specific acronyms requested by
+  CRAN.
+* Reclassified examples that require network access from `\\dontrun{}` to
+  `\\donttest{}`, so they remain user-executable while staying outside routine
+  CRAN example runs. Their request attempts are bounded and temporary upstream
+  failures no longer interrupt checks that explicitly run `\\donttest{}`.
+
 # datasus 0.16.0
 
 * Added four task-oriented vignettes covering TABNET access, modern

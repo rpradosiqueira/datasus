@@ -57,7 +57,13 @@ CSV delimiters are detected automatically. For very large datasets, use
 use a streaming database engine.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 dengue <- opendatasus_ler(
   "arboviroses-dengue",
   ano = 2025,
@@ -65,5 +71,7 @@ dengue <- opendatasus_ler(
   n_max = 1000
 )
 datasus_proveniencia(dengue)
+})
+options(old_options)
 }
 }

@@ -37,7 +37,15 @@ Downloads the annual OpenDataSUS resources. This complements the aggregated
 legacy TABNET interface available from `sinan("dengue")`.
 }
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 dengue <- sinan_dengue(ano = 2025, n_max = 1000)
+})
+options(old_options)
 }
 }
