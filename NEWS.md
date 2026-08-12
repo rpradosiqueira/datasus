@@ -3,7 +3,7 @@
 * Registered the `RoxygenNote` metadata and added package-level documentation
   that maps the primary discovery, planning, acquisition, validation and
   analysis entry points while preserving all legacy exports.
-* Added a weekly, manually dispatchable smoke test for lightweight TABNET and
+* Added a monthly, manually dispatchable smoke test for lightweight TABNET and
   OpenDataSUS metadata checks. It uses bounded requests, downloads no
   microdata and records actionable schema fingerprints as a workflow artifact.
 * Expanded deterministic offline tests around the public TABNET and
