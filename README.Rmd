@@ -6,6 +6,7 @@ output: github_document
 # datasus
 
 [![R-CMD-check](https://github.com/rpradosiqueira/datasus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rpradosiqueira/datasus/actions/workflows/R-CMD-check.yaml)
+[![source-smoke-test](https://github.com/rpradosiqueira/datasus/actions/workflows/source-smoke-test.yaml/badge.svg)](https://github.com/rpradosiqueira/datasus/actions/workflows/source-smoke-test.yaml)
 
 The "datasus" R package provides direct access to TABNET/DATASUS and
 OpenDataSUS from R.
@@ -25,6 +26,31 @@ Install the development version from GitHub:
 install.packages("remotes")
 remotes::install_github("rpradosiqueira/datasus")
 ```
+
+## Main entry points
+
+The package keeps its historical functions for compatibility, while new code
+can follow a small set of task-oriented entry points:
+
+| Stage | Main entry points | Purpose |
+|---|---|---|
+| Discover | `datasus_catalogo()`, `opendatasus_catalogo()`, `microdados_catalogo()`, `datasus_territorios()` | Inspect supported systems, portal datasets, raw-file families and offline territories. |
+| Plan | `datasus_opcoes()`, `opendatasus_recursos()`, `opendatasus_arquivos()`, `microdados_arquivos()` | Resolve current dimensions, filters, resources and physical files before acquisition. |
+| Acquire and read | `sim()`, `sinasc()`, the health-service functions, `opendatasus_baixar()`, `opendatasus_ler()`, `microdados_baixar()`, `microdados_ler()` | Query aggregated tables or acquire record-level data. |
+| Validate | `datasus_proveniencia()`, `datasus_dicionario()`, `datasus_validar_esquema()` | Inspect origin, checksums, curated fields and schema compatibility. |
+| Analyse | `calcular_indicador()`, `juntar_populacao()`, `padronizar_idade()` and the territorial helpers | Build reproducible epidemiological products after retrieval. |
+
+`opendatasus_processar()` is the advanced entry point for bounded-memory
+processing of multipart files. The `sim_*()` and `sinasc_nv_*()` historical
+wrappers remain available for existing scripts; their signatures and return
+contracts are retained, but new analyses should start with `sim()` and
+`sinasc()`.
+
+Catalog and transformation tests are offline and deterministic. Live source
+checks are kept out of regular package tests: a small scheduled workflow only
+reads TABNET form metadata and OpenDataSUS catalog/resource metadata, uses
+bounded timeouts, downloads no health microdata and publishes a schema
+fingerprint for diagnosing upstream changes.
 
 ## Example
 

@@ -1,37 +1,59 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # datasus
 
 [![R-CMD-check](https://github.com/rpradosiqueira/datasus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rpradosiqueira/datasus/actions/workflows/R-CMD-check.yaml)
+[![source-smoke-test](https://github.com/rpradosiqueira/datasus/actions/workflows/source-smoke-test.yaml/badge.svg)](https://github.com/rpradosiqueira/datasus/actions/workflows/source-smoke-test.yaml)
 
-The "datasus" R package provides direct access to TABNET/DATASUS and
-OpenDataSUS from R.
-It covers vital statistics (SIM and SINASC), hospital production and
-morbidity (SIH/SUS), ambulatory production (SIA/SUS), the National Registry
-of Health Establishments (CNES), resident population estimates, and
-notifiable conditions (SINAN). Historical immunization, nutritional
-surveillance and financing tables and current SISCAN exam tables are also
-available.
+The “datasus” R package provides direct access to TABNET/DATASUS and
+OpenDataSUS from R. It covers vital statistics (SIM and SINASC),
+hospital production and morbidity (SIH/SUS), ambulatory production
+(SIA/SUS), the National Registry of Health Establishments (CNES),
+resident population estimates, and notifiable conditions (SINAN).
+Historical immunization, nutritional surveillance and financing tables
+and current SISCAN exam tables are also available.
 
 ## Installation
 
-The package is currently under active redevelopment and is not available from CRAN.
-Install the development version from GitHub:
-
+The package is currently under active redevelopment and is not available
+from CRAN. Install the development version from GitHub:
 
 ``` r
 install.packages("remotes")
 remotes::install_github("rpradosiqueira/datasus")
 ```
 
+## Main entry points
+
+The package keeps its historical functions for compatibility, while new
+code can follow a small set of task-oriented entry points:
+
+| Stage | Main entry points | Purpose |
+|----|----|----|
+| Discover | `datasus_catalogo()`, `opendatasus_catalogo()`, `microdados_catalogo()`, `datasus_territorios()` | Inspect supported systems, portal datasets, raw-file families and offline territories. |
+| Plan | `datasus_opcoes()`, `opendatasus_recursos()`, `opendatasus_arquivos()`, `microdados_arquivos()` | Resolve current dimensions, filters, resources and physical files before acquisition. |
+| Acquire and read | `sim()`, `sinasc()`, the health-service functions, `opendatasus_baixar()`, `opendatasus_ler()`, `microdados_baixar()`, `microdados_ler()` | Query aggregated tables or acquire record-level data. |
+| Validate | `datasus_proveniencia()`, `datasus_dicionario()`, `datasus_validar_esquema()` | Inspect origin, checksums, curated fields and schema compatibility. |
+| Analyse | `calcular_indicador()`, `juntar_populacao()`, `padronizar_idade()` and the territorial helpers | Build reproducible epidemiological products after retrieval. |
+
+`opendatasus_processar()` is the advanced entry point for bounded-memory
+processing of multipart files. The `sim_*()` and `sinasc_nv_*()`
+historical wrappers remain available for existing scripts; their
+signatures and return contracts are retained, but new analyses should
+start with `sim()` and `sinasc()`.
+
+Catalog and transformation tests are offline and deterministic. Live
+source checks are kept out of regular package tests: a small scheduled
+workflow only reads TABNET form metadata and OpenDataSUS
+catalog/resource metadata, uses bounded timeouts, downloads no health
+microdata and publishes a schema fingerprint for diagnosing upstream
+changes.
+
 ## Example
 
-SIM and SINASC now use the same catalog-driven interface as the other TABNET
-systems:
-
+SIM and SINASC now use the same catalog-driven interface as the other
+TABNET systems:
 
 ``` r
 # Discover the mortality tables and inspect the current form
@@ -50,12 +72,11 @@ sim(abrangencia = "uf", periodo = 2024)
 sinasc(uf = "SP", periodo = 2024)
 ```
 
-The historical functions such as `sim_obt10_mun()` and `sinasc_nv_uf()` remain
-as deprecated compatibility wrappers. New code should use `sim()` and
-`sinasc()`.
+The historical functions such as `sim_obt10_mun()` and `sinasc_nv_uf()`
+remain as deprecated compatibility wrappers. New code should use `sim()`
+and `sinasc()`.
 
 The health-services API uses the same arguments for SIH, SIA and CNES:
-
 
 ``` r
 # Discover all supported datasets without accessing the network
@@ -76,13 +97,12 @@ cnes(uf = "MS")
 cnes(conjunto = "leitos_internacao", uf = "MS")
 ```
 
-Use `periodo = "last"` for the latest available competence, an exact label
-such as `"Mai/2026"`, or a year such as `2025` to select all available
-competences in that year. Named filters use the keys returned by
-`datasus_opcoes()`.
+Use `periodo = "last"` for the latest available competence, an exact
+label such as `"Mai/2026"`, or a year such as `2025` to select all
+available competences in that year. Named filters use the keys returned
+by `datasus_opcoes()`.
 
 Population, hospital morbidity and SINAN use the same query conventions:
-
 
 ``` r
 # Municipal population estimates; the official series currently ends in 2021
@@ -103,7 +123,6 @@ sinan("dengue", uf = "MS", periodo = 2025)
 
 Additional health-service and surveillance tables:
 
-
 ``` r
 # PNI legacy series; the official page currently exposes data through 2022
 pni_imunizacoes(uf = "MS")
@@ -118,9 +137,8 @@ sisvan(uf = "MS")
 financiamento_sus(uf = "MS")
 ```
 
-Requests use HTTPS, an explicit response encoding, timeouts, and retries. The
-defaults can be adjusted for slow connections:
-
+Requests use HTTPS, an explicit response encoding, timeouts, and
+retries. The defaults can be adjusted for slow connections:
 
 ``` r
 options(
@@ -135,7 +153,6 @@ options(
 
 The package also discovers, downloads and reads modern surveillance
 microdata from the official OpenDataSUS portal:
-
 
 ``` r
 # Search datasets and inspect their published resources
@@ -179,17 +196,16 @@ datasus_validar_esquema(
 )
 ```
 
-Downloads are atomic and cached on disk. Set `atualizar = TRUE` to force a
-fresh metadata query and download, or use `opendatasus_baixar()` when another
-engine should read the file. `esus_sindrome_gripal()` is distinct from
-hospitalized SRAG in `sivep_gripe()`, while `pni_doses()` provides
-record-level files rather than the legacy aggregated TABNET series from
-`pni_imunizacoes()`.
+Downloads are atomic and cached on disk. Set `atualizar = TRUE` to force
+a fresh metadata query and download, or use `opendatasus_baixar()` when
+another engine should read the file. `esus_sindrome_gripal()` is
+distinct from hospitalized SRAG in `sivep_gripe()`, while `pni_doses()`
+provides record-level files rather than the legacy aggregated TABNET
+series from `pni_imunizacoes()`.
 
-Some state resources are split into many physical files. Inspect their actual
-parts with `opendatasus_arquivos()`. For files that should not be loaded in
-memory, process bounded-size chunks:
-
+Some state resources are split into many physical files. Inspect their
+actual parts with `opendatasus_arquivos()`. For files that should not be
+loaded in memory, process bounded-size chunks:
 
 ``` r
 sg_resources <- opendatasus_recursos(
@@ -220,9 +236,9 @@ totals <- opendatasus_processar(
 
 ## Raw DBC/DBF microdata
 
-Record-level SIM, SINASC and SIH files are available through a common API.
-Start from the local catalog and inspect the official files before downloading:
-
+Record-level SIM, SINASC and SIH files are available through a common
+API. Start from the local catalog and inspect the official files before
+downloading:
 
 ``` r
 microdados_catalogo()
@@ -239,12 +255,11 @@ admissions <- sih_microdados(
 ```
 
 The same workflow is exposed by `sim_microdados()` and
-`sinasc_microdados()`. DBC files are decoded directly in memory; selecting
-columns and limiting rows avoids allocating an entire large file during
-exploration.
+`sinasc_microdados()`. DBC files are decoded directly in memory;
+selecting columns and limiting rows avoids allocating an entire large
+file during exploration.
 
 Common fields can be inspected and standardized conservatively:
-
 
 ``` r
 datasus_dicionario("sih")
@@ -254,9 +269,8 @@ datasus_proveniencia(admissions)
 
 ## Territorial reference
 
-The package includes an offline IBGE hierarchy for current municipalities,
-states and macroregions:
-
+The package includes an offline IBGE hierarchy for current
+municipalities, states and macroregions:
 
 ``` r
 # Discover current territories without a network request
@@ -280,7 +294,6 @@ adicionar_territorio(casos, "codmun")
 Missing territory-period combinations can be created explicitly without
 overwriting observed values:
 
-
 ``` r
 completar_territorios(
   casos,
@@ -292,12 +305,12 @@ completar_territorios(
 ```
 
 The reference describes the current territorial hierarchy. Historical
-observations are not automatically redistributed across boundary changes.
+observations are not automatically redistributed across boundary
+changes.
 
 ## Epidemiological analysis
 
 Validated helpers cover frequent calculations after data retrieval:
-
 
 ``` r
 # Vectorized crude rates and exact Poisson confidence intervals
@@ -325,9 +338,8 @@ calendario_epidemiologico(2026)
 media_movel(casos_diarios, janela = 7)
 ```
 
-Population denominators can be joined without silently duplicating rows or
-accepting ambiguous keys:
-
+Population denominators can be joined without silently duplicating rows
+or accepting ambiguous keys:
 
 ``` r
 dados <- juntar_populacao(
@@ -339,10 +351,9 @@ dados <- juntar_populacao(
 taxa_mortalidade(dados, "obitos", "populacao", grupo = c("codmun", "ano"))
 ```
 
-Direct age standardization accepts named standard-population weights and can
-calculate separate results for years, municipalities or other groups. WHO,
-Segi and Scandinavian standards are ready to use:
-
+Direct age standardization accepts named standard-population weights and
+can calculate separate results for years, municipalities or other
+groups. WHO, Segi and Scandinavian standards are ready to use:
 
 ``` r
 padronizar_idade(
@@ -358,7 +369,6 @@ padronizar_idade(
 ## Vignettes
 
 Five guides provide complete learning paths through the package:
-
 
 ``` r
 vignette("Introduction_to_datasus", package = "datasus")

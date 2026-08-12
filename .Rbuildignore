@@ -5,3 +5,6 @@
 ^cran-comments\.md$
 ^\.github$
 ^data-raw$
+^tools$
+^README[.]html$
+^source-smoke-report[.]json$

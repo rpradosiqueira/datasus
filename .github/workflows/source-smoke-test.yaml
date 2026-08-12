@@ -1,0 +1,48 @@
+name: Source smoke test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 10 * * 2"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: datasus-source-smoke-test
+  cancel-in-progress: false
+
+jobs:
+  source-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: check
+
+      - name: Install datasus
+        run: R CMD INSTALL .
+
+      - name: Check DATASUS and OpenDataSUS metadata
+        run: Rscript tools/source-smoke-test.R
+
+      - name: Upload source report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: datasus-source-smoke-report
+          path: source-smoke-report.json
+          if-no-files-found: warn
+          retention-days: 30
