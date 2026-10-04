@@ -60,7 +60,7 @@ sim_ext10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
                          local_ocorrencia = "all", acid_trabalho = "all") {
 
 
-  page <- xml2::read_html(paste0("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/ext10",uf,".def"))
+  page <- xml2::read_html(paste0("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/ext10",uf,".def"), encoding = "latin1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),

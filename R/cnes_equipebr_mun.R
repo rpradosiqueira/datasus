@@ -74,7 +74,7 @@ cnes_equipebr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa
                               tipo_de_gestao = "all", tipo_de_prestador = "all",
                               tipo_da_equipe = "all") {
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/equipebr.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/equipebr.def", encoding = "latin1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),

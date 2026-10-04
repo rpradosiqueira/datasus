@@ -92,7 +92,7 @@ cnes_proc02br_mun <- function(linha = "Munic\u00EDpio", coluna = "N\u00E3o ativa
                               ocupacoes_medicos = "all",
                               profissionais_selecionados = "all") {
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/proc02br.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/proc02br.def", encoding = "latin1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),

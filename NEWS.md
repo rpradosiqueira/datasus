@@ -1,3 +1,8 @@
+# datasus 0.6.4
+
+* fix: page scraping now declares Latin-1 encoding, restoring all TABNET-based
+  functions (births, deaths, population) that failed with "Input is not proper UTF-8"
+
 # data sus 0.5.8
 
 * multiple new functions, as for querying population, health team and professionals

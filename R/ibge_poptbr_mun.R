@@ -54,7 +54,7 @@ ibge_poptbr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa",
                            municipio_de_extrema_pobreza = "all") {
 
   #ajuste do link para tabela de população
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/poptbr.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/poptbr.def", encoding = "latin1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),

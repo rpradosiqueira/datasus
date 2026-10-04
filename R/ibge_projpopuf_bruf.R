@@ -37,7 +37,7 @@ ibge_projpopuf_bruf <- function(linha = "Unidade_da_Federa%E7%E3o", coluna = "Fa
                            faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
 
   #ajuste do link para tabela de população
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/projpopuf.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/projpopuf.def", encoding = "latin1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),

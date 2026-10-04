@@ -92,7 +92,7 @@ cnes_prid02br_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa
                               ocupacoes_medicos = "all",
                               atende_no_sus = "all") {
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/prid02br.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/prid02br.def", encoding = "latin1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),

@@ -57,7 +57,7 @@ novapop_popbr_mun <- function(linha = "Munic\u00edpio", coluna = "Faixa Et\u00e1
 
 #ajuste do link para tabela de população
   #page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?novapop/cnv/popbr.def")
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def")
+  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/popsvsbr.def", encoding = "latin1")
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
