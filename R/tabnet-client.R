@@ -481,7 +481,7 @@
 
 .tabnet_resolve_option <- function(options, selected, argument,
                                    default = 1L, index = FALSE,
-                                   multiple = TRUE) {
+                                   multiple = TRUE, numeric_prefix = FALSE) {
   if (is.null(selected)) {
     selected <- default
     index <- TRUE
@@ -510,8 +510,28 @@
     return(options$value[1L])
   }
 
+  # Numeric label codes are aliases for filters, not raw CGI values or indices.
+  # Keep codes as text so leading zeroes and exact matches retain their meaning.
+  prefixes <- NULL
+  if (numeric_prefix) {
+    labels <- trimws(as.character(options$id))
+    coded <- grepl("^[0-9]+([[:space:]]|$)", labels)
+    prefixes <- rep(NA_character_, length(labels))
+    prefixes[coded] <- sub("^([0-9]+).*", "\\1", labels[coded])
+  }
+
   resolved <- vapply(selected, function(value) {
     match <- which(options$id == value | options$value == value)
+    if (!length(match) && numeric_prefix && grepl("^[0-9]+$", value)) {
+      match <- which(prefixes == value)
+      if (length(match) > 1L) {
+        stop(
+          "Ambiguous numeric code '", value, "' for '", argument,
+          "'. Use datasus_opcoes() to select a full label or internal value.",
+          call. = FALSE
+        )
+      }
+    }
     if (!length(match)) {
       stop(
         "Unknown value '", value, "' for '", argument,
@@ -660,7 +680,8 @@
     fields[[filter_fields[[filter]]]] <- .tabnet_resolve_option(
       options$filtros[[filter]],
       selected,
-      paste0("filtros$", filter)
+      paste0("filtros$", filter),
+      numeric_prefix = TRUE
     )
   }
 
