@@ -28,6 +28,11 @@
 
 # datasus 0.16.1 (upstream development)
 
+* Fixed regression #7: legacy SIM/SINASC wrappers and named TABNET filters
+  again accept numeric codes at the start of option labels, translating them
+  to the form's internal values. Exact labels and internal values retain
+  priority; ambiguous numeric prefixes fail explicitly. Offline regression
+  tests cover numeric/text inputs, vectors, leading zeroes and legacy queries.
 * Registered the `RoxygenNote` metadata and added package-level documentation
   that maps the primary discovery, planning, acquisition, validation and
   analysis entry points while preserving all legacy exports.
