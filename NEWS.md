@@ -1,4 +1,4 @@
-# datasus 0.16.1.9000
+# datasus 0.16.2.9000
 
 * Merged upstream `rpradosiqueira/datasus` 0.16.1 (task-oriented API, shared
   TABNET client, microdata and OpenDataSUS support) into this fork, resolving
@@ -11,6 +11,9 @@
   CNES and IBGE population scrapers and the `metatabnet` metadata index.
 * Fixed vector handling in the `periodo` argument of the retained fork
   scrapers and removed leftover debug `print()` calls.
+* Merged upstream fix (fd507d2) that restores numeric IBGE-code filters such
+  as `sim_obt10_mun(municipio = 500270)`; version bumped above CRAN 0.16.2,
+  which predates that fix.
 * Updated `DESCRIPTION` imports to the union required by both code bases.
 
 ## Fork history (entries unique to this fork)

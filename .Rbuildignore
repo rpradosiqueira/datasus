@@ -10,3 +10,4 @@
 ^source-smoke-report[.]json$
 ^teste$
 ^\.crush$
+^AGENTS\.md$
