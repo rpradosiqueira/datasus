@@ -95,7 +95,7 @@ sim_pinf10_bruf(regiao = 5)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{child}

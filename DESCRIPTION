@@ -1,33 +1,53 @@
 Package: datasus
 Type: Package
-Title: An Interface to DATASUS System
-Version: 0.6.4
-Authors@R: c(person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"),),person("Rodrigo E.", "Santana Borges", email = "rodrigoesborges@gmail.com", role = "aut"))
-Description: It allows the user to retrieve the data from the systems of
-    DATASUS (SUS IT department related to the Brazilian Ministry of Health,
-    see <http://datasus.saude.gov.br/informacoes-de-saude/tabnet/> for more
-    information) much in the same way that is done in the online portal.
-    For now the package allows access to the SINASC and SIM's (ICD-10)
-    systems, that is, the 'Estatísticas Vitais'.
+Title: An Interface to Brazilian Public Health Data
+Version: 0.16.1.9000
+Authors@R: person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"))
+Description: Retrieves public health data from the Department of Informatics
+    ('DATASUS') of the Brazilian Unified Health System ('Sistema Unico de
+    Saude', 'SUS') through its online tabulation service and open-data catalog.
+    It covers the Mortality Information System ('SIM'), Live Birth Information
+    System ('SINASC'), Hospital Information System of the Unified Health System
+    ('SIH/SUS'), Outpatient Information System of the Unified Health System
+    ('SIA/SUS'), National Register of Health Establishments ('CNES'),
+    Notifiable Diseases Information System ('SINAN'), National Immunization
+    Program ('PNI'), Cancer Information System ('SISCAN'), and Food and
+    Nutrition Surveillance System ('SISVAN'). Contemporary sources from the
+    'OpenDataSUS' portal include Events Supposedly Attributable to Vaccination
+    or Immunization ('ESAVI'), influenza-like illness notifications from
+    'e-SUS Notifica', individual vaccination doses, coronavirus disease 2019
+    (COVID-19) hospital occupancy, and record-level mortality, live-birth and
+    hospital-admission microdata. Curated schemas, selective columns,
+    multipart downloads and chunk processing support memory-efficient
+    analysis of large files. The package also provides grouped epidemiological
+    indicators, confidence intervals, population-denominator joins,
+    epidemiological calendars, moving averages and direct age standardization.
+    An offline reference from the Brazilian Institute of Geography and
+    Statistics (IBGE) supports territorial codes, joins and completion of
+    geographic time series.
 License: GPL-3
 Encoding: UTF-8
-URL: http://github.com/rpradosiqueira/datasus
-BugReports: http://github.com/rpradosiqueira/datasus/issues
+URL: https://github.com/rpradosiqueira/datasus
+BugReports: https://github.com/rpradosiqueira/datasus/issues
+Depends:
+    R (>= 4.1.0)
 Imports:
+    datasusr (>= 0.1.0),
     dplyr,
     httr,
+    httr2,
+    jsonlite,
     magrittr,
-    RCurl,
     readr,
     rvest,
     stringi,
-    stringr,
     xml2
-LazyData: true
-RoxygenNote: 7.3.2
 Suggests:
+    foreign,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
-Depends: 
-    R (>= 2.10)
+Config/testthat/edition: 3
+LazyData: true
+RoxygenNote: 8.0.0

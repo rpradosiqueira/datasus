@@ -47,7 +47,7 @@
 #' @param obito_relacao_parto "all" or a character vector with period of child mortality in relation to childbirth (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param obito_investigado "all" or a character vector indicating if the death was investigated (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Renato Prado Siqueira \email{<rpradosiqueira@@gmail.com>}
+#' @author Renato Prado Siqueira \email{rpradosiqueira@@gmail.com}
 #' @seealso \code{\link{sim_evita10_mun}}
 #' @examples
 #' \dontrun{
@@ -69,7 +69,10 @@ sim_pinf10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", co
                            obito_investigado = "all") {
 
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/pinf10uf.def", encoding = "latin1")
+  page <- .tabnet_get_html("https://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/pinf10uf.def")
+  if (length(rvest::html_elements(page, "select")) == 0) {
+    stop("A tabela TABNET nao retornou formulario de consulta; a fonte pode ter sido descontinuada ou movida pelo DATASUS. Confira o portal tabnet.datasus.gov.br antes de usar esta funcao.")
+  }
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -94,7 +97,7 @@ sim_pinf10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", co
                                                          value = page %>% rvest::html_nodes("#S2 option") %>% rvest::html_attr("value")))
   unidade_da_federacao.df[] <- lapply(unidade_da_federacao.df, as.character)
 
-  capitulo_cid10.df <- data.frame(id = 0:22,
+  capitulo_cid10.df <- data.frame(id = seq_along(page %>% rvest::html_nodes("#S3 option")) - 1,
                                     value = page %>% rvest::html_nodes("#S3 option") %>% rvest::html_attr("value"))
   capitulo_cid10.df[] <- lapply(capitulo_cid10.df, as.character)
 
@@ -653,8 +656,8 @@ sim_pinf10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", co
   }
 
   #periodo
-  suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
-  suppressWarnings( if (periodo == "all") {periodo <- periodos.df$id} )
+  suppressWarnings( if (any(periodo == "last")) {periodo <- utils::head(periodos.df$id, 1)} )
+  suppressWarnings( if (any(periodo == "all")) {periodo <- periodos.df$id} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
@@ -787,29 +790,9 @@ sim_pinf10_bruf <- function(linha = "Regi\u00e3o", coluna = "N\u00e3o ativa", co
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/pinf10uf.def",
-                     body = form_data)
+  site <- .tabnet_post("https://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/pinf10uf.def", form_data)
 
-  tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes(".tabdados tbody td") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  col_tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes("th") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  f1 <- function(x) x <- gsub("\\.", "", x)
-  f2 <- function(x) x <- as.numeric(as.character(x))
-
-  tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
-                                       ncol = length(col_tabdados), byrow = TRUE))
-
-  names(tabela_final) <- col_tabdados
-
-  tabela_final[-1] <- lapply(tabela_final[-1], f1)
-  tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
+  tabela_final <- .parse_tabnet_response(site)
 
   tabela_final
 

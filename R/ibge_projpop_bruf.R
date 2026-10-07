@@ -6,9 +6,10 @@
 #' by the online portal. The argument options refer to
 #' regions and population tipes
 #'
-#' @usage ibge_projpop_bruf(linha = "Unidade da Federação", coluna = "Não ativa",
-#'   conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
-#'   sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all")
+#' @usage ibge_projpop_bruf(linha = "Unidade da Federação",
+#'     coluna = "Faixa Etária 2", conteudo = 1, periodo = "last",
+#'     regiao = "all", unidade_da_federacao = "all", sexo = "all",
+#'     faixa_etaria_1 = "all", faixa_etaria_2 = "all")
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo A character of length = 1 with the state's acronym of interest.
@@ -19,7 +20,7 @@
 #' @param faixa_etaria_1 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param faixa_etaria_2 "all" or a character vector with the age range (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Rodrigo Borges based on work by Renato Prado Siqueira  \email{<rodrigo@@borges.net.br>}
+#' @author Rodrigo Borges based on work by Renato Prado Siqueira  \email{rodrigo@@borges.net.br}
 #' @seealso \code{\link{novapop_popbr_mun}}
 #' @examples
 #' \dontrun{
@@ -37,7 +38,10 @@ ibge_projpop_bruf <- function(linha = "Unidade da Federa\u00e7\u00e3o", coluna =
                               sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all") {
 
 #ajuste do link para tabela de população
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/projpopuf.def", encoding = "latin1")
+  page <- .tabnet_get_html("https://tabnet.datasus.gov.br/cgi/deftohtm.exe?ibge/cnv/projpopuf.def")
+  if (length(rvest::html_elements(page, "select")) == 0) {
+    stop("A tabela TABNET nao retornou formulario de consulta; a fonte pode ter sido descontinuada ou movida pelo DATASUS. Confira o portal tabnet.datasus.gov.br antes de usar esta funcao.")
+  }
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -252,8 +256,8 @@ ibge_projpop_bruf <- function(linha = "Unidade da Federa\u00e7\u00e3o", coluna =
   }
 
   #periodo
-  suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
-  suppressWarnings( if (periodo == "all") {periodo <- periodos.df$id} )
+  suppressWarnings( if (any(periodo == "last")) {periodo <- utils::head(periodos.df$id, 1)} )
+  suppressWarnings( if (any(periodo == "all")) {periodo <- periodos.df$id} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
@@ -292,29 +296,9 @@ ibge_projpop_bruf <- function(linha = "Unidade da Federa\u00e7\u00e3o", coluna =
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?ibge/cnv/projpopuf.def",
-                     body = form_data)
+  site <- .tabnet_post("https://tabnet.datasus.gov.br/cgi/tabcgi.exe?ibge/cnv/projpopuf.def", form_data)
 
-  tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes(".tabdados tbody td") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  col_tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes("th") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  f1 <- function(x) x <- gsub("\\.", "", x)
-  f2 <- function(x) x <- as.numeric(as.character(x))
-
-  tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
-                                       ncol = length(col_tabdados), byrow = TRUE))
-
-  names(tabela_final) <- col_tabdados
-
-  tabela_final[-1] <- lapply(tabela_final[-1], f1)
-  tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
+  tabela_final <- .parse_tabnet_response(site)
 
   tabela_final
 

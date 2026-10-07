@@ -84,10 +84,24 @@ by the online portal. The argument options refer to
 child mortality data focused on focused on the regions
 and states.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 ## Requesting data from Midwest region
 sim_inf10_bruf(regiao = 5)
+})
+options(old_options)
 }
 
 }
@@ -95,7 +109,7 @@ sim_inf10_bruf(regiao = 5)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{child}

@@ -1,15 +1,68 @@
+## Resubmission
+
+This is a resubmission. In version 0.16.1 I have:
+
+* revised `Title` and `Description` so software and health-information-system
+  names are enclosed in single quotes and every domain-specific acronym is
+  expanded at first use;
+* replaced all 44 `\\dontrun{}` wrappers with `\\donttest{}`. These examples
+  access remote 'DATASUS' or 'OpenDataSUS' services, download data, and may
+  exceed five seconds; none requires credentials or additional software. The
+  examples use bounded request timeouts and `try()` so a temporary upstream
+  outage remains visible without interrupting package checks.
+
 ## Test environments
-* local OS X install, R 3.3.2
-* ubuntu 12.04 (on travis-ci), R 3.3.2
-* win-builder (devel and release)
+
+* local Windows 11 x64, R 4.6.0
+* GitHub Actions: Windows, macOS and Ubuntu, R release
+* GitHub Actions: Ubuntu, R-devel
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 1 note
 
-* This is a new release.
+The CRAN incoming feasibility check reports the expected note that this is a
+new submission of a package archived in 2020 for policy violation "On Internet
+access." The archived release rebuilt its vignette using live network
+requests. Version 0.16.1 replaces those calls with deterministic embedded
+examples; live integration tests are opt-in and skipped on CRAN.
+
+This release rebuilds the network layer, makes vignettes independent of live
+services, fixes response encoding and endpoint routing, and adds automated
+tests. It also introduces a shared query API and dataset catalog for SIH/SUS,
+SIA/SUS, CNES, resident population, hospital morbidity, SINAN, PNI, SISCAN,
+SISVAN and historical SUS financing tables.
+This release also adds a generic OpenDataSUS client, disk caching,
+provenance metadata, and current microdata access for SIVEP-Gripe, dengue and
+Mpox.
+It now also supports record-level SIM, SINASC and SIH DBC files through the
+current native `datasusr` reader, with typed field standardization and stable
+requested-column ordering.
+The analytical layer now adds validated crude rates, exact Poisson confidence
+intervals, Brazilian epidemiological weeks, moving averages and direct age
+standardization.
+SIM and SINASC now use the same declarative catalog and query engine as the
+other TABNET systems. Historical entry points remain available as deprecated
+compatibility wrappers.
+The package now also bundles the current IBGE municipality hierarchy and
+provides validated conversion, joining and completion helpers for geographic
+codes and time series.
+The integrated indicator layer now aggregates grouped rates, proportions,
+ratios and case fatality, safely joins population denominators, and supplies
+WHO, Segi and Scandinavian standard-population weights.
+Current OpenDataSUS coverage now also includes anonymous ESAVI notifications,
+state-level e-SUS Notifica influenza-like illness files, individual monthly
+PNI doses and annual COVID-19 hospital occupancy records.
+These contemporary sources now have curated schemas, schema-drift reporting,
+column-selective parsing, transparent multipart resources and bounded-memory
+chunk processing.
+The contemporary schemas now cover all fields documented for ESAVI, e-SUS
+Notifica, PNI doses and the current hospital-occupancy layout. Four new
+task-oriented vignettes cover access, surveillance, analysis and large-file
+workflows. Large downloads use a separate configurable timeout and empty
+source archives are diagnosed explicitly.
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
+There are no known reverse dependencies.
 

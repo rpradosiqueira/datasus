@@ -1,0 +1,180 @@
+---
+title: "Accessing DATASUS tables"
+author: "Renato Prado Siqueira"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Accessing DATASUS tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, comment = "#>")
+library(datasus)
+```
+
+## Overview
+
+`datasus` provides catalog-driven interfaces to the tables published through
+TABNET. The main workflow is:
+
+1. discover the system and dataset with `datasus_catalogo()`;
+2. inspect the dimensions and filters with `datasus_opcoes()`;
+3. submit a focused query through the corresponding function;
+4. retain the provenance attached to the result.
+
+Network examples are not evaluated when this vignette is built because the
+availability and response time of DATASUS are outside the package's control.
+
+## Discover datasets
+
+The local catalog can be searched without contacting DATASUS:
+
+```{r catalog, eval=FALSE}
+datasus_catalogo()
+datasus_catalogo("mortalidade")
+datasus_catalogo("cnes")
+datasus_catalogo("sinan")
+```
+
+The result identifies the system, dataset and public function to use. Once a
+dataset has been selected, inspect the current TABNET form:
+
+```{r options, eval=FALSE}
+options <- datasus_opcoes(
+  sistema = "sim",
+  conjunto = "obitos",
+  abrangencia = "uf"
+)
+
+options$linha
+options$coluna
+options$conteudo
+names(options$filtros)
+```
+
+Using the labels returned by `datasus_opcoes()` avoids embedding assumptions
+about a form that the portal may change later.
+
+## Vital statistics
+
+`sim()` retrieves mortality data and `sinasc()` retrieves live-birth data.
+Both accept a year, `"last"` for the latest available period, and geographic
+or demographic filters.
+
+```{r vital-statistics, eval=FALSE}
+deaths <- sim(
+  conjunto = "obitos",
+  abrangencia = "uf",
+  periodo = 2024,
+  coluna = "Ano do óbito"
+)
+
+male_deaths <- sim(
+  conjunto = "obitos",
+  uf = "MS",
+  periodo = 2024,
+  filtros = list(sexo = "Masculino")
+)
+
+births <- sinasc(
+  uf = "MS",
+  periodo = 2024,
+  coluna = "Ano do nascimento"
+)
+```
+The older `sim_*()` and `sinasc_*()` functions remain as compatibility
+wrappers, but new code should use the unified functions above.
+
+## Health services and population
+
+Hospital, ambulatory and establishment tables follow the same conventions:
+
+```{r health-services, eval=FALSE}
+admissions <- sih_producao(
+  uf = "MS",
+  conteudo = "Internações",
+  periodo = 2025,
+  filtros = list(carater_atendimento = "Urgência")
+)
+
+procedures <- sia_producao(
+  uf = "MS",
+  conteudo = "Qtd.aprovada",
+  periodo = 2025
+)
+
+beds <- cnes(
+  conjunto = "leitos_internacao",
+  uf = "MS",
+  periodo = "last"
+)
+
+population <- populacao_residente(
+  uf = "MS",
+  periodo = 2021
+)
+```
+
+Use `sih_morbidade()` when the analysis is diagnosis-oriented rather than
+production-oriented:
+
+```{r morbidity, eval=FALSE}
+morbidity <- sih_morbidade(
+  uf = "MS",
+  linha = "Capítulo CID-10",
+  conteudo = "Internações",
+  periodo = 2025
+)
+```
+
+## Surveillance, screening and financing
+
+The catalog also covers disease-specific SINAN tables, immunization,
+nutritional surveillance, cancer screening and SUS financing:
+
+```{r other-tabnet, eval=FALSE}
+dengue <- sinan("dengue", uf = "MS", periodo = 2025)
+
+coverage <- pni_imunizacoes(
+  conjunto = "cobertura",
+  uf = "MS"
+)
+
+mammograms <- siscan(
+  conjunto = "mamografia_residencia",
+  uf = "MS",
+  periodo = 2025
+)
+
+nutrition <- sisvan(uf = "MS")
+financing <- financiamento_sus(uf = "MS")
+```
+
+## Provenance and reproducibility
+
+Results carry a provenance record with the requested system, filters, source
+URL and retrieval time:
+
+```{r tabnet-provenance, eval=FALSE}
+source <- datasus_proveniencia(deaths)
+str(source)
+```
+
+For a reproducible analysis, save the query arguments together with the
+result, request explicit years instead of `"last"`, and record the package
+version:
+
+```{r reproducibility, eval=FALSE}
+analysis_metadata <- list(
+  package_version = as.character(packageVersion("datasus")),
+  query = list(
+    sistema = "sim",
+    conjunto = "obitos",
+    abrangencia = "uf",
+    periodo = 2024
+  ),
+  provenance = datasus_proveniencia(deaths)
+)
+```

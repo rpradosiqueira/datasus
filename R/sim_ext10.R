@@ -39,8 +39,8 @@
 #' @param local_ocorrencia "all" or a character vector with the place of ocurrence to filter the data. Defaults to "all".
 #' @param acid_trabalho "all" or a character vector with the categories of work accident to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Renato Prado Siqueira \email{<rpradosiqueira@@gmail.com>}
-#' @author Leonardo Goes Shibata \email{<leoshibata@@gmail.com>}
+#' @author Renato Prado Siqueira \email{rpradosiqueira@@gmail.com}
+#' @author Leonardo Goes Shibata \email{leoshibata@@gmail.com}
 #' @seealso \code{\link{sim_obt10_mun}}
 #' @examples
 #' \dontrun{
@@ -60,7 +60,10 @@ sim_ext10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
                          local_ocorrencia = "all", acid_trabalho = "all") {
 
 
-  page <- xml2::read_html(paste0("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/ext10",uf,".def"), encoding = "latin1")
+  page <- .tabnet_get_html(paste0("https://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/ext10",uf,".def"))
+  if (length(rvest::html_elements(page, "select")) == 0) {
+    stop("A tabela TABNET nao retornou formulario de consulta; a fonte pode ter sido descontinuada ou movida pelo DATASUS. Confira o portal tabnet.datasus.gov.br antes de usar esta funcao.")
+  }
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -497,8 +500,8 @@ sim_ext10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
   }
 
   #periodo
-  suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
-  suppressWarnings( if (periodo == "all") {periodo <- periodos.df$id} )
+  suppressWarnings( if (any(periodo == "last")) {periodo <- utils::head(periodos.df$id, 1)} )
+  suppressWarnings( if (any(periodo == "all")) {periodo <- periodos.df$id} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
@@ -608,29 +611,9 @@ sim_ext10_uf <- function(uf, linha = "Munic\u00edpio", coluna = "N\u00e3o ativa"
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = paste0("http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/ext10", uf,".def"),
-                     body = form_data)
+  site <- .tabnet_post(paste0("https://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/ext10", uf,".def"), form_data)
 
-  tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes(".tabdados tbody td") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  col_tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes("th") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  f1 <- function(x) x <- gsub("\\.", "", x)
-  f2 <- function(x) x <- as.numeric(as.character(x))
-
-  tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
-                                       ncol = length(col_tabdados), byrow = TRUE))
-
-  names(tabela_final) <- col_tabdados
-
-  tabela_final[-1] <- lapply(tabela_final[-1], f1)
-  tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
+  tabela_final <- .parse_tabnet_response(site)
 
   tabela_final
 

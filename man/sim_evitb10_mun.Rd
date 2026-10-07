@@ -80,10 +80,24 @@ by the online portal. The argument options refer to
 evitable causes data focused on brazilian cities and
 age ranging between 5-74 years old.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 ## Requesting data from the city of Campo Grande/MS
 sim_evitb10_mun(municipio = 500270)
+})
+options(old_options)
 }
 
 }
@@ -91,7 +105,7 @@ sim_evitb10_mun(municipio = 500270)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{causas}

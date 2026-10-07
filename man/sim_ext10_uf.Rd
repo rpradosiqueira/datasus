@@ -83,9 +83,9 @@ sim_obt10_uf(uf = "ms")
 \code{\link{sim_obt10_mun}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 
-Leonardo Goes Shibata \email{<leoshibata@gmail.com>}
+Leonardo Goes Shibata \email{leoshibata@gmail.com}
 }
 \keyword{SIM}
 \keyword{datasus}

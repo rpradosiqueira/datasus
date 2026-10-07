@@ -60,7 +60,7 @@
 #' @param atende_no_sus "all" or yes/no (Sim/Não)
 #'
 #' @return The function returns a data frame printed/filtered by parameters input.
-#' @author Rodrigo E. S. Borges \email{<rodrigoesborges@@gmail.com>}
+#' @author Rodrigo E. S. Borges \email{rodrigoesborges@@gmail.com}
 #' @seealso \code{\link{cnes_equipebr_mun}}
 #' @examples
 #' \dontrun{
@@ -92,7 +92,10 @@ cnes_prid02br_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa
                               ocupacoes_medicos = "all",
                               atende_no_sus = "all") {
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/prid02br.def", encoding = "latin1")
+  page <- .tabnet_get_html("https://tabnet.datasus.gov.br/cgi/deftohtm.exe?cnes/cnv/prid02br.def")
+  if (length(rvest::html_elements(page, "select")) == 0) {
+    stop("A tabela TABNET nao retornou formulario de consulta; a fonte pode ter sido descontinuada ou movida pelo DATASUS. Confira o portal tabnet.datasus.gov.br antes de usar esta funcao.")
+  }
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -706,32 +709,11 @@ cnes_prid02br_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa
 
   form_data <- gsub("\\\\u00", "%", form_data)
 
- print(form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?cnes/cnv/prid02br.def",
-                     body = form_data)
+  site <- .tabnet_post("https://tabnet.datasus.gov.br/cgi/tabcgi.exe?cnes/cnv/prid02br.def", form_data)
 
-  tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes(".tabdados tbody td") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  col_tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes("th") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  f1 <- function(x) x <- gsub("\\.", "", x)
-  f2 <- function(x) x <- as.numeric(as.character(x))
-
-  tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
-                                       ncol = length(col_tabdados), byrow = TRUE))
-
-  names(tabela_final) <- col_tabdados
-
-  tabela_final[-1] <- lapply(tabela_final[-1], f1)
-  tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
+  tabela_final <- .parse_tabnet_response(site)
 
   tabela_final
 

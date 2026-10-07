@@ -63,9 +63,7 @@ sinasc_nv_mun(linha = "Município", coluna = "Não ativa",
 
 \item{tipo_de_gravidez}{"all" or a character vector with the type of pregnancy (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
-\item{grupos_de_robson}{"all" or a character vector with the Robson Groups (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
-\item{adeq_pre_natal}{"all" or a character vector with the range of adequacy of prenatal consultation  (written in the same way - ex. 'Inadequado', 'Adequado') or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{tipo_de_parto}{"all" or a character vector with the Parturition type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
@@ -94,10 +92,24 @@ SINASC database much in the same way that is done
 by the online portal. The argument options refer to
 data focused on brazilian cities.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 ## Requesting data from the city of Campo Grande/MS
 sinasc_nv_mun(municipio = 500270)
+})
+options(old_options)
 }
 
 }
@@ -105,7 +117,7 @@ sinasc_nv_mun(municipio = 500270)
 \code{\link{sinasc_nv_uf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SINASC}
 \keyword{datasus}

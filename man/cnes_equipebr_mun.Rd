@@ -96,7 +96,7 @@ cnes_equipebr_mun(municipio = 221100)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Rodrigo E. S. Borges \email{<rodrigoesborges@gmail.com>}
+Rodrigo E. S. Borges \email{rodrigoesborges@gmail.com}
 }
 \keyword{CNES}
 \keyword{datasus}

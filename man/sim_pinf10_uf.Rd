@@ -103,7 +103,7 @@ sim_pinf10_uf(uf = "ms")
 \code{\link{sim_evita10_uf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{child}

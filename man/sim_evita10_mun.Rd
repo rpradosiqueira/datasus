@@ -76,10 +76,24 @@ SIM's ICD-10 database much in the same way that is done
 by the online portal. The argument options refer to
 evitable causes data focused on brazilian cities.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 ## Requesting data from the city of Campo Grande/MS
 sim_evita10_mun(municipio = 500270)
+})
+options(old_options)
 }
 
 }
@@ -87,7 +101,7 @@ sim_evita10_mun(municipio = 500270)
 \code{\link{sinasc_nv_uf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{causas}

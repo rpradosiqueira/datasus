@@ -76,10 +76,24 @@ SINASC database much in the same way that is done
 by the online portal. The argument options refer to
 data from the states unities.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 ## Requesting data from the state of Mato Grosso do Sul
 sinasc_nv_uf(uf = "ms")
+})
+options(old_options)
 }
 
 }
@@ -87,7 +101,7 @@ sinasc_nv_uf(uf = "ms")
 \code{\link{sinasc_nv_mun}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SINASC}
 \keyword{datasus}

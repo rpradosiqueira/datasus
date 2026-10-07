@@ -5,17 +5,19 @@
 \title{Scrapes SIH's SUS ambulatorial production by service location}
 \usage{
 sih_spabr_mun(linha = "Município", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", municipio = "all", capital = "all",
-  cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
-  ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
-  amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
-  zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-  procedimento = "all", grupo_procedimento = "all", subgrupo_procedimento = "all",
+  conteudo = "Quantidade aprovada", periodo = "last", municipio = "all",
+  capital = "all", cir = "all", macrorregiao_de_saude = "all",
+  microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all",
+  mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
+  faixa_de_fronteira = "all", zona_de_fronteira = "all",
+  municipio_de_extrema_pobreza = "all", procedimento_principal = "all",
+  grupo_procedimento_principal = "all",
+  subgrupo_procedimento_principal = "all",
+  forma_organizacao_principal = "all", procedimento = "all",
+  grupo_procedimento = "all", subgrupo_procedimento = "all",
   forma_organizacao = "all", complexidade = "all", financiamento = "all",
-  subtipo_financiamento = "all",servico_classificacao = "all", carater_atendimento = "all",
-  gestao = "all", documento_registro = "all", esfera_administrativa = "all",
-  tipo_prestador = "all", natureza_juridica = "all", esfera_juridica = "all",
-  aprovacao_producao = "all", profissional_cbo = "all" )
+  subtipo_financiamento = "all", servico_classificacao = "all",
+  profissional_cbo = "all")
 }
 \arguments{
 \item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".}
@@ -102,7 +104,7 @@ sih_spabr_mun(municipio = 500270)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{rodrigo@borges.net.br}
 }
 \keyword{SIH}
 \keyword{ambulatorial}

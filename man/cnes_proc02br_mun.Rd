@@ -114,7 +114,7 @@ cnes_proc02br_mun(municipio = 221100)
 \code{\link{cnes_prid02br_mun}}
 }
 \author{
-Rodrigo E. S. Borges \email{<rodrigoesborges@gmail.com>}
+Rodrigo E. S. Borges \email{rodrigoesborges@gmail.com}
 }
 \keyword{CNES}
 \keyword{datasus}

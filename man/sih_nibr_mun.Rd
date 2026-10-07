@@ -4,15 +4,15 @@
 \alias{sih_nibr_mun}
 \title{Scrapes SIM's ICD-10 hospital morbidity data from cities}
 \usage{
-sih_nibr_mun(linha = "Município", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", municipio = "all", capital = "all",
-  cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
-  ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
+sih_nibr_mun(linha = "Município", coluna = "Não ativa", conteudo = 1,
+  periodo = "last", municipio = "all", capital = "all", cir = "all",
+  macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
+  territorio_da_cidadania = "all", mesorregiao_pndr = "all",
   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-  carater_atendimento = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
-  faixa_etaria = "all", faixa_etaria_detalhada = "all", sexo = "all",
-  cor_raca = "all",regime = "all, carater_atendimento = "all)
+  carater_atendimento = "all", regime = "all", capitulo_cid10 = "all",
+  categoria_cid10 = "all", faixa_etaria = "all",
+  faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all")
 }
 \arguments{
 \item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".}
@@ -87,7 +87,7 @@ sih_nibr_mun(municipio = 500270)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{rodrigo@borges.net.br}
 }
 \keyword{SIM}
 \keyword{causas}

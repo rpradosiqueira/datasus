@@ -4,9 +4,10 @@
 \alias{ibge_projpop_bruf}
 \title{Scrapes Demographic projections of Resident Population from RIPSA}
 \usage{
-ibge_projpop_bruf(linha = "Unidade da Federação", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
-  sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all")
+ibge_projpop_bruf(linha = "Unidade da Federação",
+  coluna = "Faixa Etária 2", conteudo = 1, periodo = "last",
+  regiao = "all", unidade_da_federacao = "all", sexo = "all",
+  faixa_etaria_1 = "all", faixa_etaria_2 = "all")
 }
 \arguments{
 \item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".}
@@ -48,7 +49,7 @@ ibge_projpop_bruf(unidade_da_federacao = 32)
 \code{\link{novapop_popbr_mun}}
 }
 \author{
-Rodrigo Borges based on work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on work by Renato Prado Siqueira  \email{rodrigo@borges.net.br}
 }
 \keyword{IBGE/RIPSA}
 \keyword{ProjPop}

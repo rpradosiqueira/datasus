@@ -4,12 +4,14 @@
 \alias{ibge_projpopuf_bruf}
 \title{Scrapes Demographic projections of Resident Population from SVS}
 \usage{
-ibge_projpopuf_bruf(linha = "Unidade_da_Federa%E7%E3o", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
-  sexo = "all", idade_simples = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all")
+ibge_projpopuf_bruf(linha = "Unidade_da_Federa\%E7\%E3o",
+  coluna = "Faixa Etária 2", conteudo = "População_residente",
+  periodo = "last", regiao = "all", unidade_da_federacao = "all",
+  sexo = "all", idade_simples = "all", faixa_etaria_1 = "all",
+  faixa_etaria_2 = "all")
 }
 \arguments{
-\item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Unidade da Unidade_da_Federa%E7%E3o".}
+\item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Unidade da Unidade_da_Federa\%E7\%E3o".}
 
 \item{coluna}{A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".}
 
@@ -18,6 +20,7 @@ ibge_projpopuf_bruf(linha = "Unidade_da_Federa%E7%E3o", coluna = "Não ativa",
 \item{periodo}{A character vector describing the period of data. Defaults to the last available.}
 
 \item{regiao}{"all" or a numeric vector with the IBGE's region codes to filter the data. Defaults to "all".}
+\item{unidade_da_federacao}{"all" or a character vector with the federation units (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{sexo}{"all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
@@ -49,7 +52,7 @@ ibge_projpopuf_bruf(unidade_da_federacao = 50)
 \code{\link{ibge_poptbr_mun}}
 }
 \author{
-Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{rodrigo@borges.net.br}
 }
 \keyword{RIPSA}
 \keyword{datasus}

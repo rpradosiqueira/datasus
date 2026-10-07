@@ -102,7 +102,7 @@ sim_fet10_mun(municipio = 500270)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Rodrigo E. S. Borges \email{<rodrigoesborges@gmail.com>}
+Rodrigo E. S. Borges \email{rodrigoesborges@gmail.com}
 }
 \keyword{SIM}
 \keyword{datasus}

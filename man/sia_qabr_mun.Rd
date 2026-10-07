@@ -110,7 +110,7 @@ cnv_sih_mun(municipio = 500270)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{rodrigo@borges.net.br}
 }
 \keyword{SIA}
 \keyword{ambulatorial}

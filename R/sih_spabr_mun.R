@@ -10,17 +10,19 @@
 #' cities and age ranging between 5-74 years old.
 #'
 #' @usage sih_spabr_mun(linha = "Município", coluna = "Não ativa",
-#'   conteudo = 1, periodo = "last", municipio = "all", capital = "all",
-#'   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
-#'   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
-#'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
-#'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-#'   procedimento = "all", grupo_procedimento = "all", subgrupo_procedimento = "all",
-#'   forma_organizacao = "all", complexidade = "all", financiamento = "all",
-#'   subtipo_financiamento = "all",servico_classificacao = "all", carater_atendimento = "all",
-#'   gestao = "all", documento_registro = "all", esfera_administrativa = "all",
-#'   tipo_prestador = "all", natureza_juridica = "all", esfera_juridica = "all",
-#'   aprovacao_producao = "all", profissional_cbo = "all" )
+#'     conteudo = "Quantidade aprovada", periodo = "last", municipio = "all",
+#'     capital = "all", cir = "all", macrorregiao_de_saude = "all",
+#'     microrregiao_ibge = "all", ride = "all", territorio_da_cidadania = "all",
+#'     mesorregiao_pndr = "all", amazonia_legal = "all", semiarido = "all",
+#'     faixa_de_fronteira = "all", zona_de_fronteira = "all",
+#'     municipio_de_extrema_pobreza = "all", procedimento_principal = "all",
+#'     grupo_procedimento_principal = "all",
+#'     subgrupo_procedimento_principal = "all",
+#'     forma_organizacao_principal = "all", procedimento = "all",
+#'     grupo_procedimento = "all", subgrupo_procedimento = "all",
+#'     forma_organizacao = "all", complexidade = "all", financiamento = "all",
+#'     subtipo_financiamento = "all", servico_classificacao = "all",
+#'     profissional_cbo = "all")
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo A character of length = 1 with indicating wether approved quantity or values should be returned.
@@ -53,7 +55,7 @@
 #' @param servico_classificacao "all" or a character vector with the contractual rule (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param profissional_cbo "all" or a character vector with the professional occupation code according to Brazilian Occupations' Classifications (CBO, written in the same way as presented in the site) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{<rodrigo@@borges.net.br>}
+#' @author Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{rodrigo@@borges.net.br}
 #' @seealso \code{\link{sim_evita10_mun}}
 #' @examples
 #' \dontrun{
@@ -75,7 +77,10 @@ sih_spabr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                         profissional_cbo = "all") {
 
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sih/cnv/spabr.def", encoding = "ISO-8859-1")
+  page <- .tabnet_get_html("https://tabnet.datasus.gov.br/cgi/deftohtm.exe?sih/cnv/spabr.def")
+  if (length(rvest::html_elements(page, "select")) == 0) {
+    stop("A tabela TABNET nao retornou formulario de consulta; a fonte pode ter sido descontinuada ou movida pelo DATASUS. Confira o portal tabnet.datasus.gov.br antes de usar esta funcao.")
+  }
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -93,7 +98,6 @@ sih_spabr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
   periodos.df <- data.frame(id = page %>% rvest::html_nodes("#A option") %>% rvest::html_text() %>% trimws(),
                             value = page %>% rvest::html_nodes("#A option") %>% rvest::html_attr("value"))
-  print(class(periodos.df$id))
 
   municipios.df <- suppressWarnings(data.frame(id = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_text() %>% readr::parse_number(),
                                                value = page %>% rvest::html_nodes("#S1 option") %>% rvest::html_attr("value")))
@@ -148,7 +152,7 @@ sih_spabr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
 
 
-  grupo_procedimento_principal.df <- data.frame(id = 0:8,
+  grupo_procedimento_principal.df <- data.frame(id = seq_along(page %>% rvest::html_nodes("#S15 option")) - 1,
                                     value = page %>% rvest::html_nodes("#S15 option") %>% rvest::html_attr("value"))
   grupo_procedimento_principal.df[] <- lapply(grupo_procedimento_principal.df, as.character)
 
@@ -171,7 +175,7 @@ sih_spabr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
 
 
-  grupo_procedimento.df <- data.frame(id = 0:8,
+  grupo_procedimento.df <- data.frame(id = seq_along(page %>% rvest::html_nodes("#S19 option")) - 1,
                                       value = page %>% rvest::html_nodes("#S19 option") %>% rvest::html_attr("value"))
   grupo_procedimento.df[] <- lapply(grupo_procedimento.df, as.character)
 
@@ -261,7 +265,6 @@ sih_spabr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
       if (!(conteudo %in% 1:2)) {
         stop("The only numeric elements allowed are 1 or 2")
       }
-   print(conteudo.df)
 
     if (!(all(conteudo %in% conteudo.df$id2))) {
 
@@ -599,8 +602,8 @@ sih_spabr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   # }
 
   #periodo
-  suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
-  suppressWarnings( if (periodo == "all") {periodo <- periodos.df$id} )
+  suppressWarnings( if (any(periodo == "last")) {periodo <- utils::head(periodos.df$id, 1)} )
+  suppressWarnings( if (any(periodo == "all")) {periodo <- periodos.df$id} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
 
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
@@ -764,30 +767,9 @@ sih_spabr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/spabr.def",
-                     body = form_data)
+  site <- .tabnet_post("https://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/spabr.def", form_data)
 
-  tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes(".tabdados tbody td") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  col_tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes("th") %>%
-    rvest::html_text() %>%
-    trimws()
-
-
-  f1 <- function(x) x <- gsub("\\.", "", x)
-  f2 <- function(x) x <- as.numeric(as.character(x))
-
-  tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
-                                       ncol = length(col_tabdados), byrow = TRUE))
-
-  names(tabela_final) <- col_tabdados
-
-  tabela_final[-1] <- lapply(tabela_final[-1], f1)
-  tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
+  tabela_final <- .parse_tabnet_response(site)
 
   tabela_final
 

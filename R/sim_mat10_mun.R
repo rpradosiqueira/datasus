@@ -5,17 +5,17 @@
 #' by the online portal. The argument options refer to
 #' data focused on brazilian cities.
 #'
-#' @usage sim_mat10_mun(linha = "Município", coluna = "Não ativa",
-#'   conteudo = 1, periodo = "last", municipio = "all", capital = "all",
-#'   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
-#'   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
-#'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
-#'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-#'   capitulo_cid10 = "all", grupo_cid10 = "all", categoria_cid10 = "all",
-#'   tipo_causa_obstetrica = "all", obito_investigado = "all", faixa_etaria = "all",
-#'   faixa_etaria_ops = "all", faixa_etaria_det = "all",
-#'   obito_gravidez_puerperio = "all", cor_raca = "all", escolaridade = "all", estado_civil = "all",
-#'   local_ocorrencia = "all")
+#' @usage sim_mat10_mun(linha = "Município", coluna = "Não ativa", conteudo = 1,
+#'     periodo = "last", municipio = "all", capital = "all", cir = "all",
+#'     macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
+#'     territorio_da_cidadania = "all", mesorregiao_pndr = "all",
+#'     amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
+#'     zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
+#'     capitulo_cid10 = "all", grupo_cid10 = "all", categoria_cid10 = "all",
+#'     tipo_causa_obstetrica = "all", faixa_etaria = "all",
+#'     faixa_etaria_ops = "all", faixa_etaria_det = "all", cor_raca = "all",
+#'     escolaridade = "all", estado_civil = "all", local_ocorrencia = "all",
+#'     obito_gravidez_puerperio = "all", obito_investigado = "all")
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo A character of length = 1 with type of morbility searched for.
@@ -47,7 +47,7 @@
 #' @param obito_gravidez_puerperio "all" or a character vector with categories of deaths during pregnancy or giving birth. Defaults to "all".
 #' @param obito_investigado "all" or a character vector indicating if the death is being investigated and details on investigation if applicable. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Rodrigo Borges \email{<rodrigosborges@gmail.com>}
+#' @author Rodrigo Borges \email{rodrigosborges@gmail.com}
 #' @seealso \code{\link{sinasc_nv_uf}}
 #' @examples
 #' \dontrun{
@@ -70,7 +70,10 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                           obito_gravidez_puerperio = "all", obito_investigado = "all") {
 
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/mat10br.def", encoding = "latin1")
+  page <- .tabnet_get_html("https://tabnet.datasus.gov.br/cgi/deftohtm.exe?sim/cnv/mat10br.def")
+  if (length(rvest::html_elements(page, "select")) == 0) {
+    stop("A tabela TABNET nao retornou formulario de consulta; a fonte pode ter sido descontinuada ou movida pelo DATASUS. Confira o portal tabnet.datasus.gov.br antes de usar esta funcao.")
+  }
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -132,7 +135,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
                                                 value = page %>% rvest::html_nodes("#S13 option") %>% rvest::html_attr("value"))
   municipio_de_extrema_pobreza.df[] <- lapply(municipio_de_extrema_pobreza.df, as.character)
 
-  capitulo_cid10.df <- data.frame(id = 0:22,
+  capitulo_cid10.df <- data.frame(id = seq_along(page %>% rvest::html_nodes("#S14 option")) - 1,
                                   value = page %>% rvest::html_nodes("#S14 option") %>% rvest::html_attr("value"))
   capitulo_cid10.df[] <- lapply(capitulo_cid10.df, as.character)
 
@@ -401,7 +404,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
 
     tipo_causa_obstetrica <- as.character(tipo_causa_obstetrica)
 
-    if (!(all(tipo_causa_obstetrica %in% tipo_causa_obstetrica.df$id))) stop("Some element in 'tipo_causa_obstétrica' argument is wrong")
+    if (!(all(tipo_causa_obstetrica %in% tipo_causa_obstetrica.df$id))) stop("Some element in 'tipo_causa_obst\u00e9trica' argument is wrong")
 
   }
 
@@ -586,8 +589,8 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   }
 
   #periodo
-  suppressWarnings( if (periodo == "last") {periodo <- utils::head(periodos.df$id, 1)} )
-  suppressWarnings( if (periodo == "all") {periodo <- periodos.df$id} )
+  suppressWarnings( if (any(periodo == "last")) {periodo <- utils::head(periodos.df$id, 1)} )
+  suppressWarnings( if (any(periodo == "all")) {periodo <- periodos.df$id} )
   form_periodo <- dplyr::filter(periodos.df, periodos.df$id %in% periodo)
   form_periodo <- paste0("Arquivos=", form_periodo$value, collapse = "&")
 
@@ -677,7 +680,7 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_pesqmes16 <- "pesqmes16=Digite+o+texto+e+ache+f%E1cil"
 
   #categoria_cid10
-  form_categoria_cid10 <- dplyr::filter(categoria_cid10.df, id %in% categoria_cid10)
+  form_categoria_cid10 <- dplyr::filter(categoria_cid10.df, .data$id %in% categoria_cid10)
   form_categoria_cid10 <- paste0("SCategoria_CID-10=", form_categoria_cid10$value, collapse = "&")
 
   #tipo_causa_obstetrica
@@ -741,28 +744,9 @@ sim_mat10_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", c
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/mat10br.def",
-                     body = form_data)
+  site <- .tabnet_post("https://tabnet.datasus.gov.br/cgi/tabcgi.exe?sim/cnv/mat10br.def", form_data)
 
-  tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes(".tabdados tbody td") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  col_tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes("th") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  f1 <- function(x) x <- gsub("\\.", "", x)
-  f2 <- function(x) x <- as.numeric(as.character(x))
-  tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
-                                       ncol = length(col_tabdados), byrow = TRUE))
-
-  names(tabela_final) <- col_tabdados
-
-  tabela_final[-1] <- lapply(tabela_final[-1], f1)
-  tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
+  tabela_final <- .parse_tabnet_response(site)
 
   tabela_final
 

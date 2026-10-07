@@ -4,9 +4,9 @@
 \alias{ibge_popsvs_mun}
 \title{Scrapes Demographic projections of Resident Population from RIPSA / IBGE}
 \usage{
-ibge_popsvs_mun(linha = "Município", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
-  municipio = "all", capital = "all",
+ibge_popsvs_mun(linha = "Município", coluna = "Faixa Etária 2",
+  conteudo = 1, periodo = "last", regiao = "all",
+  unidade_da_federacao = "all", municipio = "all", capital = "all",
   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
@@ -80,7 +80,7 @@ ibge_popsvs_mun(municipio = 500270)
 \code{\link{ibge_poptbr_mun}}
 }
 \author{
-Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{rodrigo@borges.net.br}
 }
 \keyword{RIPSA}
 \keyword{datasus}

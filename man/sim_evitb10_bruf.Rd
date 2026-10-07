@@ -54,10 +54,24 @@ by the online portal. The argument options refer to
 evitable causes data focused on the regions and states
 and age ranging between 5-74 years old.
 }
+\section{Lifecycle}{
+
+This function is deprecated. Use `sim()` or `sinasc()` with a named
+`filtros` list. The legacy signature is retained for compatibility.
+}
+
 \examples{
-\dontrun{
+\donttest{
+old_options <- options(
+  datasus.timeout = 5,
+  datasus.download_timeout = 15,
+  datasus.max_tries = 1
+)
+try({
 ## Requesting data from Midwest region
 sim_evitb10_bruf(region = 5)
+})
+options(old_options)
 }
 
 }
@@ -65,7 +79,7 @@ sim_evitb10_bruf(region = 5)
 \code{\link{sim_evita10_bruf}}
 }
 \author{
-Renato Prado Siqueira \email{<rpradosiqueira@gmail.com>}
+Renato Prado Siqueira \email{rpradosiqueira@gmail.com}
 }
 \keyword{SIM}
 \keyword{causas}

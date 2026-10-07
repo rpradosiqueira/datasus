@@ -5,13 +5,12 @@
 \title{Scrapes Demographic projections of Resident Population from TCU 2024}
 \usage{
 ibge_popt2024br_mun(linha = "Município", coluna = "Não ativa",
-  conteudo = 1, periodo = "last", regiao = "all", unidade_da_federacao = "all",
-  municipio = "all", capital = "all",
-  cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
-  ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
+  conteudo = 1, periodo = "last", unidade_da_federacao = "all",
+  municipio = "all", capital = "all", cir = "all",
+  macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
+  territorio_da_cidadania = "all", mesorregiao_pndr = "all",
   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
-  zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-  sexo = "all", faixa_etaria_1 = "all", faixa_etaria_2 = "all")
+  zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all")
 }
 \arguments{
 \item{linha}{A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".}
@@ -70,7 +69,7 @@ novapop_popbr_mun(municipio = 500270)
 \code{\link{sim_evita10_mun}}
 }
 \author{
-Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{<rodrigo@borges.net.br>}
+Rodrigo Borges based on excellent work by Renato Prado Siqueira  \email{rodrigo@borges.net.br}
 }
 \keyword{RIPSA}
 \keyword{datasus}

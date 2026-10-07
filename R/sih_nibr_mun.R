@@ -7,15 +7,15 @@
 #' data focused on brazilian
 #' cities and age ranging between 5-74 years old.
 #'
-#' @usage sih_nibr_mun(linha = "Município", coluna = "Não ativa",
-#'   conteudo = 1, periodo = "last", municipio = "all", capital = "all",
-#'   cir = "all", macrorregiao_de_saude = "all", microrregiao_ibge = "all",
-#'   ride = "all", territorio_da_cidadania = "all", mesorregiao_pndr = "all",
-#'   amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
-#'   zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
-#'   carater_atendimento = "all", capitulo_cid10 = "all", categoria_cid10 = "all",
-#'   faixa_etaria = "all", faixa_etaria_detalhada = "all", sexo = "all",
-#'   cor_raca = "all",regime = "all, carater_atendimento = "all)
+#' @usage sih_nibr_mun(linha = "Município", coluna = "Não ativa", conteudo = 1,
+#'     periodo = "last", municipio = "all", capital = "all", cir = "all",
+#'     macrorregiao_de_saude = "all", microrregiao_ibge = "all", ride = "all",
+#'     territorio_da_cidadania = "all", mesorregiao_pndr = "all",
+#'     amazonia_legal = "all", semiarido = "all", faixa_de_fronteira = "all",
+#'     zona_de_fronteira = "all", municipio_de_extrema_pobreza = "all",
+#'     carater_atendimento = "all", regime = "all", capitulo_cid10 = "all",
+#'     categoria_cid10 = "all", faixa_etaria = "all",
+#'     faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all")
 #' @param linha A character describing which element will be displayed in the rows of the data.frame. Defaults to "Município".
 #' @param coluna A character describing which element will be displayed in the columns of the data.frame. Defaults to "Não ativa".
 #' @param conteudo A character of length = 1 with the state's acronym of interest.
@@ -42,7 +42,7 @@
 #' @param sexo "all" or a character vector with the gender (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @param cor_raca "all" or a character vector with the color/race (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".
 #' @return The function returns a data frame printed by parameters input.
-#' @author Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{<rodrigo@@borges.net.br>}
+#' @author Rodrigo Borges based on excellent work from Renato Prado Siqueira \email{rodrigo@@borges.net.br}
 #' @seealso \code{\link{sim_evita10_mun}}
 #' @examples
 #' \dontrun{
@@ -63,7 +63,10 @@ sih_nibr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", co
                             faixa_etaria_detalhada = "all", sexo = "all", cor_raca = "all") {
 
 
-  page <- xml2::read_html("http://tabnet.datasus.gov.br/cgi/deftohtm.exe?sih/cnv/nibr.def", encoding = "latin1")
+  page <- .tabnet_get_html("https://tabnet.datasus.gov.br/cgi/deftohtm.exe?sih/cnv/nibr.def")
+  if (length(rvest::html_elements(page, "select")) == 0) {
+    stop("A tabela TABNET nao retornou formulario de consulta; a fonte pode ter sido descontinuada ou movida pelo DATASUS. Confira o portal tabnet.datasus.gov.br antes de usar esta funcao.")
+  }
 
   #### DF ####
   linha.df <- data.frame(id = page %>% rvest::html_nodes("#L option") %>% rvest::html_text() %>% trimws(),
@@ -143,7 +146,7 @@ sih_nibr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", co
   regime.df$id <- gsub(" ", ".", regime.df$id)
 
 
-  capitulo_cid10.df <- data.frame(id = 0:22,
+  capitulo_cid10.df <- data.frame(id = seq_along(page %>% rvest::html_nodes("#S16 option")) - 1,
                                     value = page %>% rvest::html_nodes("#S16 option") %>% rvest::html_attr("value"))
   capitulo_cid10.df[] <- lapply(capitulo_cid10.df, as.character)
 
@@ -622,30 +625,9 @@ sih_nibr_mun <- function(linha = "Munic\u00edpio", coluna = "N\u00e3o ativa", co
   form_data <- gsub("\\\\u00", "%", form_data)
 
   ##### REQUEST FORM AND DATA WRANGLING ####
-  site <- httr::POST(url = "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/nibr.def",
-                     body = form_data)
+  site <- .tabnet_post("https://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/nibr.def", form_data)
 
-  tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes(".tabdados tbody td") %>%
-    rvest::html_text() %>%
-    trimws()
-
-  col_tabdados <- httr::content(site, encoding = "Latin1") %>%
-    rvest::html_nodes("th") %>%
-    rvest::html_text() %>%
-    trimws()
-
-
-  f1 <- function(x) x <- gsub("\\.", "", x)
-  f2 <- function(x) x <- as.numeric(as.character(x))
-
-  tabela_final <- as.data.frame(matrix(data = tabdados, nrow = length(tabdados)/length(col_tabdados),
-                                       ncol = length(col_tabdados), byrow = TRUE))
-
-  names(tabela_final) <- col_tabdados
-
-  tabela_final[-1] <- lapply(tabela_final[-1], f1)
-  tabela_final[-1] <- suppressWarnings(lapply(tabela_final[-1], f2))
+  tabela_final <- .parse_tabnet_response(site)
 
   tabela_final
 
