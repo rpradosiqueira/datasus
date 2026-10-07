@@ -1,4 +1,35 @@
-# datasus (development version)
+# datasus 0.16.2.9000
+
+* Merged upstream `rpradosiqueira/datasus` 0.16.1 (task-oriented API, shared
+  TABNET client, microdata and OpenDataSUS support) into this fork, resolving
+  the 15 legacy SIM/SINASC scrapers in favor of the upstream deprecated
+  wrappers, which fix vector handling in `periodo` and the `evitb10`
+  endpoints.
+* Retained the fork-only TABNET scrapers without an upstream counterpart:
+  `sim_ext10_uf()`, `sim_fet10_mun()`, `sim_mat10_mun()`, `sim_pinf10_*()`,
+  `sinasc_pnv_*()` and `novapop_popbr_mun()`, plus the municipal SIH/SIA,
+  CNES and IBGE population scrapers and the `metatabnet` metadata index.
+* Fixed vector handling in the `periodo` argument of the retained fork
+  scrapers and removed leftover debug `print()` calls.
+* Merged upstream fix (fd507d2) that restores numeric IBGE-code filters such
+  as `sim_obt10_mun(municipio = 500270)`; version bumped above CRAN 0.16.2,
+  which predates that fix.
+* Updated `DESCRIPTION` imports to the union required by both code bases.
+
+## Fork history (entries unique to this fork)
+
+# datasus 0.6.4
+
+* fix: page scraping now declares Latin-1 encoding, restoring all TABNET-based
+  functions (births, deaths, population) that failed with "Input is not proper UTF-8"
+
+# datasus 0.5.8
+
+* multiple new functions, as for querying population, health team and professionals
+* new function for metadata retrieval and search - metatabnet
+* other optimizations
+
+# datasus 0.16.1 (upstream development)
 
 * Fixed regression #7: legacy SIM/SINASC wrappers and named TABNET filters
   again accept numeric codes at the start of option labels, translating them

@@ -1,7 +1,7 @@
 Package: datasus
 Type: Package
 Title: An Interface to Brazilian Public Health Data
-Version: 0.16.1
+Version: 0.16.2.9000
 Authors@R: person("Renato", "Prado Siqueira", email = "rpradosiqueira@gmail.com", role = c("aut", "cre"))
 Description: Retrieves public health data from the Department of Informatics
     ('DATASUS') of the Brazilian Unified Health System ('Sistema Unico de
@@ -33,8 +33,11 @@ Depends:
     R (>= 4.1.0)
 Imports:
     datasusr (>= 0.1.0),
+    dplyr,
+    httr,
     httr2,
     jsonlite,
+    magrittr,
     readr,
     rvest,
     stringi,
@@ -46,4 +49,5 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+LazyData: true
 RoxygenNote: 8.0.0

@@ -25,6 +25,10 @@ Install the development version from GitHub:
 ```{r , eval = FALSE}
 install.packages("remotes")
 remotes::install_github("rpradosiqueira/datasus")
+
+# Fork with additional TABNET scrapers (IBGE, CNES, SIH, SIA and
+# extra SIM/SINASC tables without an upstream counterpart)
+remotes::install_github("rodrigoesborges/datasus")
 ```
 
 ## Main entry points

@@ -63,6 +63,8 @@ sinasc_nv_mun(linha = "Município", coluna = "Não ativa",
 
 \item{tipo_de_gravidez}{"all" or a character vector with the type of pregnancy (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
+
+
 \item{tipo_de_parto}{"all" or a character vector with the Parturition type (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}
 
 \item{consult_pre_natal}{"all" or a character vector with the amount of prenatal consultation  (written in the same way) or the number corresponding to the order of the option in the online layout to filter the data. Defaults to "all".}

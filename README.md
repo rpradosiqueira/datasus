@@ -22,6 +22,10 @@ from CRAN. Install the development version from GitHub:
 ``` r
 install.packages("remotes")
 remotes::install_github("rpradosiqueira/datasus")
+
+# Fork with additional TABNET scrapers (IBGE, CNES, SIH, SIA and
+# extra SIM/SINASC tables without an upstream counterpart)
+remotes::install_github("rodrigoesborges/datasus")
 ```
 
 ## Main entry points
@@ -70,6 +74,11 @@ sim(
 # State totals and live births within São Paulo municipalities
 sim(abrangencia = "uf", periodo = 2024)
 sinasc(uf = "SP", periodo = 2024)
+
+# Fork-only scrapers kept for tables not covered by the catalog
+sim_pinf10_mun(periodo = 2023)   # mortality of individuals aged 1+
+sinasc_pnv_mun(periodo = 2023)   # prenatal/live-birth variants
+ibge_poptbr_mun(periodo = 2021)  # IBGE population estimates
 ```
 
 The historical functions such as `sim_obt10_mun()` and `sinasc_nv_uf()`
